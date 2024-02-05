@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useSelectedGenre } from "../Provider/SelectedGenreProvider";
 import { getGamesByGenre } from "../../Services/RawGApi";
 import GameCard from "./GameCard";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import primaryImage from "../../assets/images/horizon-poster.jpg";
+import HFW from "../../assets/videos/HFW-trailer.mp4";
 
 export interface Game {
   id: number;
@@ -17,10 +21,50 @@ export interface Game {
 }
 
 function HomeMain() {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const { selectedGenre } = useSelectedGenre();
-  const [gamesList, setGamesList] = React.useState<Game[]>([]);
+  const [gamesList, setGamesList] = useState<Game[]>([]);
+
+  const [isDoneVideo, setIsDoneVideo] = useState<boolean>(false);
+
+  const handleMouseEnter = () => {
+    if (videoRef.current && isDoneVideo) {
+      videoRef.current.play();
+      videoRef.current.style.zIndex = "99";
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (videoRef.current && isDoneVideo) {
+      if (videoRef.current.currentTime < 20) {
+      } else {
+        videoRef.current.pause();
+        videoRef.current.currentTime = 0;
+        videoRef.current.style.zIndex = "0";
+      }
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.style.zIndex = "99";
+        videoRef.current.play();
+      }
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleVideoEnd = () => {
+    if (videoRef.current) {
+      videoRef.current.style.zIndex = "0";
+      setIsDoneVideo(true);
+    }
+  };
 
   const getGamesByGenreFunc = async (genreId: number) => {
+    console.log(genreId);
     const data = await getGamesByGenre(genreId.toString());
 
     const gamesListTemp: Game[] = data.results.map((result: Game) => ({
@@ -42,10 +86,25 @@ function HomeMain() {
   }, [selectedGenre]);
 
   return (
-    <div className="">
-      <h1 className="text-6xl font-bold">Trending Games</h1>
-      <h2 className="text-2xl font-bold mb-3">Based on review from thousands of players</h2>
-      <div className="grid grid-cols-4 gap-3 my-3 mr-3">
+    <div className="relative w-full">
+      <div className="group">
+        <LazyLoadImage
+          src={primaryImage}
+          alt="bg"
+          className={`$ relative z-10 h-96 md:w-[99%] md:rounded-2xl object-cover transition-opacity duration-200 ease-in-out`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        />
+        <video
+          ref={videoRef}
+          muted
+          className="absolute top-0 h-96 md:w-[99%] md:rounded-2xl object-cover"
+          src={HFW}
+          onEnded={handleVideoEnd}
+        ></video>
+      </div>
+
+      <div className="my-10 grid grid-cols-1 gap-5 mx-5 md:ml-0 md:mr-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {gamesList.map((game, index) => {
           return <GameCard key={index} {...game} />;
         })}

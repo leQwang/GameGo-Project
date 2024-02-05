@@ -10,7 +10,7 @@ const SelectedGenreContext = createContext<{
 });
 
 export const SelectedGenreProvider = ({ children } : {children: ReactNode}) => {
-  const [selectedGenre, setSelectedGenre] = React.useState(1)
+  const [selectedGenre, setSelectedGenre] = React.useState(4)
 
   return (
     <SelectedGenreContext.Provider value={{ selectedGenre, setSelectedGenre }}>
