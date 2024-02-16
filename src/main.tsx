@@ -4,15 +4,15 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // import CTA from "./components/CTA/CTA.tsx";
-// import Home from "./pages/Home.tsx";
-import ServiceStore from "./pages/ServiceStore.tsx";
+import Home from "./pages/Home.tsx";
+// import ServiceStore from "./pages/ServiceStore.tsx";
 
 
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <ServiceStore />,
+    element: <Home />,
   },
 ]);
 

@@ -5,6 +5,7 @@ import { useEffect } from "react";
 // import StoreMain from "../components/Store/StoreMain";
 // import Footer from "../components/Footer/Footer";
 import CTA from "../components/CTA/CTA";
+import ServiceStore from "./ServiceStore";
 // import {NavbarSimple} from "../components/Navbar/Navbar";
 
 function Home() {
@@ -16,6 +17,7 @@ function Home() {
     <div className="bg-custom-radial-gradient overflow-hidden">
       {/* <NavbarSimple /> */}
       <CTA />
+      <ServiceStore />
     </div>
   );
 }
