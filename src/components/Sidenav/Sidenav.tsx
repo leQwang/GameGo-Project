@@ -31,14 +31,14 @@ function Sidenav() {
   }, []);
 
   return (
-    <div className="bg-gamecard relative -left-[100%] w-0 md:w-fit md:left-0 md:sticky top-5 md:mr-5 md:ml-3 h-fit text-nowrap rounded-xl md:px-2 py-2 mb-10">
+    <div className="bg-gamecard sticky -left-[100%] top-5 mb-10 h-fit w-0 text-nowrap rounded-xl py-2 md:sticky md:left-0 md:ml-3 md:mr-5 md:w-fit md:px-2">
       <h1 className="text-center text-4xl font-bold text-orange">Genres</h1>
       <ul>
         {genres.map((genre, index) => {
           return (
             <li
               key={index}
-              className={`w-52 ${selectedGenre == genre.id ? "bg-orange" : "bg-transparent hover:opacity-80"} mx-1 my-1 rounded-md p-1 transition-all duration-100 ease-in-out group hover:bg-orange`}
+              className={`w-52 ${selectedGenre == genre.id ? "bg-orange" : "bg-transparent hover:opacity-80"} group mx-1 my-1 rounded-md p-1 transition-all duration-100 ease-in-out before:absolute before:bottom-0 before:left-0 before:h-1 before:w-0 before:translate-y-3 before:rounded-lg   before:bg-orange before:transition-all before:duration-150 before:ease-linear before:content-[''] hover:bg-orange hover:before:w-full`}
             >
               <button
                 className={`w-full ${selectedGenre == genre.id ? "text-center font-bold" : "text-start"} transition-all duration-300 ease-in-out`}

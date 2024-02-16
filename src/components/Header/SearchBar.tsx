@@ -8,7 +8,7 @@ interface Props {
 
 const SearchBar: React.FC<Props> = ({ children }) => {
   return (
-    <div className="relative flex-grow justify-center items-center w-full h-10">
+    <div className="relative justify-center items-center w-full h-10">
       <div className="relative flex w-full h-full">
         <input
           type="text"

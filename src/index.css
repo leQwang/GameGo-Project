@@ -16,14 +16,110 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* -----------------------------------------------------------  */
+
+.flyIn {
+  opacity: 0;
+  animation: flyInAnimation 2s linear forwards;
+}
+
+.flyInA {
+  opacity: 0;
+  animation: flyInAnimation 0.5s linear forwards;
+  animation-delay: 2.5s;
+}
+
+.flyInB {
+  opacity: 0;
+  animation: flyInAnimation 0.5s linear forwards;
+  animation-delay: 3s;
+}
+
+.flyInC {
+  opacity: 0;
+  animation: flyInAnimation 0.5s linear forwards;
+  animation-delay: 3.5s;
+}
+
+.flyInD {
+  opacity: 0;
+  animation: flyInAnimation 2s linear forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes flyInAnimation {
+  0% {
+    transform: translateY(50%);
+  }
+  70% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------ */
+
+.ocean {
+  height: 5%;
+  width: 100%;
+  position: absolute;
+  bottom: -50px;
+  left: 0;
+  background: #015871;
+}
+
+.wave {
+  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg)
+    repeat-x;
+  position: absolute;
+  width: 6400px;
+  top: -198px;
+  left: 0;
+  height: 198px;
+  transform: translate(0, 0, 0);
+  animation: wave 7s ease infinite;
+}
+
+.wave:nth-of-type(2) {
+  top: -168px;
+  animation: swell 4s ease infinite;
+  opacity: 1;
+}
+
+@keyframes wave {
+  0% {
+    margin-left: 0;
+  }
+  100% {
+    margin-left: -1600px;
+  }
+}
+@keyframes swell {
+  0%,
+  100% {
+    transform: translate(0, -30px);
+  }
+  50% {
+    transform: translate(0, 5px);
+  }
+}
+
+/* -------------------------------------------------------  */
+
 @layer utilities {
   .bg-custom-radial-gradient {
-    background: rgb(0,0,0);
-    background: linear-gradient(150deg, rgba(0,0,0,1) 0%, rgba(74,40,0,1) 100%);
+    background: rgb(40, 21, 0);
+    background: linear-gradient(
+      0deg,
+      rgba(40, 21, 0, 1) 0%,
+      rgba(0, 0, 0, 1) 90%
+    );
   }
 
-  .bg-gamecard{
+  .bg-gamecard {
     background: rgba(0, 0, 0, 0.4);
   }
-
 }

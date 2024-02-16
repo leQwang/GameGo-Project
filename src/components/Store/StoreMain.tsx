@@ -20,7 +20,7 @@ export interface Game {
   }[];
 }
 
-function HomeMain() {
+function StoreMain() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { selectedGenre } = useSelectedGenre();
   const [gamesList, setGamesList] = useState<Game[]>([]);
@@ -64,7 +64,6 @@ function HomeMain() {
   };
 
   const getGamesByGenreFunc = async (genreId: number) => {
-    console.log(genreId);
     const data = await getGamesByGenre(genreId.toString());
 
     const gamesListTemp: Game[] = data.results.map((result: Game) => ({
@@ -92,8 +91,8 @@ function HomeMain() {
           src={primaryImage}
           alt="bg"
           className={`$ relative z-10 h-96 md:w-[99%] md:rounded-2xl object-cover transition-opacity duration-200 ease-in-out`}
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          // onMouseEnter={handleMouseEnter}
+          // onMouseLeave={handleMouseLeave}
         />
         <video
           ref={videoRef}
@@ -113,4 +112,4 @@ function HomeMain() {
   );
 }
 
-export default HomeMain;
+export default StoreMain;

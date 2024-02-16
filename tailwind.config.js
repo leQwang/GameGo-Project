@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+const withMT = require("@material-tailwind/react/utils/withMT");
+module.exports = withMT({
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -10,6 +11,8 @@ export default {
         primary: '#161A1E',
         secondary: '#9A9A9A',
         orange: '#E58E27',
+        orangeText: '#E87D0E',
+        orangeLight: '#FA982F',
         orangeCard: '#ad6c1f',
 
         white: '#fbfbfb',
@@ -27,5 +30,5 @@ export default {
     },
   },
   plugins: [],
-}
+});
 
