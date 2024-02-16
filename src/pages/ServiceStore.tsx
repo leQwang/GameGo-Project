@@ -1,11 +1,10 @@
-import React from 'react'
 import { SelectedGenreProvider } from '../components/Provider/SelectedGenreProvider'
-import CTA from '../components/CTA/CTA'
+// import CTA from '../components/CTA/CTA'
 import Header from '../components/Header/Header'
 import Sidenav from '../components/Sidenav/Sidenav'
 import StoreMain from '../components/Store/StoreMain'
 import Footer from '../components/Footer/Footer'
-import { NavbarSimple } from '../components/Navbar/Navbar'
+// import { NavbarSimple } from '../components/Navbar/Navbar'
 
 function ServiceStore() {
   return (

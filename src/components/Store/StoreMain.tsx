@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSelectedGenre } from "../Provider/SelectedGenreProvider";
 import { getGamesByGenre } from "../../Services/RawGApi";
 import GameCard from "./GameCard";
@@ -25,25 +25,25 @@ function StoreMain() {
   const { selectedGenre } = useSelectedGenre();
   const [gamesList, setGamesList] = useState<Game[]>([]);
 
-  const [isDoneVideo, setIsDoneVideo] = useState<boolean>(false);
+  // const [isDoneVideo, setIsDoneVideo] = useState<boolean>(false);
 
-  const handleMouseEnter = () => {
-    if (videoRef.current && isDoneVideo) {
-      videoRef.current.play();
-      videoRef.current.style.zIndex = "99";
-    }
-  };
+  // const handleMouseEnter = () => {
+  //   if (videoRef.current && isDoneVideo) {
+  //     videoRef.current.play();
+  //     videoRef.current.style.zIndex = "99";
+  //   }
+  // };
 
-  const handleMouseLeave = () => {
-    if (videoRef.current && isDoneVideo) {
-      if (videoRef.current.currentTime < 20) {
-      } else {
-        videoRef.current.pause();
-        videoRef.current.currentTime = 0;
-        videoRef.current.style.zIndex = "0";
-      }
-    }
-  };
+  // const handleMouseLeave = () => {
+  //   if (videoRef.current && isDoneVideo) {
+  //     if (videoRef.current.currentTime < 20) {
+  //     } else {
+  //       videoRef.current.pause();
+  //       videoRef.current.currentTime = 0;
+  //       videoRef.current.style.zIndex = "0";
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -59,7 +59,7 @@ function StoreMain() {
   const handleVideoEnd = () => {
     if (videoRef.current) {
       videoRef.current.style.zIndex = "0";
-      setIsDoneVideo(true);
+      // setIsDoneVideo(true);
     }
   };
 

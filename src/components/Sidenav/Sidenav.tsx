@@ -1,5 +1,5 @@
 import { getGenres } from "../../Services/RawGApi";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelectedGenre } from "../Provider/SelectedGenreProvider";
 
 interface Genre {

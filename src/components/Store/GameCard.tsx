@@ -1,4 +1,3 @@
-import React from "react";
 import { Game } from "./StoreMain";
 import "../../index.css";
 import { LazyLoadImage } from "react-lazy-load-image-component";
