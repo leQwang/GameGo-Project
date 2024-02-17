@@ -123,3 +123,38 @@
     background: rgba(0, 0, 0, 0.4);
   }
 }
+
+/* ----------------------------- footer ------------------------------- */
+.footer {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+
+  background-color: #000000;
+
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+/* ----------------------------- animation ----------------------------- */
+.banner {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.banner.fade-in {
+  opacity: 1;
+}
+
+@keyframes fade-in {
+  from {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

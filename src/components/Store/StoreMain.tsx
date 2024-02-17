@@ -90,20 +90,20 @@ function StoreMain() {
         <LazyLoadImage
           src={primaryImage}
           alt="bg"
-          className={`$ relative z-10 h-96 md:w-[99%] md:rounded-2xl object-cover transition-opacity duration-200 ease-in-out`}
+          className={`relative z-10 h-96 object-cover transition-opacity duration-200 ease-in-out md:w-[99%] md:rounded-2xl`}
           // onMouseEnter={handleMouseEnter}
           // onMouseLeave={handleMouseLeave}
         />
         <video
           ref={videoRef}
           muted
-          className="absolute top-0 h-96 md:w-[99%] md:rounded-2xl object-cover"
+          className="absolute top-0 h-96 object-cover md:w-[99%] md:rounded-2xl"
           src={HFW}
           onEnded={handleVideoEnd}
         ></video>
       </div>
 
-      <div className="my-10 grid grid-cols-1 gap-5 mx-5 md:ml-0 md:mr-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mx-5 my-10 grid grid-cols-1 gap-5 md:ml-0 md:mr-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {gamesList.map((game, index) => {
           return <GameCard key={index} {...game} />;
         })}

@@ -8,8 +8,8 @@ import cry from "../../assets/images/cryLogo.png";
 function CTA() {
   return (
     <div className="relative flex min-h-screen w-screen flex-col items-start justify-center overflow-hidden">
-      <div className="relative flex w-full flex-col justify-around lg:flex-row z-10">
-        <div className="flyIn relative z-10 flex w-fit flex-col justify-center lg:ml-12 xl:ml-32">
+      <div className="relative z-10 flex w-full flex-col justify-around lg:flex-row">
+        <div className="flyIn xl:ml-30 relative z-10 flex w-fit flex-col justify-center lg:ml-20">
           <h4 className="w-fit text-lg font-bold leading-[3rem] text-orange">
             Your favorite game listing
           </h4>
@@ -21,7 +21,7 @@ function CTA() {
             Dive into our comprehensive reviews and curated lists to discover
             your next gaming adventure.
           </p>
-          <button className="w-fit rounded-full bg-orangeLight px-7 py-3 transition-all duration-200 ease-in-out text-lg font-bold hover:bg-white hover:text-orange lg:mt-4 xl:mt-12">
+          <button className="w-fit rounded-full bg-orangeLight px-7 py-3 text-lg font-bold transition-all duration-200 ease-in-out hover:bg-white hover:text-orange lg:mt-4 xl:mt-12">
             Join the Community
           </button>
         </div>
@@ -31,9 +31,9 @@ function CTA() {
             <LazyLoadImage
               src={switchImage}
               alt="switch image"
-              className={`flyInD img-rectangular z-0 h-full w-full object-contain lg:w-[30rem] xl:w-[43rem] `}
+              className={`flyInD img-rectangular z-0 h-full w-full object-contain lg:w-[30rem] xl:w-[43rem]`}
             />
-            <div className="flex -translate-y-12 flex-row items-center justify-center gap-16 xl:gap-28">
+            <div className="flex -translate-y-12 flex-row items-center justify-center gap-16 xl:gap-20">
               <LazyLoadImage
                 src={unity}
                 alt="unity logo"

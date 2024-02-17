@@ -1,15 +1,16 @@
 import logoImage from "../../assets/images/Logo1.png";
+import "../../index.css";
 
 function Footer() {
   return (
-    <footer className="bg-black">
+    <footer className="footer h-fit object-cover">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
-          <div className="mb-6 md:mb-0">
+          <div className="mb-6 flex items-center md:mb-0">
             <a href="/" className="flex items-center">
               <img
                 src={logoImage}
-                className="logo react h-12"
+                className="logo react h-20"
                 alt="React logo"
               />
             </a>

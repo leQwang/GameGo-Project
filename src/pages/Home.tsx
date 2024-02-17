@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import CTA from "../components/CTA/CTA";
 import ServiceStore from "./ServiceStore";
 // import {NavbarSimple} from "../components/Navbar/Navbar";
+// import FlyInImage from "../components/Temp/FlyInImage";
 
 function Home() {
   useEffect(() => {
@@ -18,6 +19,8 @@ function Home() {
       {/* <NavbarSimple /> */}
       <CTA />
       <ServiceStore />
+      {/* <FlyInImage /> */}
+      {/* <Footer /> */}
     </div>
   );
 }
