@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 // import Header from "../components/Header/Header";
 // import Sidenav from "../components/Sidenav/Sidenav";
 // import { SelectedGenreProvider } from "../components/Provider/SelectedGenreProvider";
@@ -10,9 +10,6 @@ import ServiceStore from "./ServiceStore";
 // import FlyInImage from "../components/Temp/FlyInImage";
 
 function Home() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   return (
     <div className="bg-custom-radial-gradient overflow-hidden">

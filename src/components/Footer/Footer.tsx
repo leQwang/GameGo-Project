@@ -1,20 +1,44 @@
 import logoImage from "../../assets/images/Logo1.png";
 import "../../index.css";
+import { motion, useInView } from "framer-motion";
+import { useRef, useEffect } from "react";
 
 function Footer() {
+  const ref = useRef(null);
+  const isInView = useInView(ref);
+
+  useEffect(() => {
+    if (isInView) {
+      console.log("in view");
+    } else {
+      console.log("not in view");
+    }
+  }, [isInView]);
+
   return (
     <footer className="footer h-fit object-cover">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
-          <div className="mb-6 flex items-center md:mb-0">
-            <a href="/" className="flex items-center">
-              <img
-                src={logoImage}
-                className="logo react h-20"
-                alt="React logo"
-              />
-            </a>
-          </div>
+          <motion.div
+            ref={ref}
+            variants={{
+              hidden: { opacity: 0, y: 80 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            initial="hidden"
+            animate="visible"
+            transition={{ duration: 0.5, delay: 0.25 }}
+          >
+            <div className="mb-6 flex items-center md:mb-0">
+              <a href="/" className="flex items-center">
+                <img
+                  src={logoImage}
+                  className="logo react h-20"
+                  alt="React logo"
+                />
+              </a>
+            </div>
+          </motion.div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-6">
             <div>
               <h2 className="mb-6 text-sm font-semibold uppercase text-orange">

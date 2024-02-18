@@ -5,7 +5,14 @@ import unity from "../../assets/images/unityLogo.png";
 import unreal from "../../assets/images/unrealLogo.png";
 import cry from "../../assets/images/cryLogo.png";
 
+// interface CTAProps {
+//   chidlren: JSX.Element;
+//   width?: "w-fit" | "w-full";
+// }
+
 function CTA() {
+
+
   return (
     <div className="relative flex min-h-screen w-screen flex-col items-start justify-center overflow-hidden">
       <div className="relative z-10 flex w-full flex-col justify-around lg:flex-row">
