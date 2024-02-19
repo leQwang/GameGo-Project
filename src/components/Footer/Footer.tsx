@@ -1,15 +1,17 @@
 import logoImage from "../../assets/images/Logo1.png";
 import "../../index.css";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useAnimation } from "framer-motion";
 import { useRef, useEffect } from "react";
 
 function Footer() {
   const ref = useRef(null);
   const isInView = useInView(ref);
 
+  const mainControls = useAnimation();
+
   useEffect(() => {
     if (isInView) {
-      console.log("in view");
+      mainControls.start("visible");
     } else {
       console.log("not in view");
     }
@@ -26,7 +28,7 @@ function Footer() {
               visible: { opacity: 1, y: 0 },
             }}
             initial="hidden"
-            animate="visible"
+            animate={mainControls}
             transition={{ duration: 0.5, delay: 0.25 }}
           >
             <div className="mb-6 flex items-center md:mb-0">
