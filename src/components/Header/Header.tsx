@@ -8,7 +8,7 @@ function Header({ setSearchValue }: { setSearchValue: any }) {
     setInputValue(event.target.value);
   };
 
-  const handleSearchChange = (event: any) => {
+  const handleSearchChange = () => {
     setSearchValue(inputValue); // Use the passed-in prop
   };
   return (

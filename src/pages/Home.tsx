@@ -11,7 +11,7 @@ import { SelectedGenreProvider } from "../components/Provider/SelectedGenreProvi
 import Header from "../components/Header/Header";
 
 function Home() {
-  const [isSidenavOpen, setIsSidenavOpen] = useState(false);
+  // const [isSidenavOpen, setIsSidenavOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
