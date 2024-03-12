@@ -1,26 +1,17 @@
-import { SelectedGenreProvider } from '../components/Provider/SelectedGenreProvider'
 // import CTA from '../components/CTA/CTA'
-import Header from '../components/Header/Header'
-import Sidenav from '../components/Sidenav/Sidenav'
-import StoreMain from '../components/Store/StoreMain'
-import Footer from '../components/Footer/Footer'
+import GenreNav from "../components/Sidenav/GenreNav";
+import StoreMain from "../components/Store/StoreMain";
 // import { NavbarSimple } from '../components/Navbar/Navbar'
 
-function ServiceStore() {
+function ServiceStore({ searchValue }: { searchValue: string }) {
   return (
-    <div className="bg-custom-radial-gradient overflow-hidden">
-    <div className="w-full">
-      <SelectedGenreProvider>
-        <Header />
-        <div className="relative flex">
-          <Sidenav />
-          <StoreMain />
-        </div>
-        <Footer />
-      </SelectedGenreProvider>
+    <div className="bg-custom-radial-gradient z-10">
+      <div className="w-full relative flex flex-col md:flex-row">
+            <GenreNav />
+            <StoreMain searchValue={searchValue}/>
+      </div>
     </div>
-  </div>
-  )
+  );
 }
 
-export default ServiceStore
+export default ServiceStore;

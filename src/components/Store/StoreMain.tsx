@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useSelectedGenre } from "../Provider/SelectedGenreProvider";
-import { getGamesByGenre } from "../../Services/RawGApi";
+import { getGamesByGenre, getGameBySearch } from "../../Services/RawGApi";
 import GameCard from "./GameCard";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -20,30 +20,10 @@ export interface Game {
   }[];
 }
 
-function StoreMain() {
+function StoreMain({ searchValue }: { searchValue: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { selectedGenre } = useSelectedGenre();
   const [gamesList, setGamesList] = useState<Game[]>([]);
-
-  // const [isDoneVideo, setIsDoneVideo] = useState<boolean>(false);
-
-  // const handleMouseEnter = () => {
-  //   if (videoRef.current && isDoneVideo) {
-  //     videoRef.current.play();
-  //     videoRef.current.style.zIndex = "99";
-  //   }
-  // };
-
-  // const handleMouseLeave = () => {
-  //   if (videoRef.current && isDoneVideo) {
-  //     if (videoRef.current.currentTime < 20) {
-  //     } else {
-  //       videoRef.current.pause();
-  //       videoRef.current.currentTime = 0;
-  //       videoRef.current.style.zIndex = "0";
-  //     }
-  //   }
-  // };
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -59,8 +39,26 @@ function StoreMain() {
   const handleVideoEnd = () => {
     if (videoRef.current) {
       videoRef.current.style.zIndex = "0";
-      // setIsDoneVideo(true);
     }
+  };
+
+  // ------------- API calls Function -------------
+
+  const getGameBySearchFunc = async (searchValue: any) => {
+    const data = await getGameBySearch(searchValue);
+
+    const gamesListTemp: Game[] = data.results.map((result: Game) => ({
+      id: result.id,
+      name: result.name,
+      background_image: result.background_image,
+      released: result.released,
+      rating: result.rating,
+      ratings_count: result.ratings_count,
+      genres: result.genres,
+    }));
+
+    setGamesList(gamesListTemp);
+    return gamesListTemp;
   };
 
   const getGamesByGenreFunc = async (genreId: number) => {
@@ -80,12 +78,23 @@ function StoreMain() {
     return gamesListTemp;
   };
 
+  // ------------- render Games -------------
+
+  useEffect(() => {
+    console.log(searchValue);
+    if (searchValue == "") {
+      getGamesByGenreFunc(selectedGenre);
+    } else {
+      getGameBySearchFunc(searchValue);
+    }
+  }, [searchValue]);
+
   useEffect(() => {
     getGamesByGenreFunc(selectedGenre);
   }, [selectedGenre]);
 
   return (
-    <div className="relative w-full">
+    <div className="relative z-10 mt-2 w-full md:mt-5">
       <div className="group">
         <LazyLoadImage
           src={primaryImage}

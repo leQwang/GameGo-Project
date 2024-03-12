@@ -11,7 +11,7 @@ const ButtonSearch: React.FC<Props> = ({ children, className = "", link }) => {
   return (
     <a href={link} target="_blank" className={`${className}`}>
 
-      <span><button className="w-full h-full">{children}</button></span>
+      <span><button className="h-full bg-orange rounded-r-xl w-14 md:w-20 px-2">{children}</button></span>
 
     </a>
   )

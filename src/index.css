@@ -120,7 +120,7 @@
   }
 
   .bg-gamecard {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(78, 51, 25, 0.4);
   }
 }
 
@@ -157,4 +157,16 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+/* ------------------------------ sticky ------------------------------- */
+
+#parent {
+  height: 100vh; /* Assuming parent container has full screen height */
+}
+
+#temp {
+  position: sticky;
+  top: 0; /* Stick to the top of the parent container */
+  z-index: 20; /* Ensure the sticky element stays on top of other content */
 }
