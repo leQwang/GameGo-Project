@@ -3,7 +3,10 @@ import React, { useEffect, useState, useRef } from "react";
 import GameCard from "./GameCard";
 
 import { useSelectedGenre } from "../Provider/SelectedGenreProvider";
-import { getGamesByGenre, getGameBySearch, getGamesByGenreAndPage, getGameBySearchAndPage } from "../../Services/RawGApi";
+import {
+  getGamesByGenreAndPage,
+  getGameBySearchAndPage,
+} from "../../Services/RawGApi";
 
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -53,43 +56,26 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   const [totalPages, setTotalPages] = React.useState(100);
   const [renderType, setRenderType] = React.useState("GENRE");
 
-  const getGameBySearchFunc = async (searchValue: any) => {
-    const data = await getGameBySearch(searchValue);
-    setTotalPages(Math.floor(data.count / 12 + 1)); // 12 is the page size
+  // const getGameBySearchFunc = async (searchValue: any) => {
+  //   const data = await getGameBySearch(searchValue);
+  //   setTotalPages(Math.floor(data.count / 12 + 1)); // 12 is the page size
 
-    const gamesListTemp: Game[] = data.results.map((result: Game) => ({
-      id: result.id,
-      name: result.name,
-      background_image: result.background_image,
-      released: result.released,
-      rating: result.rating,
-      ratings_count: result.ratings_count,
-      genres: result.genres,
-    }));
+  //   const gamesListTemp: Game[] = data.results.map((result: Game) => ({
+  //     id: result.id,
+  //     name: result.name,
+  //     background_image: result.background_image,
+  //     released: result.released,
+  //     rating: result.rating,
+  //     ratings_count: result.ratings_count,
+  //     genres: result.genres,
+  //   }));
 
-    setGamesList(gamesListTemp);
-    return gamesListTemp;
-  };
+  //   setGamesList(gamesListTemp);
+  //   return gamesListTemp;
+  // };
 
   const getGameBySearchPageFunc = async (searchValue: any, page: number) => {
     const data = await getGameBySearchAndPage(searchValue, page);
-
-    const gamesListTemp: Game[] = data.results.map((result: Game) => ({
-      id: result.id,
-      name: result.name,
-      background_image: result.background_image,
-      released: result.released,
-      rating: result.rating,
-      ratings_count: result.ratings_count,
-      genres: result.genres,
-    }));
-
-    setGamesList(gamesListTemp);
-    return gamesListTemp;
-  };
-
-  const getGamesByGenreFunc = async (genreId: number) => {
-    const data = await getGamesByGenre(genreId.toString());
     setTotalPages(Math.floor(data.count / 12 + 1));
 
     const gamesListTemp: Game[] = data.results.map((result: Game) => ({
@@ -106,8 +92,27 @@ function StoreMain({ searchValue }: { searchValue: string }) {
     return gamesListTemp;
   };
 
+  // const getGamesByGenreFunc = async (genreId: number) => {
+  //   const data = await getGamesByGenre(genreId.toString());
+  //   setTotalPages(Math.floor(data.count / 12 + 1));
+
+  //   const gamesListTemp: Game[] = data.results.map((result: Game) => ({
+  //     id: result.id,
+  //     name: result.name,
+  //     background_image: result.background_image,
+  //     released: result.released,
+  //     rating: result.rating,
+  //     ratings_count: result.ratings_count,
+  //     genres: result.genres,
+  //   }));
+
+  //   setGamesList(gamesListTemp);
+  //   return gamesListTemp;
+  // };
+
   const getGamesByGenrePageFunc = async (genreId: number, page: number) => {
     const data = await getGamesByGenreAndPage(genreId.toString(), page);
+    setTotalPages(Math.floor(data.count / 12 + 1));
 
     const gamesListTemp: Game[] = data.results.map((result: Game) => ({
       id: result.id,
@@ -124,23 +129,59 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   };
 
   // ------------- render Games -------------
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("Searching games by name");
     setRenderType("SEARCH");
+
+    // Set loading state to true when fetching starts
+    setLoading(true);
+
     if (searchValue == "") {
-      getGamesByGenreFunc(selectedGenre);
+      getGamesByGenrePageFunc(selectedGenre, 1)
+        .then((gamesListTemp) => {
+          // Set loaded games and update loading state to false when data is retrieved
+          setGamesList(gamesListTemp);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching games:", error);
+          setLoading(false); // Update loading state to false in case of an error
+        });
     } else {
-      getGameBySearchFunc(searchValue);
+      getGameBySearchPageFunc(searchValue, 1)
+        .then((gamesListTemp) => {
+          setGamesList(gamesListTemp);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching games:", error);
+          setLoading(false);
+        });
     }
   }, [searchValue]);
 
   useEffect(() => {
+    console.log("Fetching Genre by Games");
     setRenderType("GENRE");
-    getGamesByGenreFunc(selectedGenre);
+
+    setLoading(true);
+
+    getGamesByGenrePageFunc(selectedGenre, 1)
+      .then((gamesListTemp) => {
+        setGamesList(gamesListTemp);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching games:", error);
+        setLoading(false);
+      });
   }, [selectedGenre]);
 
   // ------------------ Pagination ------------------
   const [active, setActive] = React.useState(1);
+  // const [selectedPage, setSelectedPage] = React.useState(1);
 
   const next = () => {
     if (active === 10) return;
@@ -155,16 +196,43 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   };
 
   useEffect(() => {
+    setLoading(true);
+    console.log("Active page: ", active);
     if (renderType === "GENRE") {
-      getGamesByGenrePageFunc(selectedGenre, active);
+      getGamesByGenrePageFunc(selectedGenre, active)
+        .then((gamesListTemp) => {
+          setGamesList(gamesListTemp);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching games:", error);
+          setLoading(false);
+        });
     } else {
-      getGameBySearchPageFunc(searchValue, active);
+      getGameBySearchPageFunc(searchValue, active)
+        .then((gamesListTemp) => {
+          setGamesList(gamesListTemp);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching games:", error);
+          setLoading(false);
+        });
     }
   }, [active]);
 
   useEffect(() => {
     setActive(1);
   }, [renderType, searchValue, selectedGenre]);
+
+  // useEffect(() => {
+  //   // const selectedPageInput = document.getElementById(
+  //   //   "selectedPagePagination",
+  //   // ) as HTMLInputElement;
+  //   // selectedPageInput.value = selectedPage.toString();
+  //   console.log("Selected Page: ", selectedPage);
+  //   setActive(selectedPage);
+  // }, [selectedPage]);
 
   // -------------------- Scroll Effect --------------------
   // when change pagination, scroll to top for user to scroll down again -> increase UX
@@ -198,15 +266,24 @@ function StoreMain({ searchValue }: { searchValue: string }) {
       </div>
 
       {/* ------------------- Render Game Card -------------------- */}
-      <div className="mx-5 my-10 grid grid-cols-1 gap-5 md:ml-0 md:mr-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {gamesList.map((game, index) => {
-          return <GameCard key={index} {...game} />;
-        })}
+      <div className="relative">
+        {loading ? (
+          <div className="mt-32 ring">
+            Loading
+            <span className="ringSpan"></span>
+          </div>
+        ) : (
+          <div className="mx-5 my-10 grid grid-cols-1 gap-5 md:ml-0 md:mr-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {gamesList.map((game, index) => (
+              <GameCard key={index} {...game} />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ---------------- Pagination ---------------- */}
 
-      <div className="flex  w-full items-center justify-center gap-8 mb-8">
+      <div className="mb-8  flex w-full items-center justify-center gap-8">
         <IconButton
           size="sm"
           variant="outlined"
@@ -218,8 +295,34 @@ function StoreMain({ searchValue }: { searchValue: string }) {
           <ArrowLeftIcon strokeWidth={2} className="h-4 w-4 text-white" />
         </IconButton>
         <Typography color="white" className="font-normal" placeholder="">
-          Page <strong className="text-orange">{active}</strong> of{" "}
-          <strong className="text-orange">{totalPages}</strong>
+          Page{" "}
+          <div className="inline-flex h-full items-center overflow-hidden rounded-md bg-white text-black">
+            <input
+              id="selectedPagePagination"
+              type="number"
+              placeholder={active.toString()}
+              className="w-20 bg-white pl-5 text-center"
+            />
+            <button
+              className="transition-all duration-75 ease-in-out hover:bg-orange"
+              onClick={() => {
+                const selectedPageInput = document.getElementById(
+                  "selectedPagePagination",
+                ) as HTMLInputElement;
+                const inputValue = parseInt(selectedPageInput.value);
+                if (!isNaN(inputValue)) {
+                  // Update selected page if the input value is a valid number
+                  setActive(inputValue);
+                } else {
+                  // Handle invalid input (e.g., non-numeric input)
+                  console.error("Invalid input value");
+                }
+              }}
+            >
+              🔍
+            </button>
+          </div>{" "}
+          of <strong className="text-orange">{totalPages}</strong>
         </Typography>
         <IconButton
           size="sm"

@@ -21,7 +21,6 @@ function GenreNav({ isSidenavOpen }: { isSidenavOpen: boolean }) {
     }));
 
     setGenres(genresListTemp);
-
     return genresListTemp;
   };
 

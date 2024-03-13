@@ -5,8 +5,6 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.tsx";
 
-
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +14,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <RouterProvider router={router} />,
   </React.StrictMode>,
 );
+
+// Some Known Bugs:
+// -Clicking the same genre or search button will not trigger the useEffect in StoreMain.tsx
