@@ -4,33 +4,24 @@ import { motion, useInView, useAnimation } from "framer-motion";
 import { useRef, useEffect } from "react";
 
 function Footer() {
-  const ref = useRef(null);
-  const isInView = useInView(ref);
+  // const ref = useRef(null);
+  // const isInView = useInView(ref);
 
-  const mainControls = useAnimation();
+  // const mainControls = useAnimation();
 
-  useEffect(() => {
-    if (isInView) {
-      mainControls.start("visible");
-    } else {
-      console.log("not in view");
-    }
-  }, [isInView]);
+  // useEffect(() => {
+  //   if (isInView) {
+  //     mainControls.start("visible");
+  //   } else {
+  //     console.log("not in view");
+  //   }
+  // }, [isInView]);
 
   return (
     <footer className="footer h-fit object-cover z-0">
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
-          <motion.div
-            ref={ref}
-            variants={{
-              hidden: { opacity: 0, y: 80 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            initial="hidden"
-            animate={mainControls}
-            transition={{ duration: 0.5, delay: 0.25 }}
-          >
+          <div>
             <div className="mb-6 flex items-center md:mb-0">
               <a href="/" className="flex items-center">
                 <img
@@ -40,7 +31,7 @@ function Footer() {
                 />
               </a>
             </div>
-          </motion.div>
+          </div>
           <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 sm:gap-6">
             <div>
               <h2 className="mb-6 text-sm font-semibold uppercase text-orange">

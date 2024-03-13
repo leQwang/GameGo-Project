@@ -11,20 +11,26 @@ import { SelectedGenreProvider } from "../components/Provider/SelectedGenreProvi
 import Header from "../components/Header/Header";
 
 function Home() {
-  // const [isSidenavOpen, setIsSidenavOpen] = useState(false);
+  const [isSidenavOpen, setIsSidenavOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
-  useEffect(() => {
-    console.log(searchValue);
-  }, [searchValue]);
+  // useEffect(() => {
+  //   console.log(searchValue);
+  // }, [searchValue]);
+
+  // useEffect(() => {
+  //   console.log(isSidenavOpen);
+  // }, [isSidenavOpen]);
 
   return (
     <div className="bg-custom-radial-gradient overflow-hidden">
       <SelectedGenreProvider>
-        <Header setSearchValue={setSearchValue} />
-
+        <Header setSearchValue={setSearchValue} setIsSidenavOpen={setIsSidenavOpen}/>
+        
+        <a id="top" className="h-0 w-0"></a>
         <CTA />
-        <ServiceStore searchValue={searchValue}/>
+        <a id="store" className="h-0 w-0"></a>
+        <ServiceStore searchValue={searchValue} isSidenavOpen={isSidenavOpen}/>
         <Footer />
       </SelectedGenreProvider>
     </div>

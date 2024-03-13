@@ -99,14 +99,14 @@ function StoreMain({ searchValue }: { searchValue: string }) {
         <LazyLoadImage
           src={primaryImage}
           alt="bg"
-          className={`relative z-10 h-96 object-cover transition-opacity duration-200 ease-in-out md:w-[99%] md:rounded-2xl`}
+          className={`relative z-10 h-[25rem] lg:h-[27rem] xl:h-[35rem] object-cover transition-opacity duration-200 ease-in-out md:w-[99%] md:rounded-2xl`}
           // onMouseEnter={handleMouseEnter}
           // onMouseLeave={handleMouseLeave}
         />
         <video
           ref={videoRef}
           muted
-          className="absolute top-0 h-96 object-cover md:w-[99%] md:rounded-2xl"
+          className="absolute top-0 h-[25rem] lg:h-[27rem] xl:h-[35rem] object-cover md:w-[99%] md:rounded-2xl"
           src={HFW}
           onEnded={handleVideoEnd}
         ></video>

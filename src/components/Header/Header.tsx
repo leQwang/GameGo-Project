@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logoImage from "../../assets/images/Logo1.png";
 
-function Header({ setSearchValue }: { setSearchValue: any }) {
+function Header({ setSearchValue, setIsSidenavOpen }: any) {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event: any) => {
@@ -9,19 +9,36 @@ function Header({ setSearchValue }: { setSearchValue: any }) {
   };
 
   const handleSearchChange = () => {
-    setSearchValue(inputValue); // Use the passed-in prop
+    setSearchValue(inputValue); 
   };
+
+  const handleToggleNav = () => {
+    setIsSidenavOpen((prevIsOpen: boolean) => !prevIsOpen); // Use the correct prop name
+  };
+
+  // --------------- scroll to top ----------------
+  const handleScroll = () => {
+    const targetElement = document.getElementById("top");
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop,
+        behavior: "smooth",
+      });
+  }
+};
+
   return (
     <div className="fixed top-0 z-50 my-2 flex h-12 w-full items-center justify-start px-2 md:px-4">
       <img
         src={logoImage}
         className="logo react hidden h-12 md:block"
         alt="React logo"
+        onClick={handleScroll}
       />
-      <div className="bg-vBlue flex h-10 w-10 items-center justify-center rounded-md bg-orange px-5 font-bold text-white md:hidden">
+      <div className="bg-vBlue flex h-10 w-10 items-center justify-center rounded-md bg-orange px-5 font-bold text-white md:hidden"
+      onClick={handleToggleNav}>
         ☰
       </div>
-      {/* <SearchBar>Find 100,000 plus games</SearchBar> */}
 
       {/* ---------- Search Bar ------------- */}
       <div className="relative h-10 w-full items-center justify-center">
