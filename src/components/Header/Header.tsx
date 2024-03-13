@@ -9,7 +9,7 @@ function Header({ setSearchValue, setIsSidenavOpen }: any) {
   };
 
   const handleSearchChange = () => {
-    setSearchValue(inputValue); 
+    setSearchValue(inputValue);
   };
 
   const handleToggleNav = () => {
@@ -17,26 +17,38 @@ function Header({ setSearchValue, setIsSidenavOpen }: any) {
   };
 
   // --------------- scroll to top ----------------
-  const handleScroll = () => {
+  const handleScrollTop = () => {
     const targetElement = document.getElementById("top");
     if (targetElement) {
       window.scrollTo({
         top: targetElement.offsetTop,
         behavior: "smooth",
       });
-  }
-};
+    }
+  };
+
+  const handleScrollStore = () => {
+    const targetElement = document.getElementById("store");
+    if (targetElement) {
+      window.scrollTo({
+        top: targetElement.offsetTop,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
     <div className="fixed top-0 z-50 my-2 flex h-12 w-full items-center justify-start px-2 md:px-4">
       <img
         src={logoImage}
-        className="logo react hidden h-12 md:block"
+        className="logo react hidden h-12 cursor-pointer md:block"
         alt="React logo"
-        onClick={handleScroll}
+        onClick={handleScrollTop}
       />
-      <div className="bg-vBlue flex h-10 w-10 items-center justify-center rounded-md bg-orange px-5 font-bold text-white md:hidden"
-      onClick={handleToggleNav}>
+      <div
+        className="bg-vBlue flex h-10 w-10 items-center justify-center rounded-md bg-orange px-5 font-bold text-white md:hidden"
+        onClick={handleToggleNav}
+      >
         ☰
       </div>
 
@@ -51,7 +63,13 @@ function Header({ setSearchValue, setIsSidenavOpen }: any) {
           />
           {/* <ButtonSearch link="">🔍</ButtonSearch> */}
           <span>
-            <button className="h-full w-14 rounded-r-xl bg-orange px-2 md:w-20" onClick={handleSearchChange}>
+            <button
+              className="h-full w-14 rounded-r-xl bg-orange px-2 md:w-20"
+              onClick={()=>{
+                handleSearchChange();
+                handleScrollStore();
+              }}
+            >
               🔍
             </button>
           </span>

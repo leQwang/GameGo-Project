@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 // import Header from "../components/Header/Header";
 // import Sidenav from "../components/Sidenav/Sidenav";
 // import { SelectedGenreProvider } from "../components/Provider/SelectedGenreProvider";

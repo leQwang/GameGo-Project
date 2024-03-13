@@ -161,12 +161,3 @@
 
 /* ------------------------------ sticky ------------------------------- */
 
-#parent {
-  height: 100vh; /* Assuming parent container has full screen height */
-}
-
-#temp {
-  position: sticky;
-  top: 0; /* Stick to the top of the parent container */
-  z-index: 20; /* Ensure the sticky element stays on top of other content */
-}

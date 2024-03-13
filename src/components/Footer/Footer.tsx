@@ -1,7 +1,7 @@
 import logoImage from "../../assets/images/Logo1.png";
 import "../../index.css";
-import { motion, useInView, useAnimation } from "framer-motion";
-import { useRef, useEffect } from "react";
+// import { motion, useInView, useAnimation } from "framer-motion";
+// import { useRef, useEffect } from "react";
 
 function Footer() {
   // const ref = useRef(null);
@@ -95,9 +95,9 @@ function Footer() {
         <hr className="my-6 border-gray-200 dark:border-gray-700 sm:mx-auto lg:my-8" />
         <div className="sm:flex sm:items-center sm:justify-between">
           <span className="text-sm text-gray-400 sm:text-center">
-            © 2023{" "}
+            © 2024{" "}
             <a href="https://flowbite.com/" className="hover:underline">
-              GAMEGO™
+              GAMEGOSTORE™
             </a>
             . All Rights Reserved.
           </span>

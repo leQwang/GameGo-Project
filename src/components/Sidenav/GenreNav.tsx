@@ -50,7 +50,8 @@ function GenreNav({ isSidenavOpen }: { isSidenavOpen: boolean }) {
       className={`fixed top-10 flex-col md:relative md:top-0 md:flex ${isSidenavOpen ? "left-0 top-10 rounded-lg bg-black" : "-left-[100%]"} z-20 mt-5 transition-all duration-300 ease-in-out md:left-0`}
     >
       <div className="bg-gamecard sticky top-0 z-20 mb-10 h-fit w-fit text-nowrap rounded-xl py-2 md:left-0 md:ml-3 md:mr-5 md:block md:w-fit md:px-2">
-        <h1 className="text-center text-4xl font-bold text-orange ">Genres</h1>
+        {/* <div className="w-full h-2 bg-orange"></div> */}
+        <h1 className="text-center text-4xl font-bold text-orange">Genres</h1>
         {/* <div className="max-h-[calc(100vh-100px)] overflow-scroll"> */}
           <ul className="max-h-[calc(100vh-100px)] overflow-y-scroll md:overflow-y-hidden md:max-h-fit">
             {genres.map((genre, index) => {
