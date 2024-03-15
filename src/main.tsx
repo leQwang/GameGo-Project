@@ -13,10 +13,11 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <RouterProvider router={router} />,
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <RouterProvider router={router} />,
+  // </React.StrictMode>,
 );
 
 // Some Known Bugs:
-// -Clicking the same genre or search button will not trigger the useEffect in StoreMain.tsx
+// -Clicking the same genre or search button will not trigger the useEffect in StoreMain.tsx;
+// - 3 cái useEffect trong StoreMain.tsx bị gọi 3 lần getGamesByGenrePageFunc; 

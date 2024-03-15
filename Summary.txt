@@ -1,0 +1,9 @@
+What have I learned and enhanced throughout the journey:
+
+*Phase 1: Homepage Design and RawG Api 
+- Endeavour implementation of the first Vite project
+- Learn and practice UI-UX design concept (Layout, Color, Font, etc)
+- Learn and apply framer-motion
+- Use react observer to check when the div is inView
+- Optimize fetching to reduce request call (Reduce call for rendering games list on first load from 3 to 1)
+- Apply Lazy loading, skeleton, loader effect to enhance user experience and speed

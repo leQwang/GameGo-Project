@@ -56,6 +56,7 @@ function Header({ setSearchValue, setIsSidenavOpen }: any) {
       <div className="relative h-10 w-full items-center justify-center">
         <div className="relative flex h-full w-full">
           <input
+            id="headerSearchInput"
             type="text"
             placeholder="Find 100,000 plus games"
             className="relative ml-2 h-full flex-grow rounded-l-xl pl-3"

@@ -1,15 +1,53 @@
-import { Game } from "./StoreMain";
+import { useEffect, useState } from "react";
+
+import { GameRawGGeneral } from "./StoreMain";
+
 import "../../index.css";
+
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-import { useState } from "react";
 
-function GameCard(game: Game) {
+import { getExactGameByName } from "../../Services/CheapSharkApi";
+
+export interface GameCardCheapShark {
+  gameID: number;
+  steamAppID: number;
+  cheapest: number;
+  cheapestDealID: string;
+  external: string;
+  internalName: string;
+  thumb: string;
+}
+
+function GameCard(game: GameRawGGeneral) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
+
+  // --------------- fetch game details ---------------
+  const [gameDetails, setGameDetails] = useState<GameCardCheapShark | null>(
+    null,
+  );
+
+  // const fetchGameDetails = async (gameTitle: string) => {
+  //   try {
+  //     const data = await getExactGameByName(gameTitle);
+  //     // Assuming data has the structure of GameCardCheapShark
+  //     setGameDetails(data);
+  //     return data;
+  //   } catch (error) {
+  //     console.error("Error fetching game details:", error);
+  //     setGameDetails(null);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchGameDetails(game.name.toUpperCase());
+  //   console.log("fetching game details for", gameDetails?.internalName);
+  //   console.log("cheapest", gameDetails?.cheapest);
+  // }, [game]);
 
   return (
     <li
@@ -35,6 +73,10 @@ function GameCard(game: Game) {
       <div className="flex flex-grow flex-col px-2">
         <div className="flex-grow text-xl xl:text-3xl">{game.name}</div>
         <p className="mt-auto ">Rating⭐: {game.rating}</p>
+        {gameDetails !== null && (
+          <p className="mt-auto ">Cheapest💸: {gameDetails?.cheapest}</p>
+        )}
+        <p className="mt-auto ">Cheapest💸: {gameDetails?.cheapest}</p>
         <div className="relative left-0 w-full -translate-y-[1px] pb-2 transition-opacity duration-200 ease-in-out group-hover:opacity-100 md:absolute md:top-[100%] md:rounded-b-xl md:bg-orangeCard md:px-2 md:opacity-0">
           <p>Released: {game.released}</p>
           <p>Ratings Count: {game.ratings_count}</p>

@@ -17,7 +17,7 @@ import HFW from "../../assets/videos/HFW-trailer.mp4";
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
-export interface Game {
+export interface GameRawGGeneral {
   id: number;
   name: string;
   background_image: string;
@@ -33,7 +33,14 @@ export interface Game {
 function StoreMain({ searchValue }: { searchValue: string }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { selectedGenre } = useSelectedGenre();
-  const [gamesList, setGamesList] = useState<Game[]>([]);
+  const [gamesList, setGamesList] = useState<GameRawGGeneral[]>([]);
+
+  const pageInput = document.getElementById(
+    "selectedPagePagination",
+  ) as HTMLInputElement;
+  const headerSearchInput = document.getElementById(
+    "headerSearchInput",
+  ) as HTMLInputElement;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -56,73 +63,41 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   const [totalPages, setTotalPages] = React.useState(100);
   const [renderType, setRenderType] = React.useState("GENRE");
 
-  // const getGameBySearchFunc = async (searchValue: any) => {
-  //   const data = await getGameBySearch(searchValue);
-  //   setTotalPages(Math.floor(data.count / 12 + 1)); // 12 is the page size
-
-  //   const gamesListTemp: Game[] = data.results.map((result: Game) => ({
-  //     id: result.id,
-  //     name: result.name,
-  //     background_image: result.background_image,
-  //     released: result.released,
-  //     rating: result.rating,
-  //     ratings_count: result.ratings_count,
-  //     genres: result.genres,
-  //   }));
-
-  //   setGamesList(gamesListTemp);
-  //   return gamesListTemp;
-  // };
-
   const getGameBySearchPageFunc = async (searchValue: any, page: number) => {
     const data = await getGameBySearchAndPage(searchValue, page);
     setTotalPages(Math.floor(data.count / 12 + 1));
 
-    const gamesListTemp: Game[] = data.results.map((result: Game) => ({
-      id: result.id,
-      name: result.name,
-      background_image: result.background_image,
-      released: result.released,
-      rating: result.rating,
-      ratings_count: result.ratings_count,
-      genres: result.genres,
-    }));
+    const gamesListTemp: GameRawGGeneral[] = data.results.map(
+      (result: GameRawGGeneral) => ({
+        id: result.id,
+        name: result.name,
+        background_image: result.background_image,
+        released: result.released,
+        rating: result.rating,
+        ratings_count: result.ratings_count,
+        genres: result.genres,
+      }),
+    );
 
     setGamesList(gamesListTemp);
     return gamesListTemp;
   };
 
-  // const getGamesByGenreFunc = async (genreId: number) => {
-  //   const data = await getGamesByGenre(genreId.toString());
-  //   setTotalPages(Math.floor(data.count / 12 + 1));
-
-  //   const gamesListTemp: Game[] = data.results.map((result: Game) => ({
-  //     id: result.id,
-  //     name: result.name,
-  //     background_image: result.background_image,
-  //     released: result.released,
-  //     rating: result.rating,
-  //     ratings_count: result.ratings_count,
-  //     genres: result.genres,
-  //   }));
-
-  //   setGamesList(gamesListTemp);
-  //   return gamesListTemp;
-  // };
-
   const getGamesByGenrePageFunc = async (genreId: number, page: number) => {
     const data = await getGamesByGenreAndPage(genreId.toString(), page);
     setTotalPages(Math.floor(data.count / 12 + 1));
 
-    const gamesListTemp: Game[] = data.results.map((result: Game) => ({
-      id: result.id,
-      name: result.name,
-      background_image: result.background_image,
-      released: result.released,
-      rating: result.rating,
-      ratings_count: result.ratings_count,
-      genres: result.genres,
-    }));
+    const gamesListTemp: GameRawGGeneral[] = data.results.map(
+      (result: GameRawGGeneral) => ({
+        id: result.id,
+        name: result.name,
+        background_image: result.background_image,
+        released: result.released,
+        rating: result.rating,
+        ratings_count: result.ratings_count,
+        genres: result.genres,
+      }),
+    );
 
     setGamesList(gamesListTemp);
     return gamesListTemp;
@@ -131,11 +106,33 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   // ------------- render Games -------------
   const [loading, setLoading] = useState(true);
 
+  const isFirstLoad = useRef(true);
+
+  // useEffect(() => {
+  //   console.log("Fetching Games First Load");
+  //   setRenderType("GENRE");
+
+  //   setLoading(true);
+
+  //   getGamesByGenrePageFunc(selectedGenre, 1)
+  //     .then((gamesListTemp) => {
+  //       setGamesList(gamesListTemp);
+  //       setLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching games:", error);
+  //       setLoading(false);
+  //     });
+  // }, []);
+
   useEffect(() => {
+    if (isFirstLoad.current) {
+      return;
+    }
+
     console.log("Searching games by name");
     setRenderType("SEARCH");
 
-    // Set loading state to true when fetching starts
     setLoading(true);
 
     if (searchValue == "") {
@@ -163,6 +160,11 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   }, [searchValue]);
 
   useEffect(() => {
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      return;
+    }
+
     console.log("Fetching Genre by Games");
     setRenderType("GENRE");
 
@@ -178,6 +180,37 @@ function StoreMain({ searchValue }: { searchValue: string }) {
         setLoading(false);
       });
   }, [selectedGenre]);
+
+  // useEffect(() => {
+  //   console.log("Fetching data");
+
+  //   // Determine which function to call based on the condition
+  //   const fetchData = async () => {
+  //     setLoading(true); // Set loading state to true when fetching starts
+
+  //     try {
+  //       console.log("Search Value: ", searchValue);
+  //       if (searchValue === "") {
+  //         await getGamesByGenrePageFunc(selectedGenre, 1);
+  //       } else {
+  //         await getGameBySearchPageFunc(searchValue, 1);
+  //         headerSearchInput.value = "";
+  //         // searchValue = "";
+  //         // setRenderType("GENRE");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching games:", error);
+  //     } finally {
+  //       setLoading(false); // Update loading state to false when data fetching is done
+  //     }
+  //   };
+  //   // console.log("Search Value: ", searchValue);
+  //   // console.log("Previous Render Type: ", renderType);
+  //   // setRenderType(searchValue === "" ? "GENRE" : "SEARCH");
+  //   // console.log("Search Value: ", searchValue);
+  //   // console.log("Previous Render Type: ", renderType);
+  //   fetchData(); // Call the fetchData function
+  // }, [searchValue, selectedGenre]);
 
   // ------------------ Pagination ------------------
   const [active, setActive] = React.useState(1);
@@ -196,6 +229,11 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   };
 
   useEffect(() => {
+    if (isFirstLoad.current) {
+      return;
+    }
+
+    console.log("Fetching games by page ", active);
     setLoading(true);
     console.log("Active page: ", active);
     if (renderType === "GENRE") {
@@ -221,9 +259,9 @@ function StoreMain({ searchValue }: { searchValue: string }) {
     }
   }, [active]);
 
-  useEffect(() => {
-    setActive(1);
-  }, [renderType, searchValue, selectedGenre]);
+  // useEffect(() => {
+  //   setActive(1);
+  // }, [renderType, searchValue, selectedGenre]);
 
   // useEffect(() => {
   //   // const selectedPageInput = document.getElementById(
@@ -245,6 +283,17 @@ function StoreMain({ searchValue }: { searchValue: string }) {
       });
     }
   };
+
+  const [first, setfirst] = useState(1);
+
+  useEffect(() => {
+    console.log("Fetching " + first);
+    setfirst(2);
+  }, []);
+
+  useEffect(() => {
+    console.log("Fetching " + first);
+  }, [first]);
 
   return (
     <div className="relative z-10 mt-2 w-full md:mt-5">

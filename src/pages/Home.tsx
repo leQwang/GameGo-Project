@@ -29,15 +29,6 @@ function Home() {
         <a id="store" className="h-0 w-0"></a>
         <ServiceStore searchValue={searchValue} isSidenavOpen={isSidenavOpen}/>
 
-        {/* <Typography color="white" className="font-normal" placeholder="">
-          Page{" "}
-          <div className="inline-flex h-full items-center rounded-md bg-white overflow-hidden text-black">
-            <input type="number" placeholder="1" className="pl-5 bg-white w-20 text-center" />
-            <button>🔍</button>
-          </div>{" "}
-          of <strong className="text-orange">10</strong>
-        </Typography> */}
-
         <Footer />
       </SelectedGenreProvider>
     </div>
