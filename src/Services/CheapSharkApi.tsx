@@ -13,6 +13,7 @@ export const getPriceListByName = async (gameTitle: string) => {
 };
 
 export const getExactGameByName = async (gameTitle: string) => {
+  console.log("/games?title=" + gameTitle + "&exact=1");
   const response = await rawGApi.get(`/games?title=${gameTitle}&exact=1`);
   console.log(response.data);
   return response.data;

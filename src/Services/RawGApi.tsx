@@ -24,14 +24,14 @@ export const getPopularGame = async () => {
 
 export const getGameBySearchAndPage = async (search: string, page: number) => {
   const response = await rawGApi.get(
-    `/games?key=${apiKey}&search=${search}&page_size=3&page=${page}`,
+    `/games?key=${apiKey}&search=${search}&page_size=4&page=${page}`,
   );
   return response.data;
 };
 
 export const getGamesByGenreAndPage = async (genre: string, page: number) => {
   const response = await rawGApi.get(
-    `/games?key=${apiKey}&genres=${genre}&page_size=3&page=${page}`,
+    `/games?key=${apiKey}&genres=${genre}&page_size=4&page=${page}`,
   );
   return response.data;
 };

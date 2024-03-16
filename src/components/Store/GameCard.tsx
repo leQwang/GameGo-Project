@@ -10,9 +10,10 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import {
   getExactGameByName,
   getPriceListByName,
+  getGameById,
 } from "../../Services/CheapSharkApi";
 
-export interface GameCardCheapShark {
+export interface GameCardCheapSharkOverview {
   gameID: number;
   steamAppID: number;
   cheapest: number;
@@ -22,67 +23,118 @@ export interface GameCardCheapShark {
   thumb: string;
 }
 
-function GameCard(game: GameRawGGeneral) {
+interface GameCheapSharkDetails {
+  info: {
+    title: string;
+    steamAppID: string;
+    thumb: string;
+  };
+  cheapestPriceEver: {
+    price: string;
+    date: number;
+  };
+  deals: {
+    storeID: string;
+    dealID: string;
+    price: string;
+    retailPrice: number;
+    savings: number;
+  }[];
+}
+
+function GameCard(gameRawG: GameRawGGeneral) {
+  // --------------- constants ---------------
+  // const conversionRateUSDToVND = 24724.5;
+  // const regionalPriceRate = 0.585;
+  const regionalPriceRate = 1;
+
+  // --------------- image loading process ---------------
   const [imageLoaded, setImageLoaded] = useState(false);
 
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
 
-  // --------------- fetch game details ---------------
-  const [gameDetails, setGameDetails] = useState<GameCardCheapShark | null>();
+  // --------------- fetch Game by Name details ---------------
+  const [gameOverview, setGameOverview] =
+    useState<GameCardCheapSharkOverview | null>();
 
   //search for exact
-  const fetchGameDetails = async (gameTitle: string) => {
+  const fetchGameOverview = async (gameTitle: string) => {
     try {
-      const data = await getExactGameByName(gameTitle);
-      if (data === undefined || data.length === 0) {
-        let temp = await fetchGameListDetails(gameTitle);
-        if (temp === null) {
-          setGameDetails(null);
+      const exactGame = await getExactGameByName(gameTitle);
+      console.log(exactGame);
+      if (exactGame === undefined || exactGame.length === 0) {
+        // if the game is not found, then search for other relevant game
+        let relevantGame = await fetchGameListOverview(gameTitle);
+        if (relevantGame === null) {
+          // if the relevant game is not found, then set gameOverview to null
+          setGameOverview(null);
+        } else {
+          setGameOverview(relevantGame[0]);
         }
-        setGameDetails(temp[0]);
         return;
       } else {
-        setGameDetails(data[0]);
+        setGameOverview(exactGame[0]);
+        const gameDetailResult = await fetchGameDetails(exactGame[0].gameID);
+        setGameDetail(gameDetailResult);
+        console.log("Game detail result", gameDetailResult);
       }
-      return data;
+      return exactGame;
     } catch (error) {
       console.error("Error fetching game details:", error);
-      setGameDetails(null);
+      setGameOverview(null);
     }
   };
 
-  //get the price from other relevant search
-  const fetchGameListDetails = async (gameTitle: string) => {
+  //** get the price from other relevant search
+  const fetchGameListOverview = async (gameTitle: string) => {
     try {
       const gameListData = await getPriceListByName(gameTitle.toUpperCase());
       console.log(gameListData);
       if (gameListData === undefined || gameListData.length === 0) {
-        console.log("No game found");
         return null;
       }
       return gameListData;
     } catch (error) {
-      console.error("Error fetching game details:", error);
+      console.error("Error fetching gameList Overview details:", error);
     }
   };
 
   useEffect(() => {
-    fetchGameDetails(game.name.toUpperCase());
-    console.log("fetching game details for", game.name);
-    console.log("cheapest", gameDetails?.cheapest);
-  }, [game]);
+    fetchGameOverview(gameRawG.name.toUpperCase());
+  }, [gameRawG]);
+
+  // --------------- fetch Game Detail by Id ---------------
+  // this step helps getting the game Saving price
+  const [gameDetail, setGameDetail] = useState<GameCheapSharkDetails | null>();
+
+  const fetchGameDetails = async (gameId: number) => {
+    try {
+      const gameDetailTemp = await getGameById(gameId);
+      console.log(gameDetailTemp);
+      if (gameDetailTemp === undefined || gameDetailTemp.length === 0) {
+        return null;
+      }
+      // setGameDetail(gameDetailTemp);
+      return gameDetailTemp;
+    } catch (error) {
+      console.error("Error fetching gameDetail:", error);
+    }
+  };
 
   return (
-    <a href={`${gameDetails !== null ? "https://www.cheapshark.com/redirect?dealID=" + gameDetails?.cheapestDealID + "&k=1" : ""}`} target="_blank">
+    <a
+      href={`${gameOverview !== null ? "https://www.cheapshark.com/redirect?dealID=" + gameOverview?.cheapestDealID + "&k=1" : ""}`}
+      target="_blank"
+    >
       <li
-        key={game.id}
+        key={gameRawG.id}
         className="bg-gamecard xl:h-92 group relative flex w-full flex-col overflow-hidden rounded-xl transition-all duration-100 ease-in-out hover:z-10 hover:scale-105 hover:cursor-pointer hover:overflow-visible hover:rounded-t-xl hover:bg-orangeCard hover:shadow-lg md:hover:rounded-b-none"
       >
         <LazyLoadImage
-          src={game.background_image}
-          alt={game.name}
+          src={gameRawG.background_image}
+          alt={gameRawG.name}
           className={`${imageLoaded ? "h-40" : "h-0"} w-full overflow-hidden rounded-t-xl object-cover`}
           effect="blur"
           onLoad={handleImageLoad} // Set onLoad event handler to update imageLoaded state
@@ -97,20 +149,40 @@ function GameCard(game: GameRawGGeneral) {
         )}
 
         <div className="flex flex-grow flex-col px-2">
-          <div className="flex-grow text-xl xl:text-3xl">{game.name}</div>
-          <p className="mt-auto ">Rating⭐: {game.rating}</p>
-          {gameDetails !== null ? (
-            <p className="mt-auto ">Cheapest: ${gameDetails?.cheapest}</p>
+          <div className="flex-grow text-xl xl:text-3xl">{gameRawG.name}</div>
+          <p className="mt-auto ">Rating⭐: {gameRawG.rating}</p>
+          {gameOverview !== null ? (
+            // if gameOverview.steamAppID is not null, then it is available on steam
+            <>
+              <p >Current Price: ${gameDetail?.deals[0].retailPrice}</p>
+              <p className="mt-auto">
+                Cheapest: {"[-"}{Number(
+                  (gameDetail?.deals[0].savings ?? 0) * regionalPriceRate,
+                ).toFixed(2)}
+                
+                $
+                {Number(
+                  (gameOverview?.cheapest ?? 0) * regionalPriceRate,
+                ).toFixed(2)}
+                {/* {" "}
+                ={" "}
+                {Number(
+                  (gameOverview?.cheapest ?? 0) *
+                    regionalPriceRate *
+                    conversionRateUSDToVND,
+                ).toFixed(2)}{" "}
+                VND */}
+              </p>
+            </>
           ) : (
             <p>Unable to get Price</p>
           )}
-          {/* <p className="mt-auto ">Cheapest💸: {gameDetails?.cheapest}</p> */}
           <div className="relative left-0 w-full -translate-y-[1px] pb-2 transition-opacity duration-200 ease-in-out group-hover:opacity-100 md:absolute md:top-[100%] md:rounded-b-xl md:bg-orangeCard md:px-2 md:opacity-0">
-            <p>Released: {game.released}</p>
-            <p>Ratings Count: {game.ratings_count}</p>
+            <p>Released: {gameRawG.released}</p>
+            <p>Ratings Count: {gameRawG.ratings_count}</p>
             <p>
               Genres:{" "}
-              {game.genres.map((genre, index) => (
+              {gameRawG.genres.map((genre, index) => (
                 <span key={index}>
                   {index > 0 ? `, ${genre.name}` : genre.name}
                 </span>
