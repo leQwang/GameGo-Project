@@ -156,9 +156,9 @@ function GameCard(gameRawG: GameRawGGeneral) {
             <>
               <p >Current Price: ${gameDetail?.deals[0].retailPrice}</p>
               <p className="mt-auto">
-                Cheapest: {"[-"}{Number(
+                Cheapest: <span className="font-bold">{"[-"}{Number(
                   (gameDetail?.deals[0].savings ?? 0) * regionalPriceRate,
-                ).toFixed(2)}
+                ).toFixed(2)}{"] "}</span>
                 
                 $
                 {Number(
