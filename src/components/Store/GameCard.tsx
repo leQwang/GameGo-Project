@@ -150,20 +150,28 @@ function GameCard(gameRawG: GameRawGGeneral) {
 
         <div className="flex flex-grow flex-col px-2">
           <div className="flex-grow text-xl xl:text-3xl">{gameRawG.name}</div>
-          <p className="mt-auto ">Rating⭐: {gameRawG.rating}</p>
+          <p className="mt-auto flex ">Rating: {gameRawG.rating}⭐</p>
           {gameOverview !== null ? (
             // if gameOverview.steamAppID is not null, then it is available on steam
             <>
-              <p >Current Price: ${gameDetail?.deals[0].retailPrice}</p>
-              <p className="mt-auto">
-                Cheapest: <span className="font-bold">{"[-"}{Number(
-                  (gameDetail?.deals[0].savings ?? 0) * regionalPriceRate,
-                ).toFixed(2)}{"] "}</span>
-                
-                $
-                {Number(
-                  (gameOverview?.cheapest ?? 0) * regionalPriceRate,
-                ).toFixed(2)}
+              <p className="mt-auto flex items-center">
+                Price {" : "}
+                <span className="h-full text-sm text-white line-through opacity-70">
+                  ${gameDetail?.deals[0].retailPrice}
+                </span>{" "}
+                <span className="mr-auto h-full text-xl font-bold">
+                  {" $"}
+                  {Number(
+                    (gameOverview?.cheapest ?? 0) * regionalPriceRate,
+                  ).toFixed(2)}
+                </span>
+                <div className="h-full rounded-md bg-orange font-bold text-white">
+                  {"-"}
+                  {Number(
+                    (gameDetail?.deals[0].savings ?? 0) * regionalPriceRate,
+                  ).toFixed(2)}
+                  {"%"}
+                </div>
                 {/* {" "}
                 ={" "}
                 {Number(
