@@ -1,3 +1,9 @@
+Rational for the project:
+- Video games have been part of my child hood, aside from ... 
+- However, games are sometime quite expensive to purchase. I like using steamDB to check for the price, yet I found that it was not the best to offer.
+- Steam allow user to enter a key to retrieve the product. Thus, there are many third-party company selling these keys at the retail price.
+
+
 What have I learned and enhanced throughout the journey:
 
 *Phase 1: Homepage Design and RawG Api 
@@ -5,5 +11,5 @@ What have I learned and enhanced throughout the journey:
 - Learn and practice UI-UX design concept (Layout, Color, Font, etc)
 - Learn and apply framer-motion
 - Use react observer to check when the div is inView
-- Optimize fetching to reduce request call (Reduce call for rendering games list on first load from 3 to 1)
+- Optimize fetching to reduce request call (Reduce call for rendering games list on first load from 3 to 1) - useRef to check for initial load (can be enhanced by using useState and checking if the value is undefined at the useEffect)
 - Apply Lazy loading, skeleton, loader effect to enhance user experience and speed

@@ -35,12 +35,12 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   const { selectedGenre } = useSelectedGenre();
   const [gamesList, setGamesList] = useState<GameRawGGeneral[]>([]);
 
-  const pageInput = document.getElementById(
-    "selectedPagePagination",
-  ) as HTMLInputElement;
-  const headerSearchInput = document.getElementById(
-    "headerSearchInput",
-  ) as HTMLInputElement;
+  // const pageInput = document.getElementById(
+  //   "selectedPagePagination",
+  // ) as HTMLInputElement;
+  // const headerSearchInput = document.getElementById(
+  //   "headerSearchInput",
+  // ) as HTMLInputElement;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -284,16 +284,6 @@ function StoreMain({ searchValue }: { searchValue: string }) {
     }
   };
 
-  const [first, setfirst] = useState(1);
-
-  useEffect(() => {
-    console.log("Fetching " + first);
-    setfirst(2);
-  }, []);
-
-  useEffect(() => {
-    console.log("Fetching " + first);
-  }, [first]);
 
   return (
     <div className="relative z-10 mt-2 w-full md:mt-5">
