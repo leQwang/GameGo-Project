@@ -9,7 +9,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 
 import {
   getExactGameByName,
-  getPriceListByName,
+  // getPriceListByName,
   getGameById,
 } from "../../Services/CheapSharkApi";
 

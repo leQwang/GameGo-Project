@@ -11,8 +11,9 @@ import Header from "../components/Header/Header";
 function Home() {
   const [isSidenavOpen, setIsSidenavOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   // const [activePage, setActivePage] = useState(1);
+  const [renderType, setRenderType] = useState("GENRE");
 
   return (
     <div className="bg-custom-radial-gradient overflow-hidden">
@@ -20,7 +21,8 @@ function Home() {
         <Header
           setSearchValue={setSearchValue}
           setIsSidenavOpen={setIsSidenavOpen}
-          // setLoading={setLoading}
+          setLoading={setLoading}
+          setRenderType={setRenderType}
         />
 
         <a id="top" className="h-0 w-0"></a>
@@ -30,8 +32,8 @@ function Home() {
         {/* --------- store ---------- */}
         <div className="bg-custom-radial-gradient relative z-10">
           <div className="relative flex w-full flex-col md:flex-row">
-            <GenreNav isSidenavOpen={isSidenavOpen} />
-            <StoreMain searchValue={searchValue} />
+            <GenreNav isSidenavOpen={isSidenavOpen}  setLoading={setLoading} setRenderType={setRenderType}/>
+            <StoreMain searchValue={searchValue} loading={loading} setLoading={setLoading} renderType={renderType} setRenderType={setRenderType}/>
           </div>
         </div>
 

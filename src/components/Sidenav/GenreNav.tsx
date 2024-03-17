@@ -7,7 +7,13 @@ interface Genre {
   name: string;
 }
 
-function GenreNav({ isSidenavOpen }: { isSidenavOpen: boolean }) {
+interface GenreNavProps {
+  isSidenavOpen: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setRenderType: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const GenreNav: React.FC<GenreNavProps> = ({ isSidenavOpen, setLoading, setRenderType }) => {
   const { setSelectedGenre, selectedGenre } = useSelectedGenre();
 
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -62,6 +68,8 @@ function GenreNav({ isSidenavOpen }: { isSidenavOpen: boolean }) {
                   <button
                     className={`w-full ${selectedGenre == genre.id ? "text-center font-bold" : "text-start"} transition-all duration-300 ease-in-out`}
                     onClick={() => {
+                      setRenderType("GENRE");
+                      setLoading(true);
                       setSelectedGenre(genre.id);
                       handleScroll();
                     }}

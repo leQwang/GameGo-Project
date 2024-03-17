@@ -16,6 +16,7 @@ import HFW from "../../assets/videos/HFW-trailer.mp4";
 
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+// import { render } from "react-dom";
 
 export interface GameRawGGeneral {
   id: number;
@@ -31,7 +32,15 @@ export interface GameRawGGeneral {
   }[];
 }
 
-function StoreMain({ searchValue }: { searchValue: string }) {
+interface StoreMainProps {
+  searchValue: string;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  renderType: string;
+  setRenderType: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function StoreMain({ searchValue, loading, setLoading, renderType, setRenderType }: StoreMainProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { selectedGenre } = useSelectedGenre();
   const [gamesList, setGamesList] = useState<GameRawGGeneral[]>([]);
@@ -62,7 +71,7 @@ function StoreMain({ searchValue }: { searchValue: string }) {
 
   // ------------- API calls Function -------------
   const [totalPages, setTotalPages] = useState(100);
-  const [renderType, setRenderType] = useState("GENRE");
+  // const [renderType, setRenderType] = useState("GENRE");
 
   const getGameBySearchPageFunc = async (searchValue: any, page: number) => {
     const data = await getGameBySearchAndPage(searchValue, page);
@@ -107,7 +116,7 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   };
 
   // ------------- render Games -------------
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const isFirstLoad = useRef(true);
 
@@ -158,8 +167,8 @@ function StoreMain({ searchValue }: { searchValue: string }) {
     console.log("Go to render games");
 
     // ** If search value is empty, render games by genre
-    if (searchValue === "") {
-      setRenderType("SEARCH");
+    if (renderType === "GENRE") {
+      // setRenderType("SEARCH");
 
       getGamesByGenrePageFunc(selectedGenre, 1)
         .then((gamesListTemp) => {
@@ -173,7 +182,7 @@ function StoreMain({ searchValue }: { searchValue: string }) {
     }
     // ** If search value is not empty, render games by search
     else {
-      setRenderType("GENRE");
+      // setRenderType("GENRE");
       getGameBySearchPageFunc(searchValue, 1)
         .then((gamesListTemp) => {
           setGamesList(gamesListTemp);
