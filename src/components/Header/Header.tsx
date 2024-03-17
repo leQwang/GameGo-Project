@@ -1,7 +1,7 @@
 import { useState } from "react";
 import logoImage from "../../assets/images/Logo1.png";
 
-function Header({ setSearchValue, setIsSidenavOpen }: any) {
+function Header({ setSearchValue, setIsSidenavOpen, setLoading }: any) {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event: any) => {
@@ -67,6 +67,7 @@ function Header({ setSearchValue, setIsSidenavOpen }: any) {
             <button
               className="h-full w-14 rounded-r-xl bg-orange px-2 md:w-20"
               onClick={()=>{
+                setLoading(true);
                 handleSearchChange();
                 handleScrollStore();
               }}

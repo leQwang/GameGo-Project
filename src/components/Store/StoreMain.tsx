@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 
 import GameCard from "./GameCard";
 
@@ -19,6 +19,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export interface GameRawGGeneral {
   id: number;
+  slug: string;
   name: string;
   background_image: string;
   released: string;
@@ -60,8 +61,8 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   };
 
   // ------------- API calls Function -------------
-  const [totalPages, setTotalPages] = React.useState(100);
-  const [renderType, setRenderType] = React.useState("GENRE");
+  const [totalPages, setTotalPages] = useState(100);
+  const [renderType, setRenderType] = useState("GENRE");
 
   const getGameBySearchPageFunc = async (searchValue: any, page: number) => {
     const data = await getGameBySearchAndPage(searchValue, page);
@@ -70,6 +71,7 @@ function StoreMain({ searchValue }: { searchValue: string }) {
     const gamesListTemp: GameRawGGeneral[] = data.results.map(
       (result: GameRawGGeneral) => ({
         id: result.id,
+        slug: result.slug,
         name: result.name,
         background_image: result.background_image,
         released: result.released,
@@ -90,6 +92,7 @@ function StoreMain({ searchValue }: { searchValue: string }) {
     const gamesListTemp: GameRawGGeneral[] = data.results.map(
       (result: GameRawGGeneral) => ({
         id: result.id,
+        slug: result.slug,
         name: result.name,
         background_image: result.background_image,
         released: result.released,
@@ -109,66 +112,35 @@ function StoreMain({ searchValue }: { searchValue: string }) {
   const isFirstLoad = useRef(true);
 
   // useEffect(() => {
-  //   console.log("Fetching Games First Load");
-  //   setRenderType("GENRE");
+  //   if (isFirstLoad.current) {
+  //     // If first load: render game by genre
+  //     renderGamesByGenre();
 
-  //   setLoading(true);
-
-  //   getGamesByGenrePageFunc(selectedGenre, 1)
-  //     .then((gamesListTemp) => {
-  //       setGamesList(gamesListTemp);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching games:", error);
-  //       setLoading(false);
-  //     });
-  // }, []);
+  //     isFirstLoad.current = false;
+  //   } else {
+  //     // If not first load: render games
+  //     renderGames();
+  //   }
+  // }, [searchValue, selectedGenre]);
 
   useEffect(() => {
     if (isFirstLoad.current) {
-      return;
-    }
+      // If first load: render game by genre
+      renderGamesByGenre();
 
-    console.log("Searching games by name");
-    setRenderType("SEARCH");
-
-    setLoading(true);
-
-    if (searchValue == "") {
-      getGamesByGenrePageFunc(selectedGenre, 1)
-        .then((gamesListTemp) => {
-          // Set loaded games and update loading state to false when data is retrieved
-          setGamesList(gamesListTemp);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching games:", error);
-          setLoading(false); // Update loading state to false in case of an error
-        });
-    } else {
-      getGameBySearchPageFunc(searchValue, 1)
-        .then((gamesListTemp) => {
-          setGamesList(gamesListTemp);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching games:", error);
-          setLoading(false);
-        });
-    }
-  }, [searchValue]);
-
-  useEffect(() => {
-    if (isFirstLoad.current) {
       isFirstLoad.current = false;
-      return;
+    } else {
+      // If not first load: render games
+      renderGames();
     }
+  }, [searchValue, selectedGenre]);
 
-    console.log("Fetching Genre by Games");
+  const renderGamesByGenre = async () => {
+    console.log("Go to render games by genre");
     setRenderType("GENRE");
 
     setLoading(true);
+    console.log("loading: ", loading);
 
     getGamesByGenrePageFunc(selectedGenre, 1)
       .then((gamesListTemp) => {
@@ -179,89 +151,91 @@ function StoreMain({ searchValue }: { searchValue: string }) {
         console.error("Error fetching games:", error);
         setLoading(false);
       });
-  }, [selectedGenre]);
+  };
 
-  // useEffect(() => {
-  //   console.log("Fetching data");
+  const renderGames = async () => {
+    setLoading(true);
+    console.log("Go to render games");
 
-  //   // Determine which function to call based on the condition
-  //   const fetchData = async () => {
-  //     setLoading(true); // Set loading state to true when fetching starts
+    // ** If search value is empty, render games by genre
+    if (searchValue === "") {
+      setRenderType("SEARCH");
 
-  //     try {
-  //       console.log("Search Value: ", searchValue);
-  //       if (searchValue === "") {
-  //         await getGamesByGenrePageFunc(selectedGenre, 1);
-  //       } else {
-  //         await getGameBySearchPageFunc(searchValue, 1);
-  //         headerSearchInput.value = "";
-  //         // searchValue = "";
-  //         // setRenderType("GENRE");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching games:", error);
-  //     } finally {
-  //       setLoading(false); // Update loading state to false when data fetching is done
-  //     }
-  //   };
-  //   // console.log("Search Value: ", searchValue);
-  //   // console.log("Previous Render Type: ", renderType);
-  //   // setRenderType(searchValue === "" ? "GENRE" : "SEARCH");
-  //   // console.log("Search Value: ", searchValue);
-  //   // console.log("Previous Render Type: ", renderType);
-  //   fetchData(); // Call the fetchData function
-  // }, [searchValue, selectedGenre]);
+      getGamesByGenrePageFunc(selectedGenre, 1)
+        .then((gamesListTemp) => {
+          setGamesList(gamesListTemp);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching games:", error);
+          setLoading(false);
+        });
+    }
+    // ** If search value is not empty, render games by search
+    else {
+      setRenderType("GENRE");
+      getGameBySearchPageFunc(searchValue, 1)
+        .then((gamesListTemp) => {
+          setGamesList(gamesListTemp);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching games:", error);
+          setLoading(false);
+        });
+    }
+  };
 
   // ------------------ Pagination ------------------
-  const [active, setActive] = React.useState(1);
-  // const [selectedPage, setSelectedPage] = React.useState(1);
+  const [active, setActive] = useState(1);
+  // const [selectedPage, setSelectedPage] = useState(1);
 
+  // Set loading on the click to prevent running the if else statement rendering the GameCard
   const next = () => {
     if (active === 10) return;
+    setLoading(true);
     handleScrollStore();
     setActive(active + 1);
   };
 
   const prev = () => {
     if (active === 1) return;
+    setLoading(true);
     handleScrollStore();
     setActive(active - 1);
   };
 
   useEffect(() => {
-    if (isFirstLoad.current) {
+    if (active === 1) {
+      // console.log("Initial render");
       return;
-    }
-
-    console.log("Fetching games by page ", active);
-    setLoading(true);
-    console.log("Active page: ", active);
-    if (renderType === "GENRE") {
-      getGamesByGenrePageFunc(selectedGenre, active)
-        .then((gamesListTemp) => {
-          setGamesList(gamesListTemp);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching games:", error);
-          setLoading(false);
-        });
     } else {
-      getGameBySearchPageFunc(searchValue, active)
-        .then((gamesListTemp) => {
-          setGamesList(gamesListTemp);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching games:", error);
-          setLoading(false);
-        });
+      console.log("Fetching games by page ", active);
+      if (renderType === "GENRE") {
+        console.log("Fetching games by genre: ");
+        getGamesByGenrePageFunc(selectedGenre, active)
+          .then((gamesListTemp) => {
+            setGamesList(gamesListTemp);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching games:", error);
+            setLoading(false);
+          });
+      } else {
+        console.log("Fetching games by search: ");
+        getGameBySearchPageFunc(searchValue, active)
+          .then((gamesListTemp) => {
+            setGamesList(gamesListTemp);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching games:", error);
+            setLoading(false);
+          });
+      }
     }
   }, [active]);
-
-  // useEffect(() => {
-  //   setActive(1);
-  // }, [renderType, searchValue, selectedGenre]);
 
   // useEffect(() => {
   //   // const selectedPageInput = document.getElementById(
@@ -283,7 +257,6 @@ function StoreMain({ searchValue }: { searchValue: string }) {
       });
     }
   };
-
 
   return (
     <div className="relative z-10 mt-2 w-full md:mt-5">

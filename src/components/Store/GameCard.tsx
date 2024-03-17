@@ -60,25 +60,28 @@ function GameCard(gameRawG: GameRawGGeneral) {
     useState<GameCardCheapSharkOverview | null>();
 
   //search for exact
-  const fetchGameOverview = async (gameTitle: string) => {
+  const fetchGameOverview = async (gameSlug: string) => {
     try {
+      const gameTitle = gameSlug.replace(/-/g, "");
+      // console.log("Game title", gameTitle);
       const exactGame = await getExactGameByName(gameTitle);
-      console.log(exactGame);
+      // console.log(exactGame);
       if (exactGame === undefined || exactGame.length === 0) {
+        console.log("Game not found", gameTitle);
         // if the game is not found, then search for other relevant game
-        let relevantGame = await fetchGameListOverview(gameTitle);
-        if (relevantGame === null) {
-          // if the relevant game is not found, then set gameOverview to null
-          setGameOverview(null);
-        } else {
-          setGameOverview(relevantGame[0]);
-        }
+        // let relevantGame = await fetchGameListOverview(gameTitle);
+        // if (relevantGame === null) {
+        //   // if the relevant game is not found, then set gameOverview to null
+        //   setGameOverview(null);
+        // } else {
+        //   setGameOverview(relevantGame[0]);
+        // }
         return;
       } else {
         setGameOverview(exactGame[0]);
         const gameDetailResult = await fetchGameDetails(exactGame[0].gameID);
         setGameDetail(gameDetailResult);
-        console.log("Game detail result", gameDetailResult);
+        // console.log("Game detail result", gameDetailResult);
       }
       return exactGame;
     } catch (error) {
@@ -88,21 +91,22 @@ function GameCard(gameRawG: GameRawGGeneral) {
   };
 
   //** get the price from other relevant search
-  const fetchGameListOverview = async (gameTitle: string) => {
-    try {
-      const gameListData = await getPriceListByName(gameTitle.toUpperCase());
-      console.log(gameListData);
-      if (gameListData === undefined || gameListData.length === 0) {
-        return null;
-      }
-      return gameListData;
-    } catch (error) {
-      console.error("Error fetching gameList Overview details:", error);
-    }
-  };
+  // const fetchGameListOverview = async (gameTitle: string) => {
+  //   try {
+  //     const gameListData = await getPriceListByName(gameTitle.toUpperCase());
+  //     console.log(gameListData);
+  //     if (gameListData === undefined || gameListData.length === 0) {
+  //       return null;
+  //     }
+  //     return gameListData;
+  //   } catch (error) {
+  //     console.error("Error fetching gameList Overview details:", error);
+  //   }
+  // };
 
   useEffect(() => {
-    fetchGameOverview(gameRawG.name.toUpperCase());
+    console.log("Game rawG", gameRawG.slug.toUpperCase());
+    fetchGameOverview(gameRawG.slug.toUpperCase());
   }, [gameRawG]);
 
   // --------------- fetch Game Detail by Id ---------------
@@ -112,7 +116,7 @@ function GameCard(gameRawG: GameRawGGeneral) {
   const fetchGameDetails = async (gameId: number) => {
     try {
       const gameDetailTemp = await getGameById(gameId);
-      console.log(gameDetailTemp);
+      // console.log(gameDetailTemp);
       if (gameDetailTemp === undefined || gameDetailTemp.length === 0) {
         return null;
       }
@@ -162,7 +166,7 @@ function GameCard(gameRawG: GameRawGGeneral) {
                 <span className="mr-auto h-full text-xl font-bold">
                   {" $"}
                   {Number(
-                    (gameOverview?.cheapest ?? 0) * regionalPriceRate,
+                    Number(gameDetail?.deals[0].price ?? 0) * regionalPriceRate,
                   ).toFixed(2)}
                 </span>
                 <div className="h-full rounded-md bg-orange font-bold text-white">
