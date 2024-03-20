@@ -18,19 +18,7 @@ import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 // import { render } from "react-dom";
 
-export interface GameRawGGeneral {
-  id: number;
-  slug: string;
-  name: string;
-  background_image: string;
-  released: string;
-  rating: number;
-  ratings_count: number;
-  genres: {
-    id: number;
-    name: string;
-  }[];
-}
+import { GameRawGGeneral } from "../../Services/RawGApi";
 
 interface StoreMainProps {
   searchValue: string;

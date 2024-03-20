@@ -266,3 +266,9 @@
     background-position: 800px 0;
   }
 }
+
+/* ----------------------- Game Detail ----------------------- */
+.gameDetail_background-desktop {
+  background: rgb(0,0,0);
+  background: linear-gradient(180deg, rgba(0,0,0,0.6976225083056478) 0%, rgba(34,18,0,1) 85%);
+}

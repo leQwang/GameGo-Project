@@ -28,7 +28,6 @@ function Home() {
         <a id="top" className="h-0 w-0"></a>
         <CTA />
         <a id="store" className="h-0 w-0"></a>
-        {/* <ServiceStore searchValue={searchValue} isSidenavOpen={isSidenavOpen}/> */}
         {/* --------- store ---------- */}
         <div className="bg-custom-radial-gradient relative z-10">
           <div className="relative flex w-full flex-col md:flex-row">
