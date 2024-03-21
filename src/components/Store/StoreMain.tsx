@@ -18,7 +18,7 @@ import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 // import { render } from "react-dom";
 
-import { GameRawGGeneral } from "../../Services/RawGApi";
+import { GameRawGCard } from "../../Services/RawGApi";
 
 interface StoreMainProps {
   searchValue: string;
@@ -28,10 +28,16 @@ interface StoreMainProps {
   setRenderType: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function StoreMain({ searchValue, loading, setLoading, renderType, setRenderType }: StoreMainProps) {
+function StoreMain({
+  searchValue,
+  loading,
+  setLoading,
+  renderType,
+  setRenderType,
+}: StoreMainProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { selectedGenre } = useSelectedGenre();
-  const [gamesList, setGamesList] = useState<GameRawGGeneral[]>([]);
+  const [gamesList, setGamesList] = useState<GameRawGCard[]>([]);
 
   // const pageInput = document.getElementById(
   //   "selectedPagePagination",
@@ -62,45 +68,31 @@ function StoreMain({ searchValue, loading, setLoading, renderType, setRenderType
   // const [renderType, setRenderType] = useState("GENRE");
 
   const getGameBySearchPageFunc = async (searchValue: any, page: number) => {
-    const data = await getGameBySearchAndPage(searchValue, page);
-    setTotalPages(Math.floor(data.count / 12 + 1));
+    try {
+      const data = await getGameBySearchAndPage(searchValue, page);
+      setTotalPages(Math.floor(data.count / 12 + 1));
 
-    const gamesListTemp: GameRawGGeneral[] = data.results.map(
-      (result: GameRawGGeneral) => ({
-        id: result.id,
-        slug: result.slug,
-        name: result.name,
-        background_image: result.background_image,
-        released: result.released,
-        rating: result.rating,
-        ratings_count: result.ratings_count,
-        genres: result.genres,
-      }),
-    );
+      const gamesListTemp: GameRawGCard[] = data.results;
 
-    setGamesList(gamesListTemp);
-    return gamesListTemp;
+      setGamesList(gamesListTemp);
+      return gamesListTemp;
+    } catch (error) {
+      console.error("Error fetching games:", error);
+    }
   };
 
   const getGamesByGenrePageFunc = async (genreId: number, page: number) => {
-    const data = await getGamesByGenreAndPage(genreId.toString(), page);
-    setTotalPages(Math.floor(data.count / 12 + 1));
+    try {
+      const data = await getGamesByGenreAndPage(genreId.toString(), page);
+      setTotalPages(Math.floor(data.count / 12 + 1));
 
-    const gamesListTemp: GameRawGGeneral[] = data.results.map(
-      (result: GameRawGGeneral) => ({
-        id: result.id,
-        slug: result.slug,
-        name: result.name,
-        background_image: result.background_image,
-        released: result.released,
-        rating: result.rating,
-        ratings_count: result.ratings_count,
-        genres: result.genres,
-      }),
-    );
+      const gamesListTemp: GameRawGCard[] = data.results;
 
-    setGamesList(gamesListTemp);
-    return gamesListTemp;
+      setGamesList(gamesListTemp);
+      return gamesListTemp;
+    } catch (error) {
+      console.error("Error fetching games:", error);
+    }
   };
 
   // ------------- render Games -------------
@@ -141,7 +133,9 @@ function StoreMain({ searchValue, loading, setLoading, renderType, setRenderType
 
     getGamesByGenrePageFunc(selectedGenre, 1)
       .then((gamesListTemp) => {
-        setGamesList(gamesListTemp);
+        if (gamesListTemp) {
+          setGamesList(gamesListTemp);
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -160,7 +154,9 @@ function StoreMain({ searchValue, loading, setLoading, renderType, setRenderType
 
       getGamesByGenrePageFunc(selectedGenre, 1)
         .then((gamesListTemp) => {
-          setGamesList(gamesListTemp);
+          if (gamesListTemp) {
+            setGamesList(gamesListTemp);
+          }
           setLoading(false);
         })
         .catch((error) => {
@@ -173,7 +169,9 @@ function StoreMain({ searchValue, loading, setLoading, renderType, setRenderType
       // setRenderType("GENRE");
       getGameBySearchPageFunc(searchValue, 1)
         .then((gamesListTemp) => {
-          setGamesList(gamesListTemp);
+          if (gamesListTemp) {
+            setGamesList(gamesListTemp);
+          }
           setLoading(false);
         })
         .catch((error) => {
@@ -212,7 +210,9 @@ function StoreMain({ searchValue, loading, setLoading, renderType, setRenderType
         console.log("Fetching games by genre: ");
         getGamesByGenrePageFunc(selectedGenre, active)
           .then((gamesListTemp) => {
-            setGamesList(gamesListTemp);
+            if (gamesListTemp) {
+              setGamesList(gamesListTemp);
+            }
             setLoading(false);
           })
           .catch((error) => {
@@ -223,7 +223,9 @@ function StoreMain({ searchValue, loading, setLoading, renderType, setRenderType
         console.log("Fetching games by search: ");
         getGameBySearchPageFunc(searchValue, active)
           .then((gamesListTemp) => {
-            setGamesList(gamesListTemp);
+            if (gamesListTemp) {
+              setGamesList(gamesListTemp);
+            }
             setLoading(false);
           })
           .catch((error) => {
@@ -292,7 +294,7 @@ function StoreMain({ searchValue, loading, setLoading, renderType, setRenderType
 
       {/* ---------------- Pagination ---------------- */}
 
-      <div className="mb-8  flex w-full items-center justify-center gap-8">
+      <div className="mb-8  flex w-full items-center justify-center gap-8 my-2">
         <IconButton
           size="sm"
           variant="outlined"

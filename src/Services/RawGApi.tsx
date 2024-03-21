@@ -41,6 +41,18 @@ export const getGenres = async () => {
   return response.data;
 };
 
+export const getStoreLinks = async (gameId: string) => {
+  const response = await rawGApi.get(`/games/${gameId}/stores?key=${apiKey}`);
+  return response.data;
+};
+
+export interface GameStoreLink {
+  id: number;
+  game_id: string;
+  store_id: string;
+  url: string;
+}
+
 export interface GameRawGGeneral {
   id: number;
   slug: string;
@@ -58,15 +70,15 @@ export interface GameRawGGeneral {
   rating: number;
   rating_top: number;
   ratings: {
-      id: number;
-      title: string;
-      count: number;
-      percent: number;
+    id: number;
+    title: string;
+    count: number;
+    percent: number;
   }[];
   reactions: any; // Replace 'any' with the actual type if available
   added: number;
   added_by_status: {
-      [key: string]: number;
+    [key: string]: number;
   };
   playtime: number;
   screenshots_count: number;
@@ -94,75 +106,158 @@ export interface GameRawGGeneral {
   saturated_color: string;
   dominant_color: string;
   parent_platforms: {
-      platform: {
-          id: number;
-          name: string;
-          slug: string;
-          image: string | null;
-          year_end: number | null;
-          year_start: number | null;
-          games_count: number;
-          image_background: string;
-      };
+    platform: {
+      id: number;
+      name: string;
+      slug: string;
+      image: string | null;
+      year_end: number | null;
+      year_start: number | null;
+      games_count: number;
+      image_background: string;
+    };
   }[];
   platforms: {
-      platform: {
-          id: number;
-          name: string;
-          slug: string;
-          image: string | null;
-          year_end: number | null;
-          year_start: number | null;
-          games_count: number;
-          image_background: string;
-      };
-      released_at: string;
-      requirements: {
-          minimum: string;
-      };
+    platform: {
+      id: number;
+      name: string;
+      slug: string;
+      image: string | null;
+      year_end: number | null;
+      year_start: number | null;
+      games_count: number;
+      image_background: string;
+    };
+    released_at: string;
+    requirements: {
+      minimum: string;
+    };
   }[];
   stores: {
+    id: number;
+    url: string;
+    store: {
       id: number;
-      url: string;
-      store: {
-          id: number;
-          name: string;
-          slug: string;
-          domain: string;
-          games_count: number;
-          image_background: string;
-      };
+      name: string;
+      slug: string;
+      domain: string;
+      games_count: number;
+      image_background: string;
+    };
   }[];
   developers: {
-      id: number;
-      name: string;
-      slug: string;
-      games_count: number;
-      image_background: string;
+    id: number;
+    name: string;
+    slug: string;
+    games_count: number;
+    image_background: string;
   }[];
   genres: {
-      id: number;
-      name: string;
-      slug: string;
-      games_count: number;
-      image_background: string;
+    id: number;
+    name: string;
+    slug: string;
+    games_count: number;
+    image_background: string;
   }[];
   tags: {
-      id: number;
-      name: string;
-      slug: string;
-      language: string;
-      games_count: number;
-      image_background: string;
+    id: number;
+    name: string;
+    slug: string;
+    language: string;
+    games_count: number;
+    image_background: string;
   }[];
   publishers: {
-      id: number;
-      name: string;
-      slug: string;
-      games_count: number;
-      image_background: string;
+    id: number;
+    name: string;
+    slug: string;
+    games_count: number;
+    image_background: string;
   }[];
   esrb_rating: any; // Replace 'any' with the actual type if available
   clip: any; // Replace 'any' with the actual type if available
   description_raw: string;
+}
+
+export interface GameRawGCard {
+  slug: string;
+  name: string;
+  playtime: number;
+  platforms: {
+    platform: {
+      id: number;
+      name: string;
+      slug: string;
+    };
+  }[];
+  stores: {
+    store: {
+      id: number;
+      name: string;
+      slug: string;
+    };
+  }[];
+  released: string;
+  tba: boolean;
+  background_image: string;
+  rating: number;
+  rating_top: number;
+  ratings: {
+    id: number;
+    title: string;
+    count: number;
+    percent: number;
+  }[];
+  ratings_count: number;
+  reviews_text_count: number;
+  added: number;
+  added_by_status: {
+    yet: number;
+    owned: number;
+    beaten: number;
+    toplay: number;
+    dropped: number;
+    playing: number;
+  };
+  metacritic: number;
+  suggestions_count: number;
+  updated: string;
+  id: number;
+  score: any;
+  clip: any;
+  tags: {
+    id: number;
+    name: string;
+    slug: string;
+    language: string;
+    games_count: number;
+    image_background: string;
+  }[];
+  esrb_rating: {
+    id: number;
+    name: string;
+    slug: string;
+    name_en: string;
+    name_ru: string;
+  };
+  user_game: any;
+  reviews_count: number;
+  saturated_color: string;
+  dominant_color: string;
+  short_screenshots: {
+    id: number;
+    image: string;
+  }[];
+  parent_platforms: {
+    platform: {
+      id: number;
+      name: string;
+      slug: string;
+    };
+  }[];
+  genres: {
+    id: number;
+    name: string;
+    slug: string;
+  }[];
 }

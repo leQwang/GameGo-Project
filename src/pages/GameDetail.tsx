@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 //interface
-import { GameRawGGeneral } from "../Services/RawGApi";
+import { GameRawGGeneral, GameStoreLink } from "../Services/RawGApi";
 
 //services
-import { getGameRawGById } from "../Services/RawGApi";
+import { getGameRawGById, getStoreLinks } from "../Services/RawGApi";
 
 // components
 import GameDetailInfo from "../components/GameDetail/GameDetailInfo";
@@ -16,6 +16,7 @@ import GameDetailMedia from "../components/GameDetail/GameDetailMedia";
 function GameDetail() {
   const { gameId } = useParams<{ gameId: string }>();
 
+  // ----------------- fetch game details -----------------
   const [gameData, setGameData] = useState<GameRawGGeneral | null>(null);
 
   const fetchGameById = async (gameID: string) => {
@@ -33,11 +34,31 @@ function GameDetail() {
     }
   };
 
+  // ----------------- fetch game store link -----------------
+  const [gameStoreLinks, setGameStoreLinks] = useState<GameStoreLink[] | null>(null);
+
+  const fetchGameStoreLink = async (gameId: string) => {
+    try {
+      const GameStoreLink = await getStoreLinks(gameId);
+      if (GameStoreLink === undefined || GameStoreLink.length === 0) {
+        return null;
+      }
+      setGameStoreLinks(GameStoreLink.results);
+
+      return GameStoreLink.results;
+    } catch (error) {
+      console.error("Error fetching gameList Overview details:", error);
+    }
+  }
+
+  // -------------------------------------------------
   useEffect(() => {
     console.log(gameId, gameId === undefined);
     if (gameId === undefined) return;
     fetchGameById(gameId);
+    fetchGameStoreLink(gameId);
   }, []);
+    
 
   return (
     <div className={`relative h-screen bg-[#221200]`}>
@@ -55,7 +76,7 @@ function GameDetail() {
       <div className="relative h-full w-full">
         <div className="relative h-20 w-full">Header Later</div>
         <div className="flex flex-row">
-          <GameDetailInfo gameData={gameData} />
+          <GameDetailInfo gameData={gameData} gameStoreLinks={gameStoreLinks} />
           <GameDetailMedia />
         </div>
       </div>
