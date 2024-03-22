@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 import { GameRawGCard } from "../../Services/RawGApi";
 
@@ -132,7 +132,7 @@ function GameCard(gameRawG: GameRawGCard) {
 
   const handleClick = () => {
     // Redirect to GameDetail component with the game ID
-    window.open(`/game/${gameRawG.id}`, '_blank');
+    window.open(`/game/${gameRawG.id}`, "_blank");
   };
 
   return (
