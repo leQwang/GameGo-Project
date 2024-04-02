@@ -28,7 +28,7 @@ interface StoreMainProps {
   setRenderType: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function StoreMain({
+function ListingMain({
   searchValue,
   loading,
   setLoading,
@@ -39,12 +39,9 @@ function StoreMain({
   const { selectedGenre } = useSelectedGenre();
   const [gamesList, setGamesList] = useState<GameRawGCard[]>([]);
 
-  // const pageInput = document.getElementById(
-  //   "selectedPagePagination",
-  // ) as HTMLInputElement;
-  // const headerSearchInput = document.getElementById(
-  //   "headerSearchInput",
-  // ) as HTMLInputElement;
+  const selectedPageInput = document.getElementById(
+    "selectedPagePagination",
+  ) as HTMLInputElement;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -69,8 +66,9 @@ function StoreMain({
 
   const getGameBySearchPageFunc = async (searchValue: any, page: number) => {
     try {
-      const data = await getGameBySearchAndPage(searchValue, page);
-      setTotalPages(Math.floor(data.count / 12 + 1));
+      const pageSize = 24;
+      const data = await getGameBySearchAndPage(searchValue, pageSize, page);
+      setTotalPages(Math.floor(data.count / pageSize + 1));
 
       const gamesListTemp: GameRawGCard[] = data.results;
 
@@ -83,8 +81,15 @@ function StoreMain({
 
   const getGamesByGenrePageFunc = async (genreId: number, page: number) => {
     try {
-      const data = await getGamesByGenreAndPage(genreId.toString(), page);
-      setTotalPages(Math.floor(data.count / 12 + 1));
+      const pageSize = 24;
+
+      const data = await getGamesByGenreAndPage(
+        genreId.toString(),
+        pageSize,
+        page,
+      );
+      console.log(data.count, pageSize);
+      setTotalPages(Math.floor(data.count / pageSize + 1));
 
       const gamesListTemp: GameRawGCard[] = data.results;
 
@@ -96,21 +101,7 @@ function StoreMain({
   };
 
   // ------------- render Games -------------
-  // const [loading, setLoading] = useState(true);
-
   const isFirstLoad = useRef(true);
-
-  // useEffect(() => {
-  //   if (isFirstLoad.current) {
-  //     // If first load: render game by genre
-  //     renderGamesByGenre();
-
-  //     isFirstLoad.current = false;
-  //   } else {
-  //     // If not first load: render games
-  //     renderGames();
-  //   }
-  // }, [searchValue, selectedGenre]);
 
   useEffect(() => {
     if (isFirstLoad.current) {
@@ -125,11 +116,9 @@ function StoreMain({
   }, [searchValue, selectedGenre]);
 
   const renderGamesByGenre = async () => {
-    console.log("Go to render games by genre");
     setRenderType("GENRE");
 
     setLoading(true);
-    console.log("loading: ", loading);
 
     getGamesByGenrePageFunc(selectedGenre, 1)
       .then((gamesListTemp) => {
@@ -146,9 +135,8 @@ function StoreMain({
 
   const renderGames = async () => {
     setLoading(true);
-    console.log("Go to render games");
-
     // ** If search value is empty, render games by genre
+    setActive(1);
     if (renderType === "GENRE") {
       // setRenderType("SEARCH");
 
@@ -236,15 +224,6 @@ function StoreMain({
     }
   }, [active]);
 
-  // useEffect(() => {
-  //   // const selectedPageInput = document.getElementById(
-  //   //   "selectedPagePagination",
-  //   // ) as HTMLInputElement;
-  //   // selectedPageInput.value = selectedPage.toString();
-  //   console.log("Selected Page: ", selectedPage);
-  //   setActive(selectedPage);
-  // }, [selectedPage]);
-
   // -------------------- Scroll Effect --------------------
   // when change pagination, scroll to top for user to scroll down again -> increase UX
   const handleScrollStore = () => {
@@ -294,7 +273,7 @@ function StoreMain({
 
       {/* ---------------- Pagination ---------------- */}
 
-      <div className="mb-8  flex w-full items-center justify-center gap-8 my-2">
+      <div className="my-2  mb-8 flex w-full items-center justify-center gap-8">
         <IconButton
           size="sm"
           variant="outlined"
@@ -312,18 +291,17 @@ function StoreMain({
               id="selectedPagePagination"
               type="number"
               placeholder={active.toString()}
+              // value={active.toString()}
               className="w-20 bg-white pl-5 text-center"
             />
             <button
               className="transition-all duration-75 ease-in-out hover:bg-orange"
               onClick={() => {
-                const selectedPageInput = document.getElementById(
-                  "selectedPagePagination",
-                ) as HTMLInputElement;
                 const inputValue = parseInt(selectedPageInput.value);
                 if (!isNaN(inputValue)) {
                   // Update selected page if the input value is a valid number
                   setActive(inputValue);
+                  selectedPageInput.value = ""; // Clear the input value
                 } else {
                   // Handle invalid input (e.g., non-numeric input)
                   console.error("Invalid input value");
@@ -350,4 +328,4 @@ function StoreMain({
   );
 }
 
-export default StoreMain;
+export default ListingMain;

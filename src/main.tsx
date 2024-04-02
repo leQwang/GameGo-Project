@@ -5,6 +5,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GameDetail from "./pages/GameDetail.tsx";
 import Home from "./pages/Home.tsx";
+import GameReview from "./pages/GameListing.tsx";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +15,10 @@ const router = createBrowserRouter([
   {
     path: "/game/:gameId",
     element: <GameDetail />,
-  },
+  },{
+    path: "reviews",
+    element: <GameReview />
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

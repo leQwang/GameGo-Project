@@ -87,25 +87,7 @@ function GameCard(gameRawG: GameRawGCard) {
   //   }
   // };
 
-  //*** get the price from other relevant search
-  // const fetchGameListOverview = async (gameTitle: string) => {
-  //   try {
-  //     const gameListData = await getPriceListByName(gameTitle.toUpperCase());
-  //     console.log(gameListData);
-  //     if (gameListData === undefined || gameListData.length === 0) {
-  //       return null;
-  //     }
-  //     return gameListData;
-  //   } catch (error) {
-  //     console.error("Error fetching gameList Overview details:", error);
-  //   }
-  // };
-  //***
-
   useEffect(() => {
-    console.log(gameRawG);
-    console.log("Metacritic Score " + gameRawG.name);
-    console.log("Review Count " + gameRawG.reviews_count);
     // fetchGameOverview(gameRawG.slug.toUpperCase());
   }, [gameRawG]);
 
@@ -136,6 +118,7 @@ function GameCard(gameRawG: GameRawGCard) {
   };
 
   return (
+    // <a href={`https://www.cheapshark.com/api/1.0/deals?id=${gameDetail?.deals}`} target="_blank" rel="noreferrer">
     <li
       key={gameRawG.id}
       onClick={handleClick}
@@ -174,6 +157,7 @@ function GameCard(gameRawG: GameRawGCard) {
             {gameRawG.metacritic}
           </div>
         </div>
+        {/* ------------------------------------------ */}
         {/* {gameOverview !== null ? (
             // if gameOverview.steamAppID is not null, then it is available on steam
             <>
@@ -215,6 +199,7 @@ function GameCard(gameRawG: GameRawGCard) {
         </div>
       </div>
     </li>
+    // </a>
   );
 }
 

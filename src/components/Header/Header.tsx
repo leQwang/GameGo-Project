@@ -1,7 +1,12 @@
 import { useState } from "react";
 import logoImage from "../../assets/images/Logo1.png";
 
-function Header({ setSearchValue, setIsSidenavOpen, setLoading, setRenderType }: any) {
+function Header({
+  setSearchValue,
+  setIsSidenavOpen,
+  setLoading,
+  setRenderType,
+}: any) {
   const [inputValue, setInputValue] = useState("");
 
   const handleInputChange = (event: any) => {
@@ -18,7 +23,7 @@ function Header({ setSearchValue, setIsSidenavOpen, setLoading, setRenderType }:
 
   // --------------- scroll to top ----------------
   const handleScrollTop = () => {
-    const targetElement = document.getElementById("top");
+    const targetElement = document.getElementById("store");
     if (targetElement) {
       window.scrollTo({
         top: targetElement.offsetTop,
@@ -66,7 +71,7 @@ function Header({ setSearchValue, setIsSidenavOpen, setLoading, setRenderType }:
           <span>
             <button
               className="h-full w-14 rounded-r-xl bg-orange px-2 md:w-20"
-              onClick={()=>{
+              onClick={() => {
                 setRenderType("SEARCH");
                 setLoading(true);
                 handleSearchChange();

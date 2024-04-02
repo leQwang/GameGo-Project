@@ -22,16 +22,16 @@ export const getPopularGame = async () => {
 // Next time, try to add more specific parameters to the function, instead of separating getGameBySearch() and getGameBySearchAndPage()
 // You can just make 1 with specific parameters, and then use the parameters to make the request
 
-export const getGameBySearchAndPage = async (search: string, page: number) => {
+export const getGameBySearchAndPage = async (search: string, size:number, page: number) => {
   const response = await rawGApi.get(
-    `/games?key=${apiKey}&search=${search}&page_size=12&page=${page}`,
+    `/games?key=${apiKey}&search=${search}&page_size=${size}&page=${page}`,
   );
   return response.data;
 };
 
-export const getGamesByGenreAndPage = async (genre: string, page: number) => {
+export const getGamesByGenreAndPage = async (genre: string, size:number, page: number) => {
   const response = await rawGApi.get(
-    `/games?key=${apiKey}&genres=${genre}&page_size=12&page=${page}`,
+    `/games?key=${apiKey}&genres=${genre}&page_size=${size}&page=${page}`,
   );
   return response.data;
 };

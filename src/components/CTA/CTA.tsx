@@ -6,6 +6,7 @@ import { useInView } from "react-intersection-observer";
 import logoImage from "../../assets/images/Logo1.png";
 
 import ImageFly from "./ImageFly";
+import { useNavigate } from "react-router-dom";
 
 function CTA() {
   const controls = useAnimation();
@@ -55,6 +56,16 @@ function CTA() {
     }
   }, [screenWidth]);
 
+  //  ---------------------- useNavigation ------------------
+  // const navigate = useNavigate();
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // Redirect to GameDetail component with the game ID
+    navigate("/reviews");
+  };
+
   return (
     <div className="relative z-0 flex min-h-screen w-screen flex-col items-start justify-center overflow-hidden pt-16 md:pt-14">
       <div className="relative z-10 flex w-full flex-col justify-around lg:flex-row">
@@ -83,11 +94,14 @@ function CTA() {
             <div></div>
           ) : (
             <div className="flex flex-col gap-2 md:flex-row md:gap-5">
-              <button className="mx-auto w-full rounded-xl bg-orange px-7 py-3 text-lg font-bold transition-all duration-200 ease-in-out hover:bg-white hover:text-orange lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10">
-                Get Started
+              <button
+                onClick={handleClick}
+                className="mx-auto w-full rounded-xl bg-orange px-7 py-3 text-lg font-bold transition-all duration-200 ease-in-out hover:bg-white hover:text-orange lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10"
+              >
+                See Listing
               </button>
               <button className="mx-auto w-full rounded-xl bg-white px-7 py-3 text-lg font-bold text-black transition-all duration-200 ease-in-out hover:bg-orange hover:text-white lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10">
-                Join Community
+                Find Best Deal
               </button>
             </div>
           )}
@@ -96,12 +110,12 @@ function CTA() {
         {/* ------------------------------- */}
         <ImageFly />
         {isMobile ? (
-          <div className="flex flex-col gap-3 md:flex-row md:gap-5 mb-20 md:mb-0">
+          <div className="mb-20 flex flex-col gap-3 md:mb-0 md:flex-row md:gap-5">
             <button className="mx-auto w-[70%] rounded-xl bg-orange px-7 py-3 text-lg font-bold transition-all duration-200 ease-in-out hover:bg-white hover:text-orange lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10">
-              Get Started
+              See Listing
             </button>
             <button className="mx-auto w-[70%] rounded-xl bg-white px-7 py-3 text-lg font-bold text-black transition-all duration-200 ease-in-out hover:bg-orange hover:text-white lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10">
-              Join Community
+              Find Best Deal
             </button>
           </div>
         ) : (
