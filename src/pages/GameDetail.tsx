@@ -15,6 +15,7 @@ import GameDetailMedia from "../components/GameDetail/GameDetailMedia";
 
 function GameDetail() {
   const { gameId } = useParams<{ gameId: string }>();
+  console.log(gameId);
 
   // ----------------- fetch game details -----------------
   const [gameData, setGameData] = useState<GameRawGGeneral | null>(null);
@@ -22,7 +23,6 @@ function GameDetail() {
   const fetchGameById = async (gameID: string) => {
     try {
       const gameData = await getGameRawGById(gameID);
-      console.log(gameData);
       if (gameData === undefined || gameData.detail === "Not found.") {
         return null;
       }
