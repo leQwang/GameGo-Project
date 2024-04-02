@@ -46,6 +46,19 @@ export const getStoreLinks = async (gameId: string) => {
   return response.data;
 };
 
+export const getScreenShotRawG = async(gameId: string) => {
+  const response = await rawGApi.get(`/games/${gameId}/screenshots?key=c542e67aec3a4340908f9de9e86038af`)
+  return response.data;
+}
+
+export interface GameScreenShotRawG {
+  id: number;
+  image: string;
+  width: number;
+  height: number;
+  is_deleted: boolean;
+}
+
 export interface GameStoreLink {
   id: number;
   game_id: string;

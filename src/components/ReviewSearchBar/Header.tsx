@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import logoImage from "../../assets/images/Logo1.png";
 
 function Header({
@@ -7,14 +7,16 @@ function Header({
   setLoading,
   setRenderType,
 }: any) {
-  const [inputValue, setInputValue] = useState("");
+  // const [inputValue, setInputValue] = useState("");
+  const searchBarValue = document.getElementById("headerSearchInput") as HTMLInputElement;
 
-  const handleInputChange = (event: any) => {
-    setInputValue(event.target.value);
-  };
+  // const handleInputChange = () => {
+  //   setInputValue(searchBarValue?.value || "");
+  // };
 
+  //called directly when search button is clicked
   const handleSearchChange = () => {
-    setSearchValue(inputValue);
+    setSearchValue(searchBarValue?.value || "");
   };
 
   const handleToggleNav = () => {
@@ -42,6 +44,45 @@ function Header({
     }
   };
 
+  // --------------- search button click ----------------
+  const handleSearch = () => {
+    setLoading(true);
+
+    setRenderType("SEARCH");
+    handleSearchChange();
+    handleScrollStore();
+  };
+
+  // -------------- add a listener click enter key perform search -------------
+  // Define a debounce function
+  function debounce<T extends (...args: any[]) => void>(
+    func: T,
+    delay: number,
+  ) {
+    let timeoutId: ReturnType<typeof setTimeout>;
+    return function (this: ThisParameterType<T>, ...args: Parameters<T>) {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  }
+
+  document.addEventListener(
+    "keydown",
+    debounce((event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        handleSearch();
+      }
+    }, 400),
+  );
+
+  // document.addEventListener("keydown", (event) => {
+  //   if (event.key === "Enter") {
+  //     handleSearch();
+  //   }
+  // });
+
   return (
     <div className="fixed top-0 z-50 my-2 flex h-12 w-full items-center justify-start px-2 md:px-4">
       <img
@@ -65,17 +106,14 @@ function Header({
             type="text"
             placeholder="Find 100,000 plus games"
             className="relative ml-2 h-full flex-grow rounded-l-xl pl-3"
-            onChange={handleInputChange}
+            // onChange={handleInputChange}
           />
           {/* <ButtonSearch link="">🔍</ButtonSearch> */}
           <span>
             <button
               className="h-full w-14 rounded-r-xl bg-orange px-2 md:w-20"
               onClick={() => {
-                setRenderType("SEARCH");
-                setLoading(true);
-                handleSearchChange();
-                handleScrollStore();
+                handleSearch();
               }}
             >
               🔍

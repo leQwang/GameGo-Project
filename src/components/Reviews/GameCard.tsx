@@ -120,12 +120,14 @@ function GameCard(gameRawG: GameRawGCard) {
   // };
 
   return (
-    <Link to={`/reviews/${gameRawG.id}`}>
+    <Link to={`/reviews/${gameRawG.id}`} target="_blank">
       <li
         key={gameRawG.id}
-        // onClick={handleClick}
         className="bg-gamecard xl:h-92 group relative flex w-full flex-col overflow-hidden rounded-xl transition-all duration-100 ease-in-out hover:z-10 hover:scale-105 hover:cursor-pointer hover:overflow-visible hover:rounded-t-xl hover:bg-orangeCard hover:shadow-lg md:hover:rounded-b-none"
       >
+        {/* <div>
+
+        </div> */}
         <LazyLoadImage
           src={gameRawG.background_image}
           alt={gameRawG.name}
@@ -154,38 +156,17 @@ function GameCard(gameRawG: GameRawGCard) {
                   : Number(gameRawG.metacritic) < 50
                     ? "border-red-500 text-red-500"
                     : "border-yellow-600 text-yellow-600"
+              } ${
+                Number(gameRawG.metacritic) >= 80
+                  ? "group-hover:bg-green-500 group-hover:text-white"
+                  : Number(gameRawG.metacritic) < 50
+                    ? "group-hover:bg-red-500 group-hover:text-white"
+                    : "group-hover:bg-yellow-600 group-hover:text-black"
               } ${gameRawG.metacritic === null ? "hidden" : "visible"}`}
             >
               {gameRawG.metacritic}
             </div>
           </div>
-          {/* ------------------------------------------ */}
-          {/* {gameOverview !== null ? (
-            // if gameOverview.steamAppID is not null, then it is available on steam
-            <>
-              <p className="mt-auto flex items-center">
-                Price {" : "}
-                <span className="h-full text-sm text-white line-through opacity-70">
-                  ${gameDetail?.deals[0].retailPrice}
-                </span>{" "}
-                <span className="mr-auto h-full text-xl font-bold">
-                  {" $"}
-                  {Number(
-                    Number(gameDetail?.deals[0].price ?? 0) * regionalPriceRate,
-                  ).toFixed(2)}
-                </span>
-                <div className="h-full rounded-md bg-orange font-bold text-white">
-                  {"-"}
-                  {Number(
-                    (gameDetail?.deals[0].savings ?? 0) * regionalPriceRate,
-                  ).toFixed(2)}
-                  {"%"}
-                </div>
-              </p>
-            </>
-          ) : (
-            <p>Unable to get Price</p>
-          )} */}
           {/* --------------------------------------- */}
           <div className="relative left-0 w-full -translate-y-[1px] pb-2 transition-opacity duration-200 ease-in-out group-hover:opacity-100 md:absolute md:top-[100%] md:rounded-b-xl md:bg-orangeCard md:px-2 md:opacity-0">
             <p>Released: {gameRawG.released}</p>
@@ -202,7 +183,6 @@ function GameCard(gameRawG: GameRawGCard) {
         </div>
       </li>
     </Link>
-    // </a>
   );
 }
 

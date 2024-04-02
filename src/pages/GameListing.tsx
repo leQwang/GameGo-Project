@@ -3,9 +3,9 @@ import { useState } from "react";
 import { SelectedGenreProvider } from "../components/Provider/SelectedGenreProvider";
 
 import GenreNav from "../components/GenreNav/GenreNav";
-import StoreMain from "../components/Store/ListingMain";
+import ListingMain from "../components/Reviews/ListingMain";
 import Footer from "../components/Footer/Footer";
-import Header from "../components/Header/Header";
+import Header from "../components/ReviewSearchBar/Header";
 
 function GameReview() {
   const [isSidenavOpen, setIsSidenavOpen] = useState(false);
@@ -33,7 +33,7 @@ function GameReview() {
               setLoading={setLoading}
               setRenderType={setRenderType}
             />
-            <StoreMain
+            <ListingMain
               searchValue={searchValue}
               loading={loading}
               setLoading={setLoading}

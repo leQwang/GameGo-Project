@@ -1,4 +1,13 @@
 import { GameRawGGeneral, GameStoreLink } from "../../Services/RawGApi";
+import {
+  FaSteam,
+  FaXbox,
+  FaPlaystation,
+  FaApple,
+  FaGooglePlay,
+  FaItchIo,
+} from "react-icons/fa";
+import { SiGogdotcom, SiNintendoswitch, SiEpicgames } from "react-icons/si";
 
 interface GameDetailInfoProps {
   gameData: GameRawGGeneral | null;
@@ -13,8 +22,23 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
         <div className="flex items-center justify-center rounded-md bg-orange px-1 text-sm font-semibold text-black lg:px-3">
           {gameData?.released}
         </div>
-        {/* <div className=' text-orange px-3'>{gameData?.ratings_count} Ratings</div> */}
-        <div className="font-body">
+        <ul className="flex items-center ">
+          {gameStoreLinks?.map((store, index) => (
+            <li className="mx-1 my-2" key={index}>
+              {Number(store.store_id) === 1 ? <FaSteam /> : ""}
+              {Number(store.store_id) === 2 ? <FaXbox /> : ""}
+              {Number(store.store_id) === 3 ? <FaPlaystation /> : ""}
+              {Number(store.store_id) === 4 ? <FaApple /> : ""}
+              {Number(store.store_id) === 5 ? <SiGogdotcom /> : ""}
+              {Number(store.store_id) === 6 ? <SiNintendoswitch /> : ""}
+              {/* {Number(store.store_id) === 7 ? "360" : ""} */}
+              {Number(store.store_id) === 8 ? <FaGooglePlay /> : ""}
+              {Number(store.store_id) === 9 ? <FaItchIo /> : ""}
+              {Number(store.store_id) === 11 ? <SiEpicgames /> : ""}
+            </li>
+          ))}
+        </ul>
+        <div className="flex items-center font-body">
           AVERAGE PLAYTIME: {gameData?.playtime} HOURS
         </div>
       </div>
@@ -23,16 +47,18 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
       <div>
         <h1 className="text-2xl text-orange underline ">Genres: </h1>
         {gameData?.genres.map((genre, index) => (
-          <span key={index}>{genre.name}</span>
+          <span className="text-xl font-semibold hover:text-blue-400" key={index}>
+            {genre.name}
+            {index < gameData.genres.length - 1 ? ", " : ""}
+          </span>
         ))}
       </div>
 
-      <div className="w-fit">
-        <h1 className="text-2xl text-orange underline ">Store List</h1>
-        <div></div>
-        <ul className="grid grid-cols-2 rounded-md ">
+      <div className="w-fit ">
+        <h1 className="text-2xl text-orange underline ">Store List:</h1>
+        <ul className="flex rounded-md ">
           {gameStoreLinks?.map((store, index) => (
-            <li className="mx-1 my-2 rounded-md bg-orangeCard p-1" key={index}>
+            <li className="mx-1 my-2 rounded-md bg-orangeCard p-1 hover:bg-blue-400" key={index}>
               <a
                 className="flex justify-center"
                 href={store.url}
@@ -53,6 +79,10 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
             </li>
           ))}
         </ul>
+      </div>
+      <div>
+        <h1 className="text-2xl text-orange underline ">Description:</h1>
+        <p className="first-letter:text-3xl font-bold">{gameData?.description_raw}</p>
       </div>
     </div>
   );

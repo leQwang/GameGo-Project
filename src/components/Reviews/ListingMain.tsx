@@ -20,7 +20,7 @@ import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 import { GameRawGCard } from "../../Services/RawGApi";
 
-interface StoreMainProps {
+interface ListingMainProps {
   searchValue: string;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -34,7 +34,7 @@ function ListingMain({
   setLoading,
   renderType,
   setRenderType,
-}: StoreMainProps) {
+}: ListingMainProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const { selectedGenre } = useSelectedGenre();
   const [gamesList, setGamesList] = useState<GameRawGCard[]>([]);
@@ -62,11 +62,11 @@ function ListingMain({
 
   // ------------- API calls Function -------------
   const [totalPages, setTotalPages] = useState(100);
-  // const [renderType, setRenderType] = useState("GENRE");
+  const pageSize = 24;
 
   const getGameBySearchPageFunc = async (searchValue: any, page: number) => {
     try {
-      const pageSize = 24;
+      // console.log("Fetching games by search: ", searchValue, page);
       const data = await getGameBySearchAndPage(searchValue, pageSize, page);
       setTotalPages(Math.floor(data.count / pageSize + 1));
 
@@ -81,14 +81,12 @@ function ListingMain({
 
   const getGamesByGenrePageFunc = async (genreId: number, page: number) => {
     try {
-      const pageSize = 24;
-
       const data = await getGamesByGenreAndPage(
         genreId.toString(),
         pageSize,
         page,
       );
-      console.log(data.count, pageSize);
+      // console.log(data.count, pageSize);
       setTotalPages(Math.floor(data.count / pageSize + 1));
 
       const gamesListTemp: GameRawGCard[] = data.results;
@@ -104,6 +102,10 @@ function ListingMain({
   const isFirstLoad = useRef(true);
 
   useEffect(() => {
+    console.log("When the search value is: ", searchValue);
+    console.log("When the genre is: ", selectedGenre);
+    console.log("When the render type is: ", renderType);
+    console.log("-------------------------------------");
     if (isFirstLoad.current) {
       // If first load: render game by genre
       renderGamesByGenre();
@@ -154,7 +156,11 @@ function ListingMain({
     }
     // ** If search value is not empty, render games by search
     else {
+      if (searchValue === "") {
+        return;
+      }
       // setRenderType("GENRE");
+      // console.log("Search: ", searchValue);
       getGameBySearchPageFunc(searchValue, 1)
         .then((gamesListTemp) => {
           if (gamesListTemp) {
@@ -208,7 +214,7 @@ function ListingMain({
             setLoading(false);
           });
       } else {
-        console.log("Fetching games by search: ");
+        console.log("Active search: ", searchValue);
         getGameBySearchPageFunc(searchValue, active)
           .then((gamesListTemp) => {
             if (gamesListTemp) {
