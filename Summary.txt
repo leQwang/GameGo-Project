@@ -13,3 +13,4 @@ What have I learned and enhanced throughout the journey:
 - Use react observer to check when the div is inView
 - Optimize fetching to reduce request call (Reduce call for rendering games list on first load from 3 to 1) - useRef to check for initial load (can be enhanced by using useState and checking if the value is undefined at the useEffect)
 - Apply Lazy loading, skeleton, loader effect to enhance user experience and speed
+- Learn about routing, configure routing for deployment on Vercel

@@ -23,6 +23,7 @@ import {
 // components
 import GameDetailInfo from "../components/GameDetail/GameDetailInfo";
 import GameDetailMedia from "../components/GameDetail/GameDetailMedia";
+import ImageGameDetailLoad from "../components/ImageLoad/ImageGameDetailLoad";
 
 function GameDetail() {
   const { gameId } = useParams<{ gameId: string }>();
@@ -114,6 +115,7 @@ function GameDetail() {
             className="relative w-full"
             src={gameData?.background_image}
             alt="background image"
+            loading="lazy"
           />
           <div className="gameDetail_background-desktop absolute left-0 top-0 h-full w-full"></div>
         </div>
@@ -126,36 +128,28 @@ function GameDetail() {
           <GameDetailMedia />
         </div>
 
-        {/* display list of screenshots */}
-        {/* <div className="flex flex-row flex-wrap"> */}
-        {/* {gameScreenShots?.map((screenshot, index) => {
-            return (
-              <div key={index} className="relative w-full md:w-1/2 lg:w-1/2 ">
-                <img
-                  loading="lazy"
-                  className="w-full"
-                  src={screenshot.image}
-                  alt="screenshot"
-                />
-              </div>
-            );
-          })}
-        </div> */}
-
         {gameScreenShots?.length != undefined && gameScreenShots?.length > 0 ? (
           <div ref={sliderRef} className="keen-slider">
             {gameScreenShots?.map((screenshot, index) => {
               return (
+                // <div
+                //   key={index}
+                //   className="keen-slider__slide blur-load relative"
+                //   style={{ backgroundImage: `url(${screenshot.image})` }}
+                // >
+                //   <img
+                //   loading="lazy"
+                //   className="lazyLoadImg h-full w-full object-cover"
+                //   src={screenshot.image}
+                //   alt="screenshot"
+                //   />
+                // </div>
+
                 <div
                   key={index}
-                  className="keen-slider__slide relative  "
+                  className="keen-slider__slide relative"
                 >
-                  <img
-                    loading="lazy"
-                    className="w-full h-full object-cover"
-                    src={screenshot.image}
-                    alt="screenshot"
-                  />
+                  <ImageGameDetailLoad imageLink={screenshot.image} />
                 </div>
               );
             })}
