@@ -19,7 +19,7 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
     <div className="flex-grow">
       {/* <div>Pagination</div> */}
       <div className="flex gap-3 py-1">
-        <div className="flex items-center justify-center rounded-md bg-orange px-1 text-sm font-semibold text-black lg:px-3">
+        <div className="flex items-center justify-center rounded-md bg-black px-1 text-sm font-semibold text-white lg:px-3 text-nowrap">
           {gameData?.released}
         </div>
         <ul className="flex items-center ">
@@ -38,13 +38,13 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
             </li>
           ))}
         </ul>
-        <div className="flex items-center font-body">
-          AVERAGE PLAYTIME: {gameData?.playtime} HOURS
+        <div className="flex items-center font-body text-nowrap">
+          AVERAGE PLAYTIME: <span className="text-orange font-semibold"> {gameData?.playtime} HOURS</span> 
         </div>
       </div>
-      <div className="font-bold lg:text-6xl">{gameData?.name}</div>
+      <div className="font-bold text-5xl lg:text-6xl my-5">{gameData?.name}</div>
 
-      <div>
+      <div className="my-3">
         <h1 className="text-2xl text-orange underline ">Genres: </h1>
         {gameData?.genres.map((genre, index) => (
           <span className="text-xl font-semibold hover:text-blue-400" key={index}>
@@ -54,7 +54,7 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
         ))}
       </div>
 
-      <div className="w-fit ">
+      <div className="w-fit my-3">
         <h1 className="text-2xl text-orange underline ">Store List:</h1>
         <ul className="flex rounded-md ">
           {gameStoreLinks?.map((store, index) => (

@@ -22,7 +22,7 @@ import {
 
 // components
 import GameDetailInfo from "../components/GameDetail/GameDetailInfo";
-import GameDetailMedia from "../components/GameDetail/GameDetailMedia";
+// import GameDetailMedia from "../components/GameDetail/GameDetailMedia";
 import ImageGameDetailLoad from "../components/ImageLoad/ImageGameDetailLoad";
 
 function GameDetail() {
@@ -107,8 +107,31 @@ function GameDetail() {
     },
   });
 
+  // -------------------- check if mobile --------------------
+  const [isMobile, setIsMobile] = useState(false);
+
+  const [screenWidth, setScreenWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 0,
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (screenWidth < 640) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [screenWidth]);
+
   return (
-    <div className={`relative min-h-screen bg-[#221200]`}>
+    <div className={`relative min-h-screen overflow-x-hidden bg-[#221200]`}>
       <div className="absolute left-0 top-0 w-full">
         <div className="relative w-full">
           <img
@@ -123,31 +146,23 @@ function GameDetail() {
 
       <div className="relative h-full w-full">
         <div className="relative h-20 w-full">Header Later</div>
-        <div className="flex flex-row">
+        <div className="flex flex-row w-full md:w-1/2 mx-auto">
           <GameDetailInfo gameData={gameData} gameStoreLinks={gameStoreLinks} />
-          <GameDetailMedia />
+          {/* <GameDetailMedia /> */}
         </div>
+      </div>
 
+      <div className="relative h-full w-full my-10">
         {gameScreenShots?.length != undefined && gameScreenShots?.length > 0 ? (
-          <div ref={sliderRef} className="keen-slider">
+          <div
+            ref={sliderRef}
+            className={` ${isMobile ? "flex flex-col" : "keen-slider"}`}
+          >
             {gameScreenShots?.map((screenshot, index) => {
               return (
-                // <div
-                //   key={index}
-                //   className="keen-slider__slide blur-load relative"
-                //   style={{ backgroundImage: `url(${screenshot.image})` }}
-                // >
-                //   <img
-                //   loading="lazy"
-                //   className="lazyLoadImg h-full w-full object-cover"
-                //   src={screenshot.image}
-                //   alt="screenshot"
-                //   />
-                // </div>
-
                 <div
                   key={index}
-                  className="keen-slider__slide relative"
+                  className={` relative ${isMobile ? "" : "keen-slider__slide"}`}
                 >
                   <ImageGameDetailLoad imageLink={screenshot.image} />
                 </div>
