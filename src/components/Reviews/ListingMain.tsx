@@ -12,7 +12,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 import primaryImage from "../../assets/images/horizon-poster.jpg";
-import HFW from "../../assets/videos/HFW-trailer.mp4";
+// import HFW from "../../assets/videos/HFW-trailer.mp4"; 
 
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
@@ -54,11 +54,11 @@ function ListingMain({
     return () => clearTimeout(timer);
   }, []);
 
-  const handleVideoEnd = () => {
-    if (videoRef.current) {
-      videoRef.current.style.zIndex = "0";
-    }
-  };
+  // const handleVideoEnd = () => {
+  //   if (videoRef.current) {
+  //     videoRef.current.style.zIndex = "0";
+  //   }
+  // };
 
   // ------------- API calls Function -------------
   const [totalPages, setTotalPages] = useState(100);
@@ -252,13 +252,13 @@ function ListingMain({
           // onMouseEnter={handleMouseEnter}
           // onMouseLeave={handleMouseLeave}
         />
-        <video
+        {/* <video
           ref={videoRef}
           muted
           className="absolute top-0 h-[25rem] object-cover md:w-[99%] md:rounded-2xl lg:h-[27rem] xl:h-[35rem]"
           src={HFW}
           onEnded={handleVideoEnd}
-        ></video>
+        ></video> */}
       </div>
 
       {/* ------------------- Render Game Card -------------------- */}
