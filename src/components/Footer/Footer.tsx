@@ -1,21 +1,7 @@
 import logoImage from "../../assets/images/Logo1.png";
 import "../../index.css";
-// import { motion, useInView, useAnimation } from "framer-motion";
-// import { useRef, useEffect } from "react";
 
 function Footer() {
-  // const ref = useRef(null);
-  // const isInView = useInView(ref);
-
-  // const mainControls = useAnimation();
-
-  // useEffect(() => {
-  //   if (isInView) {
-  //     mainControls.start("visible");
-  //   } else {
-  //     console.log("not in view");
-  //   }
-  // }, [isInView]);
 
   return (
     <footer className="footer h-fit object-cover z-0">

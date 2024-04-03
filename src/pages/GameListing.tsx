@@ -27,7 +27,7 @@ function GameReview() {
         <a id="store" className="h-0 w-0"></a>
         {/* --------- store ---------- */}
         <div className="bg-custom-radial-gradient relative z-10">
-          <div className="relative mt-12 flex w-full flex-col md:flex-row">
+          <div className="relative mt-14 md:mt-12 flex w-full flex-col md:flex-row">
             <GenreNav
               isSidenavOpen={isSidenavOpen}
               setLoading={setLoading}

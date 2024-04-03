@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import GameDetail from "./pages/GameDetail.tsx";
 import Home from "./pages/Home.tsx";
 import GameReview from "./pages/GameListing.tsx";
+import Store from "./pages/Store.tsx";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
   {
     path: "/reviews/:gameId",
     element: <GameDetail />,
+  },
+  {
+    path: "/store",
+    element: <Store />,
   },
 ]);
 

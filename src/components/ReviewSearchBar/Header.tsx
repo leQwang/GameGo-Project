@@ -1,6 +1,12 @@
 // import { useState } from "react";
 import logoImage from "../../assets/images/Logo1.png";
 
+import { IoHomeOutline, IoStorefrontOutline } from "react-icons/io5";
+import { FaRegStar } from "react-icons/fa";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+
+import { useNavigate } from "react-router-dom";
+
 function Header({
   setSearchValue,
   setIsSidenavOpen,
@@ -8,7 +14,9 @@ function Header({
   setRenderType,
 }: any) {
   // const [inputValue, setInputValue] = useState("");
-  const searchBarValue = document.getElementById("headerSearchInput") as HTMLInputElement;
+  const searchBarValue = document.getElementById(
+    "headerSearchInput",
+  ) as HTMLInputElement;
 
   // const handleInputChange = () => {
   //   setInputValue(searchBarValue?.value || "");
@@ -83,8 +91,23 @@ function Header({
   //   }
   // });
 
+  //  ------------ navigation ----------------
+  const navigate = useNavigate();
+
+  const handleClickStore = () => {
+    navigate("/store");
+  };
+
+  const handleClickReviews = () => {
+    navigate("/reviews");
+  };
+
+  const handleClickHome = () => {
+    navigate("/");
+  };
+
   return (
-    <div className="fixed top-0 z-50 my-2 flex h-12 w-full items-center justify-start px-2 md:px-4">
+    <div className="fixed top-0 z-50 my-0 flex h-16 w-full items-center justify-start bg-[#000000c2] px-2 md:px-4">
       <img
         src={logoImage}
         className="logo react hidden h-12 cursor-pointer md:block"
@@ -97,6 +120,38 @@ function Header({
       >
         ☰
       </div>
+      {/* <div
+        className="bg-vBlue flex h-10 w-10 items-center justify-center px-5 text-white md:hidden"
+        onClick={handleToggleNav}
+      >
+        <IoHomeOutline />
+      </div> */}
+      <div className="hidden h-full items-center justify-center gap-3 px-1 font-bold md:flex">
+        <div
+          onClick={handleClickHome}
+          className="text-md cursor-pointer flex h-full items-center px-1 transition-all duration-200 ease-in-out hover:bg-orange hover:text-black"
+        >
+          Home
+        </div>
+        <div
+          onClick={handleClickReviews}
+          className="text-md cursor-pointer flex h-full items-center px-1 transition-all duration-200 ease-in-out hover:bg-orange hover:text-black"
+        >
+          Reviews
+        </div>
+        <div
+          onClick={handleClickStore}
+          className="text-md cursor-pointer flex h-full items-center px-1 transition-all duration-200 ease-in-out hover:bg-orange hover:text-black"
+        >
+          Store
+        </div>
+      </div>
+
+      <div className="flex items-center justify-center gap-3 px-2 md:hidden">
+        <IoHomeOutline onClick={handleClickHome} className="cursor-pointer"/>
+        <FaRegStar onClick={handleClickReviews} className="cursor-pointer"/>
+        <IoStorefrontOutline onClick={handleClickStore} className="cursor-pointer"/>
+      </div>
 
       {/* ---------- Search Bar ------------- */}
       <div className="relative h-10 w-full items-center justify-center">
@@ -105,18 +160,18 @@ function Header({
             id="headerSearchInput"
             type="text"
             placeholder="Find 100,000 plus games"
-            className="relative ml-2 h-full flex-grow rounded-l-xl pl-3"
+            className="relative h-full flex-grow rounded-l-xl pl-3 md:ml-2"
             // onChange={handleInputChange}
           />
           {/* <ButtonSearch link="">🔍</ButtonSearch> */}
           <span>
             <button
-              className="h-full w-14 rounded-r-xl bg-orange px-2 md:w-20"
+              className="flex h-full w-14 items-center justify-center rounded-r-xl bg-orange px-2 hover:opacity-80 md:w-20"
               onClick={() => {
                 handleSearch();
               }}
             >
-              🔍
+              <FaMagnifyingGlass />
             </button>
           </span>
         </div>

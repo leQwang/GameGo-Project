@@ -61,9 +61,12 @@ function CTA() {
 
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    // Redirect to GameDetail component with the game ID
+  const handleClickReviews = () => {
     navigate("/reviews");
+  };
+
+  const handleClickStore = () => {
+    navigate("/store");
   };
 
   return (
@@ -95,12 +98,12 @@ function CTA() {
           ) : (
             <div className="flex flex-col gap-2 md:flex-row md:gap-5">
               <button
-                onClick={handleClick}
+                onClick={handleClickReviews}
                 className="mx-auto w-full rounded-xl bg-orange px-7 py-3 text-lg font-bold transition-all duration-200 ease-in-out hover:bg-white hover:text-orange lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10"
               >
                 See Listing
               </button>
-              <button className="mx-auto w-full rounded-xl bg-white px-7 py-3 text-lg font-bold text-black transition-all duration-200 ease-in-out hover:bg-orange hover:text-white lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10">
+              <button onClick={handleClickStore} className="mx-auto w-full rounded-xl bg-white px-7 py-3 text-lg font-bold text-black transition-all duration-200 ease-in-out hover:bg-orange hover:text-white lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10">
                 Find Best Deal
               </button>
             </div>
@@ -112,12 +115,12 @@ function CTA() {
         {isMobile ? (
           <div className="mb-20 flex flex-col gap-3 md:mb-0 md:flex-row md:gap-5">
             <button
-              onClick={handleClick}
+              onClick={handleClickReviews}
               className="mx-auto w-[70%] rounded-xl bg-orange px-7 py-3 text-lg font-bold transition-all duration-200 ease-in-out hover:bg-white hover:text-orange lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10"
             >
               See Listing
             </button>
-            <button className="mx-auto w-[70%] rounded-xl bg-white px-7 py-3 text-lg font-bold text-black transition-all duration-200 ease-in-out hover:bg-orange hover:text-white lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10">
+            <button onClick={handleClickStore} className="mx-auto w-[70%] rounded-xl bg-white px-7 py-3 text-lg font-bold text-black transition-all duration-200 ease-in-out hover:bg-orange hover:text-white lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10">
               Find Best Deal
             </button>
           </div>
