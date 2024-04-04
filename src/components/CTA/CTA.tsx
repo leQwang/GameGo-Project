@@ -70,7 +70,7 @@ function CTA() {
   };
 
   return (
-    <div className="relative z-0 flex min-h-screen w-screen flex-col items-start justify-center overflow-hidden pt-16 md:pt-14">
+    <div className="relative z-0 flex h-screen w-screen flex-col items-start justify-center overflow-hidden pt-16 md:pt-14">
       <div className="relative z-10 flex w-full flex-col justify-around lg:flex-row">
         <motion.div
           ref={ref}

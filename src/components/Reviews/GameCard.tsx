@@ -18,6 +18,7 @@ import {
   FaItchIo,
 } from "react-icons/fa";
 import { SiGogdotcom, SiNintendoswitch, SiEpicgames } from "react-icons/si";
+// import { IoStar } from "react-icons/io5";
 
 // import {
 //   getExactGameByName,
@@ -25,9 +26,7 @@ import { SiGogdotcom, SiNintendoswitch, SiEpicgames } from "react-icons/si";
 //   getGameById,
 // } from "../../Services/CheapSharkApi";
 
-
 function GameCard(gameRawG: GameRawGCard) {
-
   // --------------- constants ---------------
   console.log(gameRawG);
 
@@ -106,7 +105,8 @@ function GameCard(gameRawG: GameRawGCard) {
     <Link to={`/reviews/${gameRawG.id}`} target="_blank">
       <li
         key={gameRawG.id}
-        className="bg-gamecard xl:h-92 group relative flex w-full flex-col overflow-hidden rounded-xl transition-all duration-100 ease-in-out hover:z-10 hover:scale-105 hover:cursor-pointer hover:overflow-visible hover:rounded-t-xl hover:bg-orangeCard hover:shadow-lg md:hover:rounded-b-none"
+        className="xl:h-92 group relative flex w-full flex-col overflow-hidden rounded-xl bg-[#392714] transition-all duration-100 ease-in-out hover:z-10 hover:scale-105 hover:cursor-pointer hover:overflow-visible hover:rounded-t-xl hover:shadow-lg md:hover:rounded-b-none"
+        // hover:bg-orangeCard
       >
         {/* <div>
 
@@ -126,30 +126,28 @@ function GameCard(gameRawG: GameRawGCard) {
         )}
 
         <div className="flex flex-grow flex-col px-2 pb-2">
-        <ul className="flex items-center ">
-          {gameRawG.stores?.map((store, index) => (
-            <li className={`${ Number(store.store.id) === 7 ?"mx-0" : "mx-1" } my-2`} key={index}>
-              {Number(store.store.id) === 1 ? <FaSteam /> : ""}
-              {Number(store.store.id) === 2 ? <FaXbox /> : ""}
-              {Number(store.store.id) === 3 ? <FaPlaystation /> : ""}
-              {Number(store.store.id) === 4 ? <FaApple /> : ""}
-              {Number(store.store.id) === 5 ? <SiGogdotcom /> : ""}
-              {Number(store.store.id) === 6 ? <SiNintendoswitch /> : ""}
-              {/* {Number(store.store.id) === 7 ? "360" : ""} */}
-              {Number(store.store.id) === 8 ? <FaGooglePlay /> : ""}
-              {Number(store.store.id) === 9 ? <FaItchIo /> : ""}
-              {Number(store.store.id) === 11 ? <SiEpicgames /> : ""}
-            </li>
-          ))}
-        </ul>
-          <div className="flex-grow font-sans text-xl font-semibold xl:text-2xl">
-            {gameRawG.name}
-          </div>
-          <div className="mt-1 flex w-full justify-between">
-            <p className="mt-auto flex ">Rating: {gameRawG.rating}⭐</p>
-
+          <div className="mt-1 flex justify-between">
+            <ul className="flex items-center ">
+              {gameRawG.stores?.map((store, index) => (
+                <li
+                  className={`${Number(store.store.id) === 7 ? "mx-0" : "mx-1"} my-2`}
+                  key={index}
+                >
+                  {Number(store.store.id) === 1 ? <FaSteam /> : ""}
+                  {Number(store.store.id) === 2 ? <FaXbox /> : ""}
+                  {Number(store.store.id) === 3 ? <FaPlaystation /> : ""}
+                  {Number(store.store.id) === 4 ? <FaApple /> : ""}
+                  {Number(store.store.id) === 5 ? <SiGogdotcom /> : ""}
+                  {Number(store.store.id) === 6 ? <SiNintendoswitch /> : ""}
+                  {/* {Number(store.store.id) === 7 ? "360" : ""} */}
+                  {Number(store.store.id) === 8 ? <FaGooglePlay /> : ""}
+                  {Number(store.store.id) === 9 ? <FaItchIo /> : ""}
+                  {Number(store.store.id) === 11 ? <SiEpicgames /> : ""}
+                </li>
+              ))}
+            </ul>
             <div
-              className={`w-fit rounded-sm border px-2 font-bold ${
+              className={`w-fit rounded-sm border px-3 font-bold ${
                 Number(gameRawG.metacritic) >= 80
                   ? "border-green-500 text-green-500"
                   : Number(gameRawG.metacritic) < 50
@@ -166,18 +164,42 @@ function GameCard(gameRawG: GameRawGCard) {
               {gameRawG.metacritic}
             </div>
           </div>
+
+          <div className="flex-grow font-sans text-xl font-semibold xl:text-2xl">
+            {gameRawG.name}
+          </div>
+
           {/* --------------------------------------- */}
-          <div className="relative left-0 w-full -translate-y-[1px] pb-2 transition-opacity duration-200 ease-in-out group-hover:opacity-100 md:absolute md:top-[100%] md:rounded-b-xl md:bg-orangeCard md:px-2 md:opacity-0">
-            <p>Released: {gameRawG.released}</p>
-            <p>Ratings Count: {gameRawG.ratings_count}</p>
-            <p>
-              Genres:{" "}
-              {gameRawG.genres.map((genre: { name: string }, index: number) => (
-                <span key={index}>
-                  {index > 0 ? `, ${genre.name}` : genre.name}
-                </span>
-              ))}
-            </p>
+          <div className="text-md relative left-0 w-full -translate-y-[7px] bg-[#392714] pb-2 transition-opacity duration-200 ease-in-out group-hover:opacity-100 md:absolute md:top-[100%] md:rounded-b-xl md:px-2 md:opacity-0">
+            <div className="flex justify-between">
+              <span className="font-semibold">Rating: </span>
+              <span>{gameRawG.rating}⭐</span>
+            </div>
+            <div className="h-[1px] w-full opacity-50 bg-orange"></div>
+            <div className="flex justify-between">
+              <span className="font-semibold">Released: </span>{" "}
+              <span>{gameRawG.released}</span>
+            </div>
+            <div className="h-[1px] w-full opacity-50 bg-orange"></div>
+            <div className="flex justify-between">
+              <span className="font-semibold">Rank: </span>
+              <span>
+                {gameRawG.rating_top} of {gameRawG.released.slice(0, 4)}
+              </span>
+            </div>
+            <div className="h-[1px] w-full opacity-50 bg-orange"></div>
+            <div className="flex flex-col justify-between">
+              <div className="flex flex-grow font-semibold">Genres: </div>
+              <div className="flex justify-end">
+                {gameRawG.genres.map(
+                  (genre: { name: string }, index: number) => (
+                    <span key={index}>
+                      {index > 0 ? `, ${genre.name}` : genre.name}
+                    </span>
+                  ),
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </li>

@@ -115,18 +115,18 @@ function Header({
         onClick={handleScrollTop}
       />
       <div
-        className="bg-vBlue flex h-10 w-10 items-center justify-center rounded-md bg-orange px-5 font-bold text-white md:hidden"
+        className="bg-vBlue flex h-10 w-10 items-center justify-center rounded-md bg-orange px-5 font-bold text-white lg:hidden"
         onClick={handleToggleNav}
       >
         ☰
       </div>
       {/* <div
-        className="bg-vBlue flex h-10 w-10 items-center justify-center px-5 text-white md:hidden"
+        className="bg-vBlue flex h-10 w-10 items-center justify-center px-5 text-white lg:hidden"
         onClick={handleToggleNav}
       >
         <IoHomeOutline />
       </div> */}
-      <div className="hidden h-full items-center justify-center gap-3 px-1 font-bold md:flex">
+      <div className="hidden h-full items-center justify-center gap-3 px-1 font-bold lg:flex">
         <div
           onClick={handleClickHome}
           className="text-md cursor-pointer flex h-full items-center px-1 transition-all duration-200 ease-in-out hover:bg-orange hover:text-black"
@@ -147,7 +147,7 @@ function Header({
         </div>
       </div>
 
-      <div className="flex items-center justify-center gap-3 px-2 md:hidden">
+      <div className="flex items-center justify-center gap-3 px-2 lg:hidden">
         <IoHomeOutline onClick={handleClickHome} className="cursor-pointer"/>
         <FaRegStar onClick={handleClickReviews} className="cursor-pointer"/>
         <IoStorefrontOutline onClick={handleClickStore} className="cursor-pointer"/>
@@ -159,7 +159,7 @@ function Header({
           <input
             id="headerSearchInput"
             type="text"
-            placeholder="Find 100,000 plus games"
+            placeholder="Find 300,000 plus games"
             className="relative h-full flex-grow rounded-l-xl pl-3 md:ml-2"
             // onChange={handleInputChange}
           />

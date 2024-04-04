@@ -13,7 +13,7 @@ module.exports = withMT({
         orange: '#E58E27',
         orangeText: '#E87D0E',
         orangeLight: '#FA982F',
-        orangeCard: '#ad6c1f',
+        orangeCard: '#392714',
 
         white: '#fbfbfb',
       },
@@ -28,6 +28,8 @@ module.exports = withMT({
         // => @media (min-width: 1280px) { ... }
 
         'xxl': '1440px',
+
+        '3xl': '1600px',
       },
     },
   },

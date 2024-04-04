@@ -263,18 +263,18 @@ function ReviewListing({
 
   return (
     <div className="relative z-10 mt-2 w-full md:mt-5">
-      <div className="group">
+      <div className="relative group overflow-hidden md:w-[99%] md:rounded-2xl lg:h-[27rem] 2xl:h-[28rem]">
         <LazyLoadImage
           src={primaryImage}
           alt="bg"
-          className={`relative z-10 h-[25rem] object-cover transition-opacity duration-200 ease-in-out md:w-[99%] md:rounded-2xl lg:h-[27rem] xl:h-[35rem]`}
+          className={`relative z-10 h-[25rem] w-full object-cover transition-opacity duration-200 ease-in-out md:h-full`}
           // onMouseEnter={handleMouseEnter}
           // onMouseLeave={handleMouseLeave}
         />
         <video
           ref={videoRef}
           muted
-          className="absolute top-0 h-[25rem] object-cover md:w-[99%] md:rounded-2xl lg:h-[27rem] xl:h-[35rem]"
+          className="absolute top-0 h-[25rem] w-full object-cover md:h-full "
           src={
             "http://cdn.akamai.steamstatic.com/steam/apps/257007287/movie_max_vp9.webm?t=1711032973"
           }
@@ -300,7 +300,7 @@ function ReviewListing({
 
       {/* ---------------- Pagination ---------------- */}
 
-      <div className="my-2  mb-8 flex w-full items-center justify-center gap-8">
+      <div className="my-2 mb-8 flex w-full items-center justify-center gap-8">
         <IconButton
           size="sm"
           variant="outlined"

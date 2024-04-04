@@ -69,14 +69,14 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
 
       <div className="my-3 w-fit">
         <h1 className="text-2xl text-orange underline ">Store List:</h1>
-        <ul className="flex rounded-md ">
+        <ul className="flex rounded-md flex-wrap">
           {gameStoreLinks?.map((store, index) => (
             <li
               className="mx-1 my-2 rounded-md bg-orangeCard p-1 hover:bg-blue-400"
               key={index}
             >
               <a
-                className="flex justify-center"
+                className="flex justify-center text-nowrap"
                 href={store.url}
                 target="_blank"
                 rel="noreferrer"
