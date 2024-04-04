@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { GameRawGGeneral, GameStoreLink } from "../../Services/RawGApi";
 import {
   FaSteam,
@@ -28,8 +30,24 @@ const storeIcons: { [key: number]: JSX.Element } = {
 };
 
 const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
+  const [isReadMore, setIsReadMore] = useState(false);
+
+  const handleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
+
+  const gameDescritpion = convertGameDescription(
+    gameData?.description_raw || "",
+  );
+
+  function convertGameDescription(descriptionHtml: string) {
+    return <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />;
+  }
+
+  // document.getElementById('gameDescription').innerHTML = gameData?.description_raw || "";
+
   return (
-    <div className="flex-grow">
+    <div className="w-full flex-grow">
       {/* <div>Pagination</div> */}
       <div className="flex gap-3 py-1">
         <div className="flex items-center justify-center text-nowrap rounded-md bg-black px-1 text-sm font-semibold text-white lg:px-3">
@@ -67,9 +85,9 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
         ))}
       </div>
 
-      <div className="my-3 w-fit">
+      <div className="my-3 w-full overflow-x-hidden md:w-fit">
         <h1 className="text-2xl text-orange underline ">Store List:</h1>
-        <ul className="flex rounded-md flex-wrap">
+        <ul className="flex flex-wrap rounded-md">
           {gameStoreLinks?.map((store, index) => (
             <li
               className="mx-1 my-2 rounded-md bg-orangeCard p-1 hover:bg-blue-400"
@@ -96,12 +114,39 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
           ))}
         </ul>
       </div>
-      <div>
-        <h1 className="text-2xl text-orange underline ">Description:</h1>
-        <p className="font-bold first-letter:text-3xl">
-          {gameData?.description_raw}
-        </p>
-      </div>
+      {gameData?.description_raw == null || gameData?.description_raw == "" ? (
+        <div className="flex w-full flex-col overflow-hidden text-ellipsis">
+          <h1 className="relative text-2xl text-orange underline ">
+            Description:
+          </h1>
+          <div
+            id="gameDescription"
+            className={`${isReadMore ? "h-full" : "h-24"} relative `}
+          >
+            Unavailable
+          </div>
+        </div>
+      ) : (
+        <div className={` flex w-full flex-col`}>
+          <div className="flex w-full flex-col overflow-hidden text-ellipsis">
+            <h1 className="relative text-2xl text-orange underline ">
+              Description:
+            </h1>
+            <div
+              id="gameDescription"
+              className={`${isReadMore ? "h-full" : "h-24"} relative first-letter:text-3xl`}
+            >
+              {gameDescritpion}
+            </div>
+          </div>
+          <div
+            onClick={handleReadMore}
+            className={`${isReadMore ? "hidden" : ""} relative flex w-full cursor-pointer justify-center rounded-b-xl bg-[#50473e67] font-bold text-orange opacity-90 hover:opacity-60`}
+          >
+            Read more
+          </div>
+        </div>
+      )}
     </div>
   );
 };

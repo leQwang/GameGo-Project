@@ -28,7 +28,7 @@ import { SiGogdotcom, SiNintendoswitch, SiEpicgames } from "react-icons/si";
 
 function GameCard(gameRawG: GameRawGCard) {
   // --------------- constants ---------------
-  console.log(gameRawG);
+  // console.log(gameRawG);
 
   // --------------- image loading process ---------------
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -181,12 +181,14 @@ function GameCard(gameRawG: GameRawGCard) {
               <span>{gameRawG.released}</span>
             </div>
             <div className="h-[1px] w-full opacity-50 bg-orange"></div>
+            {gameRawG.released == null ? "" : (
             <div className="flex justify-between">
               <span className="font-semibold">Rank: </span>
               <span>
                 {gameRawG.rating_top} of {gameRawG.released.slice(0, 4)}
               </span>
             </div>
+            )}
             <div className="h-[1px] w-full opacity-50 bg-orange"></div>
             <div className="flex flex-col justify-between">
               <div className="flex flex-grow font-semibold">Genres: </div>

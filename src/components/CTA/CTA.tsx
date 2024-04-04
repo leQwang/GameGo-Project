@@ -78,7 +78,7 @@ function CTA() {
           animate={controls}
           className="relative z-10 mx-auto flex w-fit flex-col justify-center gap-3 px-2 md:w-[80%] lg:w-fit lg:pl-20 xl:mx-0 xl:ml-auto "
         >
-          <div className="flex justify-center md:hidden lg:relative lg:-left-3 lg:mb-8 lg:justify-start">
+          <div className="flex justify-center lg:relative lg:-left-3 lg:justify-start">
             <img src={logoImage} className="logo react h-12" alt="React logo" />
           </div>
           <h4 className="w-full text-center text-lg font-bold text-orange lg:w-fit lg:text-left">

@@ -102,9 +102,9 @@ function ReviewListing({
   const isFirstLoad = useRef(true);
 
   useEffect(() => {
-    // console.log("When the search value is: ", searchValue);
-    // console.log("When the genre is: ", selectedGenre);
-    // console.log("When the render type is: ", renderType);
+    console.log("When the search value is: ", searchValue);
+    console.log("When the genre is: ", selectedGenre);
+    console.log("When the render type is: ", renderType);
     // console.log("-------------------------------------");
     if (isFirstLoad.current) {
       // If first load: render game by genre
@@ -157,7 +157,18 @@ function ReviewListing({
     // ** If search value is not empty, render games by search
     else {
       if (searchValue === "") {
-        return;
+        // which mean you delete the current search value
+        getGamesByGenrePageFunc(selectedGenre, 1)
+        .then((gamesListTemp) => {
+          if (gamesListTemp) {
+            setGamesList(gamesListTemp);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching games:", error);
+          setLoading(false);
+        });
       }
       // setRenderType("GENRE");
       // console.log("Search: ", searchValue);
@@ -262,7 +273,7 @@ function ReviewListing({
   // });
 
   return (
-    <div className="relative z-10 mt-2 w-full md:mt-5">
+    <div className="relative z-10 mt-2 w-full md:mt-5 min-h-screen">
       <div className="relative group overflow-hidden md:w-[99%] md:rounded-2xl lg:h-[27rem] 2xl:h-[28rem]">
         <LazyLoadImage
           src={primaryImage}
@@ -290,7 +301,7 @@ function ReviewListing({
             <span className="ringSpan"></span>
           </div>
         ) : (
-          <div className="mx-5 my-10 grid grid-cols-1 gap-5 md:ml-0 md:mr-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="mx-5 my-10 grid grid-cols-1 gap-5 md:mx-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {gamesList.map((game, index) => (
               <GameCard key={index} {...game} />
             ))}

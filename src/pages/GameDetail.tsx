@@ -156,7 +156,7 @@ function GameDetail() {
   }, []);
 
   useEffect(() => {
-    if (screenWidth < 640) {
+    if (screenWidth < 1023) {
       setIsMobile(true);
     } else {
       setIsMobile(false);
@@ -164,48 +164,57 @@ function GameDetail() {
   }, [screenWidth]);
 
   return (
-    <div className={`relative min-h-screen overflow-hidden bg-[#221200]`}>
-      <div className="absolute left-0 top-0 w-full">
-        <div className="relative w-full">
-          <img
-            className="relative w-full"
-            src={gameData?.background_image}
-            alt="background image"
-            loading="lazy"
-          />
-          <div className="gameDetail_background-desktop absolute left-0 top-0 h-full w-full"></div>
-        </div>
-      </div>
-
-      <div className="relative h-full w-full">
-        <div className="relative h-20 w-full"></div>
-        <div className="mx-auto flex w-full flex-row md:w-1/2">
-          <GameDetailInfo gameData={gameData} gameStoreLinks={gameStoreLinks} />
-          {/* <GameDetailMedia /> */}
-        </div>
-      </div>
-
-      <div className="relative my-10 h-full w-full">
-        {gameScreenShots?.length != undefined && gameScreenShots?.length > 0 ? (
-          <div
-            ref={sliderRef}
-            className={` ${isMobile ? "flex flex-col" : "keen-slider"}`}
-          >
-            {gameScreenShots?.map((screenshot, index) => {
-              return (
-                <div
-                  key={index}
-                  className={` relative ${isMobile ? "" : "keen-slider__slide"}`}
-                >
-                  <ImageGameDetailLoad imageLink={screenshot.image} />
-                </div>
-              );
-            })}
+    <div className={`relative overflow-hidden bg-[#221200]`}>
+      <div className="relative min-h-screen">
+        <div className="absolute left-0 top-0 w-full">
+          <div className="relative w-full">
+            <img
+              className="relative w-full"
+              src={gameData?.background_image}
+              alt="background image"
+              // loading="lazy"
+            />
+            <div className="gameDetail_background-desktop absolute left-0 top-0 h-full w-full"></div>
           </div>
-        ) : (
-          ""
-        )}
+        </div>
+        {/* ------------------------------------------ */}
+        <div className="relative mx-1">
+          <div className="relative h-full w-full">
+            <div className="relative h-20 w-full"></div>
+            <div className="mx-auto flex w-full flex-row md:w-1/2">
+              <GameDetailInfo
+                gameData={gameData}
+                gameStoreLinks={gameStoreLinks}
+              />
+              {/* <GameDetailMedia /> */}
+            </div>
+          </div>
+
+          <div className="relative my-5 h-full w-full">
+            {gameScreenShots?.length != undefined &&
+            gameScreenShots?.length > 0 ? (
+              <div
+                ref={sliderRef}
+                className={` ${isMobile ? "flex flex-col" : "keen-slider"}`}
+              >
+                {gameScreenShots?.map((screenshot, index) => {
+                  return (
+                    <div
+                      key={index}
+                      className={` relative ${isMobile ? "mx-3 my-1" : "keen-slider__slide"}`}
+                    >
+                      <ImageGameDetailLoad imageLink={screenshot.image} />
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </div>
       </div>
+
       <Footer />
     </div>
   );
