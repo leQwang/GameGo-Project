@@ -26,3 +26,32 @@ export const getGameById = async (gameId: number) => {
   const response = await rawGApi.get(`/games?id=${gameId}`);
   return response.data;
 };
+
+export interface GameCardCheapSharkOverview {
+  gameID: number;
+  steamAppID: number;
+  cheapest: number;
+  cheapestDealID: string;
+  external: string;
+  internalName: string;
+  thumb: string;
+}
+
+// export interface GameCheapSharkDetails {
+//   info: {
+//     title: string;
+//     steamAppID: string;
+//     thumb: string;
+//   };
+//   cheapestPriceEver: {
+//     price: string;
+//     date: number;
+//   };
+//   deals: {
+//     storeID: string;
+//     dealID: string;
+//     price: string;
+//     retailPrice: number;
+//     savings: number;
+//   }[];
+// }

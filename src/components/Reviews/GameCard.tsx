@@ -9,44 +9,27 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
 
+import {
+  FaSteam,
+  FaXbox,
+  FaPlaystation,
+  FaApple,
+  FaGooglePlay,
+  FaItchIo,
+} from "react-icons/fa";
+import { SiGogdotcom, SiNintendoswitch, SiEpicgames } from "react-icons/si";
+
 // import {
 //   getExactGameByName,
 //   // getPriceListByName,
 //   getGameById,
 // } from "../../Services/CheapSharkApi";
 
-export interface GameCardCheapSharkOverview {
-  gameID: number;
-  steamAppID: number;
-  cheapest: number;
-  cheapestDealID: string;
-  external: string;
-  internalName: string;
-  thumb: string;
-}
-
-// interface GameCheapSharkDetails {
-//   info: {
-//     title: string;
-//     steamAppID: string;
-//     thumb: string;
-//   };
-//   cheapestPriceEver: {
-//     price: string;
-//     date: number;
-//   };
-//   deals: {
-//     storeID: string;
-//     dealID: string;
-//     price: string;
-//     retailPrice: number;
-//     savings: number;
-//   }[];
-// }
 
 function GameCard(gameRawG: GameRawGCard) {
+
   // --------------- constants ---------------
-  // const regionalPriceRate = 1;
+  console.log(gameRawG);
 
   // --------------- image loading process ---------------
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -131,7 +114,7 @@ function GameCard(gameRawG: GameRawGCard) {
         <LazyLoadImage
           src={gameRawG.background_image}
           alt={gameRawG.name}
-          className={`${imageLoaded ? "h-40" : "h-0"} w-full overflow-hidden rounded-t-xl object-cover`}
+          className={`${imageLoaded ? "h-48" : "h-0"} w-full overflow-hidden rounded-t-xl object-cover`}
           effect="blur"
           onLoad={handleImageLoad} // Set onLoad event handler to update imageLoaded state
         />
@@ -143,6 +126,22 @@ function GameCard(gameRawG: GameRawGCard) {
         )}
 
         <div className="flex flex-grow flex-col px-2 pb-2">
+        <ul className="flex items-center ">
+          {gameRawG.stores?.map((store, index) => (
+            <li className={`${ Number(store.store.id) === 7 ?"mx-0" : "mx-1" } my-2`} key={index}>
+              {Number(store.store.id) === 1 ? <FaSteam /> : ""}
+              {Number(store.store.id) === 2 ? <FaXbox /> : ""}
+              {Number(store.store.id) === 3 ? <FaPlaystation /> : ""}
+              {Number(store.store.id) === 4 ? <FaApple /> : ""}
+              {Number(store.store.id) === 5 ? <SiGogdotcom /> : ""}
+              {Number(store.store.id) === 6 ? <SiNintendoswitch /> : ""}
+              {/* {Number(store.store.id) === 7 ? "360" : ""} */}
+              {Number(store.store.id) === 8 ? <FaGooglePlay /> : ""}
+              {Number(store.store.id) === 9 ? <FaItchIo /> : ""}
+              {Number(store.store.id) === 11 ? <SiEpicgames /> : ""}
+            </li>
+          ))}
+        </ul>
           <div className="flex-grow font-sans text-xl font-semibold xl:text-2xl">
             {gameRawG.name}
           </div>

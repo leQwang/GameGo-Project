@@ -12,7 +12,7 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 import primaryImage from "../../assets/images/horizon-poster.jpg";
-// import HFW from "../../assets/videos/HFW-trailer.mp4"; 
+// import HFW from "../../assets/videos/HFW-trailer.mp4";
 
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
@@ -28,7 +28,7 @@ interface ListingMainProps {
   setRenderType: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function ListingMain({
+function ReviewListing({
   searchValue,
   loading,
   setLoading,
@@ -54,11 +54,11 @@ function ListingMain({
     return () => clearTimeout(timer);
   }, []);
 
-  // const handleVideoEnd = () => {
-  //   if (videoRef.current) {
-  //     videoRef.current.style.zIndex = "0";
-  //   }
-  // };
+  const handleVideoEnd = () => {
+    if (videoRef.current) {
+      videoRef.current.style.zIndex = "0";
+    }
+  };
 
   // ------------- API calls Function -------------
   const [totalPages, setTotalPages] = useState(100);
@@ -102,10 +102,10 @@ function ListingMain({
   const isFirstLoad = useRef(true);
 
   useEffect(() => {
-    console.log("When the search value is: ", searchValue);
-    console.log("When the genre is: ", selectedGenre);
-    console.log("When the render type is: ", renderType);
-    console.log("-------------------------------------");
+    // console.log("When the search value is: ", searchValue);
+    // console.log("When the genre is: ", selectedGenre);
+    // console.log("When the render type is: ", renderType);
+    // console.log("-------------------------------------");
     if (isFirstLoad.current) {
       // If first load: render game by genre
       renderGamesByGenre();
@@ -242,6 +242,25 @@ function ListingMain({
     }
   };
 
+  // ------------------- Keen Slider --------------------
+  // const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
+  //   slidesPerView: 1,
+  //   spacing: 15,
+  //   centered: false,
+  //   vertical: false,
+  //   loop: true,
+  //   mode: "snap",
+  //   duration: 500,
+  //   breakpoints: {
+  //     "(min-width: 768px)": {
+  //       slidesPerView: 2,
+  //     },
+  //     "(min-width: 1200px)": {
+  //       slidesPerView: 3,
+  //     },
+  //   },
+  // });
+
   return (
     <div className="relative z-10 mt-2 w-full md:mt-5">
       <div className="group">
@@ -252,13 +271,15 @@ function ListingMain({
           // onMouseEnter={handleMouseEnter}
           // onMouseLeave={handleMouseLeave}
         />
-        {/* <video
+        <video
           ref={videoRef}
           muted
           className="absolute top-0 h-[25rem] object-cover md:w-[99%] md:rounded-2xl lg:h-[27rem] xl:h-[35rem]"
-          src={HFW}
+          src={
+            "http://cdn.akamai.steamstatic.com/steam/apps/257007287/movie_max_vp9.webm?t=1711032973"
+          }
           onEnded={handleVideoEnd}
-        ></video> */}
+        ></video>
       </div>
 
       {/* ------------------- Render Game Card -------------------- */}
@@ -334,4 +355,4 @@ function ListingMain({
   );
 }
 
-export default ListingMain;
+export default ReviewListing;

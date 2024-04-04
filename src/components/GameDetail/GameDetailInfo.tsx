@@ -14,51 +14,67 @@ interface GameDetailInfoProps {
   gameStoreLinks: GameStoreLink[] | null;
 }
 
+const storeIcons: { [key: number]: JSX.Element } = {
+  1: <FaSteam />,
+  2: <FaXbox />,
+  3: <FaPlaystation />,
+  4: <FaApple />,
+  5: <SiGogdotcom />,
+  6: <SiNintendoswitch />,
+  // 7: "360",
+  8: <FaGooglePlay />,
+  9: <FaItchIo />,
+  11: <SiEpicgames />,
+};
+
 const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
   return (
     <div className="flex-grow">
       {/* <div>Pagination</div> */}
       <div className="flex gap-3 py-1">
-        <div className="flex items-center justify-center rounded-md bg-black px-1 text-sm font-semibold text-white lg:px-3 text-nowrap">
+        <div className="flex items-center justify-center text-nowrap rounded-md bg-black px-1 text-sm font-semibold text-white lg:px-3">
           {gameData?.released}
         </div>
         <ul className="flex items-center ">
           {gameStoreLinks?.map((store, index) => (
             <li className="mx-1 my-2" key={index}>
-              {Number(store.store_id) === 1 ? <FaSteam /> : ""}
-              {Number(store.store_id) === 2 ? <FaXbox /> : ""}
-              {Number(store.store_id) === 3 ? <FaPlaystation /> : ""}
-              {Number(store.store_id) === 4 ? <FaApple /> : ""}
-              {Number(store.store_id) === 5 ? <SiGogdotcom /> : ""}
-              {Number(store.store_id) === 6 ? <SiNintendoswitch /> : ""}
-              {/* {Number(store.store_id) === 7 ? "360" : ""} */}
-              {Number(store.store_id) === 8 ? <FaGooglePlay /> : ""}
-              {Number(store.store_id) === 9 ? <FaItchIo /> : ""}
-              {Number(store.store_id) === 11 ? <SiEpicgames /> : ""}
+              {storeIcons[Number(store.store_id)]}
             </li>
           ))}
         </ul>
-        <div className="flex items-center font-body text-nowrap">
-          AVERAGE PLAYTIME: <span className="text-orange font-semibold"> {gameData?.playtime} HOURS</span> 
+        <div className="flex items-center text-nowrap font-body">
+          AVERAGE PLAYTIME:{" "}
+          <span className="font-semibold text-orange">
+            {" "}
+            {gameData?.playtime} HOURS
+          </span>
         </div>
       </div>
-      <div className="font-bold text-5xl lg:text-6xl my-5">{gameData?.name}</div>
+      <div className="my-5 text-5xl font-bold lg:text-6xl">
+        {gameData?.name}
+      </div>
 
       <div className="my-3">
         <h1 className="text-2xl text-orange underline ">Genres: </h1>
         {gameData?.genres.map((genre, index) => (
-          <span className="text-xl font-semibold hover:text-blue-400" key={index}>
+          <span
+            className="text-xl font-semibold hover:text-blue-400"
+            key={index}
+          >
             {genre.name}
             {index < gameData.genres.length - 1 ? ", " : ""}
           </span>
         ))}
       </div>
 
-      <div className="w-fit my-3">
+      <div className="my-3 w-fit">
         <h1 className="text-2xl text-orange underline ">Store List:</h1>
         <ul className="flex rounded-md ">
           {gameStoreLinks?.map((store, index) => (
-            <li className="mx-1 my-2 rounded-md bg-orangeCard p-1 hover:bg-blue-400" key={index}>
+            <li
+              className="mx-1 my-2 rounded-md bg-orangeCard p-1 hover:bg-blue-400"
+              key={index}
+            >
               <a
                 className="flex justify-center"
                 href={store.url}
@@ -82,7 +98,9 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
       </div>
       <div>
         <h1 className="text-2xl text-orange underline ">Description:</h1>
-        <p className="first-letter:text-3xl font-bold">{gameData?.description_raw}</p>
+        <p className="font-bold first-letter:text-3xl">
+          {gameData?.description_raw}
+        </p>
       </div>
     </div>
   );

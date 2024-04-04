@@ -204,6 +204,8 @@ export interface GameRawGCard {
     };
   }[];
   stores: {
+    platform: any;
+    store_id(store_id: any): unknown;
     store: {
       id: number;
       name: string;
@@ -274,3 +276,4 @@ export interface GameRawGCard {
     slug: string;
   }[];
 }
+
