@@ -14,7 +14,7 @@ const SelectedGenreContext = createContext<{
 });
 
 export const SelectedGenreProvider = ({ children } : {children: ReactNode}) => {
-  const [selectedGenre, setSelectedGenre] = useState(4);
+  const [selectedGenre, setSelectedGenre] = useState(0);
   const [selectedPlatform, setSelectedPlatform] = useState(0); // Default platform state
 
   return (

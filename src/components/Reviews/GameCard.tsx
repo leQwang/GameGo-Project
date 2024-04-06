@@ -9,22 +9,16 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
 
+import { FaWindows } from "react-icons/fa6";
+import { IoLogoAndroid } from "react-icons/io";
 import {
-  FaSteam,
+  FaLinux ,
   FaXbox,
   FaPlaystation,
   FaApple,
-  FaGooglePlay,
-  FaItchIo,
 } from "react-icons/fa";
-import { SiGogdotcom, SiNintendoswitch, SiEpicgames } from "react-icons/si";
-// import { IoStar } from "react-icons/io5";
 
-// import {
-//   getExactGameByName,
-//   // getPriceListByName,
-//   getGameById,
-// } from "../../Services/CheapSharkApi";
+import { SiNintendoswitch } from "react-icons/si";
 
 function GameCard(gameRawG: GameRawGCard) {
   // --------------- constants ---------------
@@ -128,21 +122,18 @@ function GameCard(gameRawG: GameRawGCard) {
         <div className="flex flex-grow flex-col px-2 pb-2">
           <div className="mt-1 flex justify-between">
             <ul className="flex items-center ">
-              {gameRawG.stores?.map((store, index) => (
+              {gameRawG.parent_platforms?.map((parent_platform, index) => (
                 <li
-                  className={`${Number(store.store.id) === 7 ? "mx-0" : "mx-1"} my-2`}
+                  className={`mx-1 my-2`}
                   key={index}
                 >
-                  {Number(store.store.id) === 1 ? <FaSteam /> : ""}
-                  {Number(store.store.id) === 2 ? <FaXbox /> : ""}
-                  {Number(store.store.id) === 3 ? <FaPlaystation /> : ""}
-                  {Number(store.store.id) === 4 ? <FaApple /> : ""}
-                  {Number(store.store.id) === 5 ? <SiGogdotcom /> : ""}
-                  {Number(store.store.id) === 6 ? <SiNintendoswitch /> : ""}
-                  {/* {Number(store.store.id) === 7 ? "360" : ""} */}
-                  {Number(store.store.id) === 8 ? <FaGooglePlay /> : ""}
-                  {Number(store.store.id) === 9 ? <FaItchIo /> : ""}
-                  {Number(store.store.id) === 11 ? <SiEpicgames /> : ""}
+                  {Number(parent_platform.platform.id) === 1 ? <FaWindows /> : ""}
+                  {Number(parent_platform.platform.id) === 2 ? <FaPlaystation /> : ""}
+                  {Number(parent_platform.platform.id) === 3 ? <FaXbox /> : ""}
+                  {Number(parent_platform.platform.id) === 4 ? <IoLogoAndroid /> : ""}
+                  {Number(parent_platform.platform.id) === 5 ? <FaApple /> : ""}
+                  {Number(parent_platform.platform.id) === 6 ? <FaLinux  /> : ""}
+                  {Number(parent_platform.platform.id) === 7 ? <SiNintendoswitch /> : ""}
                 </li>
               ))}
             </ul>

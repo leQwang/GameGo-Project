@@ -1,6 +1,8 @@
 import axios from "axios";
 const apiKey = "acfae1e51f0540c5b9c7bb4211faf13f";
 
+// c542e67aec3a4340908f9de9e86038af this API key allow get clips
+
 export const rawGApi = axios.create({
   baseURL: "https://api.rawg.io/api",
   headers: {
@@ -11,6 +13,11 @@ export const rawGApi = axios.create({
 //async await
 export const getGameRawGById = async (gameId: string) => {
   const response = await rawGApi.get(`/games/${gameId}?key=${apiKey}`);
+  return response.data;
+};
+
+export const getGameRawGByIdDefault = async (gameId: string) => {
+  const response = await rawGApi.get(`/games/${gameId}?key=c542e67aec3a4340908f9de9e86038af`);
   return response.data;
 };
 
@@ -42,6 +49,11 @@ export const getGamesByPlatformAndPage = async (platform: string, size:number, p
   );
   return response.data;
 };
+
+export const getGameMain = async (size:number, page:number) => {
+  const response = await rawGApi.get(`/games/lists/main?discover=true&key=${apiKey}&ordering=-relevance&page_size=${size}&page=${page}`);
+  return response.data;
+}
 
 export const getGenres = async () => {
   const response = await rawGApi.get(`/genres?key=${apiKey}`);

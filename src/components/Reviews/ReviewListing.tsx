@@ -6,14 +6,14 @@ import { useSelectedGenre } from "../Provider/SelectedGenreProvider";
 import {
   getGamesByGenreAndPage,
   getGameBySearchAndPage,
-  getGamesByPlatformAndPage
+  getGamesByPlatformAndPage,
+  getGameMain
 } from "../../Services/RawGApi";
 
 import "react-lazy-load-image-component/src/effects/blur.css";
 
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
-// import { render } from "react-dom";
 
 import { GameRawGCard } from "../../Services/RawGApi";
 import VideoBanner from "./VideoBanner";
@@ -43,6 +43,24 @@ function ReviewListing({
   // ------------- API calls Function -------------
   const [totalPages, setTotalPages] = useState(100);
   const pageSize = 24;
+
+  const getGamesMain = async (page: number) => {
+    try {
+      const data = await getGameMain(
+        pageSize,
+        page,
+      );
+      // console.log(data.count, pageSize);
+      setTotalPages(Math.floor(data.count / pageSize + 1));
+
+      const gamesListTemp: GameRawGCard[] = data.results;
+
+      setGamesList(gamesListTemp);
+      return gamesListTemp;
+    } catch (error) {
+      console.error("Error fetching games:", error);
+    }
+  }
 
   const getGameBySearchPageFunc = async (searchValue: any, page: number) => {
     try {
@@ -108,7 +126,7 @@ function ReviewListing({
     // console.log("-------------------------------------");
     if (isFirstLoad.current) {
       // If first load: render game by genre
-      renderGamesByGenre();
+      renderGamesMain();
 
       isFirstLoad.current = false;
     } else {
@@ -117,12 +135,12 @@ function ReviewListing({
     }
   }, [searchValue, selectedGenre, selectedPlatform]);
 
-  const renderGamesByGenre = async () => {
-    setRenderType("GENRE");
+  const renderGamesMain = async () => {
+    setRenderType("MAIN");
 
     setLoading(true);
 
-    getGamesByGenrePageFunc(selectedGenre, 1)
+    getGamesMain(1)
       .then((gamesListTemp) => {
         if (gamesListTemp) {
           setGamesList(gamesListTemp);
@@ -247,6 +265,20 @@ function ReviewListing({
             console.error("Error fetching games:", error);
             setLoading(false);
           });
+      } else if(renderType === "MAIN"){
+        console.log("Fetching games by main: ");
+        getGamesMain(active)
+          .then((gamesListTemp) => {
+            if (gamesListTemp) {
+              setGamesList(gamesListTemp);
+            }
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching games:", error);
+            setLoading(false);
+          });
+      
       } else {
         console.log("Active search: ", searchValue);
         getGameBySearchPageFunc(searchValue, active)
@@ -299,14 +331,17 @@ function ReviewListing({
     <div className="relative z-10 mt-2 w-full md:mt-5 min-h-screen">
       <VideoBanner />
       {/* ------------------- Render Game Card -------------------- */}
+      {renderType === "MAIN" ? (
+        <div className="text-5xl font-semibold mt-5 mx-5 md:mx-3">NEWS and TRENDING</div>
+      ): ""}
       <div className="relative">
         {loading ? (
-          <div className="mt-32 ring">
+          <div className={`${renderType !== "MAIN" ? "mt-32" : "mt-10"} ring`}>
             Loading
             <span className="ringSpan"></span>
           </div>
         ) : (
-          <div className="mx-5 my-10 grid grid-cols-1 gap-5 md:mx-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="mx-5 my-3 grid grid-cols-1 gap-5 md:mx-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {gamesList.map((game, index) => (
               <GameCard key={index} {...game} />
             ))}
@@ -341,7 +376,7 @@ function ReviewListing({
               className="transition-all duration-75 ease-in-out hover:bg-orange"
               onClick={() => {
                 const inputValue = parseInt(selectedPageInput.value);
-                if (!isNaN(inputValue)) {
+                if (!isNaN(inputValue) && inputValue > 0 && inputValue <= totalPages) {
                   // Update selected page if the input value is a valid number
                   setActive(inputValue);
                   selectedPageInput.value = ""; // Clear the input value

@@ -159,7 +159,7 @@ function ReviewSearchBar({
           <input
             id="headerSearchInput"
             type="text"
-            placeholder="Find 300,000 plus games"
+            placeholder="Find 300,000 plus games reviews"
             className="relative h-full flex-grow rounded-l-xl pl-3 md:ml-2"
             // onChange={handleInputChange}
           />

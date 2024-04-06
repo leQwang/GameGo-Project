@@ -9,7 +9,9 @@ import "keen-slider/keen-slider.min.css";
 import { GameRawGGeneral, GameStoreLink } from "../Services/RawGApi";
 
 //services
-import { getGameRawGById, getStoreLinks } from "../Services/RawGApi";
+// import { getGameRawGById, getStoreLinks } from "../Services/RawGApi";
+import { getGameRawGByIdDefault, getStoreLinks} from "../Services/RawGApi";
+
 
 // components
 import GameDetailInfo from "../components/GameDetail/GameDetailInfo";
@@ -24,7 +26,8 @@ function GameDetail() {
 
   const fetchGameById = async (gameID: string) => {
     try {
-      const gameData = await getGameRawGById(gameID);
+      // const gameData = await getGameRawGById(gameID);
+      const gameData = await getGameRawGByIdDefault(gameID);
       if (gameData === undefined || gameData.detail === "Not found.") {
         return null;
       }
@@ -81,12 +84,11 @@ function GameDetail() {
         <div className="relative mx-1">
           <div className="relative h-full w-full">
             <div className="relative h-20 w-full"></div>
-            <div className="mx-auto flex w-full flex-row md:w-1/2">
+            <div className="mx-auto flex w-full flex-row md:w-[70%]">
               <GameDetailInfo
                 gameData={gameData}
                 gameStoreLinks={gameStoreLinks}
               />
-              {/* <GameDetailMedia /> */}
             </div>
           </div>
         </div>

@@ -38,34 +38,71 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
     setIsReadMore(!isReadMore);
   };
 
-  const htmlString = gameData?.description_raw ?? "";
+  const descriptionRaw = gameData?.description_raw ?? "";
+
+  // const tempString = gameData?.description ?? "";
+  // const [parsedHTML, setParsedHTML] = useState<any>();
+
+  // useEffect(() => {
+  //   // Get HTML string from API
+  //   const htmlString = tempString;
+
+  //   // Parse HTML
+  //   const parser = new DOMParser();
+  //   const doc = parser.parseFromString(htmlString, 'text/html');
+
+  //   // Get elements
+  //   const elements = Array.from(doc.body.children);
+
+  //   // Add to React state
+  //   setParsedHTML(elements);
+
+  // }, []);
 
   return (
     <div className="w-full flex-grow">
       {/* <div>Pagination</div> */}
-      <div className="flex gap-3 py-1">
-        <div className="flex items-center justify-center text-nowrap rounded-md bg-black px-1 text-sm font-semibold text-white lg:px-3">
-          {gameData?.released}
+      <div className="flex flex-col lg:flex-row justify-between">
+        <div className="flex flex-col">
+          <div className="flex flex-wrap gap-3 py-1">
+            <div className="flex items-center justify-center text-nowrap rounded-md bg-black px-1 text-sm font-semibold text-white lg:px-3">
+              {gameData?.released === null ? "Coming Soon" : gameData?.released}
+            </div>
+            <ul className="flex items-center ">
+              {gameStoreLinks?.map((store, index) => (
+                <li className="mx-1 my-2" key={index}>
+                  {storeIcons[Number(store.store_id)]}
+                </li>
+              ))}
+            </ul>
+            <div className="flex items-center text-nowrap font-body">
+              <span className="mr-1">AVERAGE PLAYTIME: </span>
+
+              <span className="font-semibold text-orange">
+                {gameData?.playtime} HOURS
+              </span>
+            </div>
+          </div>
+          <div className="my-5 text-5xl font-bold lg:text-6xl h-full flex items-center">
+            {gameData?.name}
+          </div>
         </div>
-        <ul className="flex items-center ">
-          {gameStoreLinks?.map((store, index) => (
-            <li className="mx-1 my-2" key={index}>
-              {storeIcons[Number(store.store_id)]}
-            </li>
-          ))}
-        </ul>
-        <div className="flex items-center text-nowrap font-body">
-          <span className="mr-1">AVERAGE PLAYTIME: </span>
-          
-          <span className="font-semibold text-orange">
-            {gameData?.playtime} HOURS
-          </span>
+        {/* ---------------------  Video -------------------- */}
+      {gameData?.clip === null ? (
+        ""
+      ) : (
+        <div className="w-full lg:w-[25rem] px-1">
+          <video
+            className="w-full rounded-xl "
+            controls
+            src={gameData?.clip.clip}
+            autoPlay={true}
+          ></video>
         </div>
-      </div>
-      <div className="my-5 text-5xl font-bold lg:text-6xl">
-        {gameData?.name}
+      )}
       </div>
 
+      
       <div className="my-3">
         <h1 className="text-2xl text-orange underline ">Genres: </h1>
         {gameData?.genres.map((genre, index) => (
@@ -129,14 +166,14 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
             </h1>
             <div
               id="gameDescription"
-              className={`${isReadMore ? "h-full" : "h-24"} relative first-letter:text-3xl`}
+              className={`${isReadMore || descriptionRaw.length<670 ? "h-full" : "h-24"} relative first-letter:text-3xl`}
             >
-              {htmlString}
+              {descriptionRaw}
             </div>
           </div>
           <div
             onClick={handleReadMore}
-            className={`${isReadMore ? "hidden" : ""} relative flex w-full cursor-pointer justify-center rounded-b-xl bg-[#50473e67] font-bold text-orange opacity-90 hover:opacity-60`}
+            className={`${isReadMore || descriptionRaw.length<670 ? "hidden" : ""} relative flex w-full cursor-pointer justify-center rounded-b-xl bg-[#50473e67] font-bold text-orange opacity-90 hover:opacity-60`}
           >
             Read more
           </div>
