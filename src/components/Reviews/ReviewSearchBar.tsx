@@ -7,7 +7,7 @@ import { FaMagnifyingGlass } from "react-icons/fa6";
 
 import { useNavigate } from "react-router-dom";
 
-function Header({
+function ReviewSearchBar({
   setSearchValue,
   setIsSidenavOpen,
   setLoading,
@@ -180,4 +180,4 @@ function Header({
   );
 }
 
-export default Header;
+export default ReviewSearchBar;

@@ -16,6 +16,8 @@ interface GameDetailInfoProps {
   gameStoreLinks: GameStoreLink[] | null;
 }
 
+// import ScrShotCarousel from "./ScrShotCarousel";
+
 const storeIcons: { [key: number]: JSX.Element } = {
   1: <FaSteam />,
   2: <FaXbox />,
@@ -114,6 +116,7 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
           ))}
         </ul>
       </div>
+{/* ---------------------------------------------------- */}
       {gameData?.description_raw == null || gameData?.description_raw == "" ? (
         <div className="flex w-full flex-col overflow-hidden text-ellipsis">
           <h1 className="relative text-2xl text-orange underline ">

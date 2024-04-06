@@ -1,11 +1,10 @@
 import { useState } from "react";
 
 import { SelectedGenreProvider } from "../components/Provider/SelectedGenreProvider";
-
-import GenreNav from "../components/GenreNav/GenreNav";
+import ReviewSearchBar from "../components/Reviews/ReviewSearchBar";
+import ReviewSideNav from "../components/SideNav/ReviewSideNav";
 import ReviewListing from "../components/Reviews/ReviewListing";
 import Footer from "../components/Footer/Footer";
-import Header from "../components/ReviewSearchBar/Header";
 
 function GameReview() {
   const [isSidenavOpen, setIsSidenavOpen] = useState(false);
@@ -17,7 +16,7 @@ function GameReview() {
   return (
     <div className="bg-custom-radial-gradient min-h-screen overflow-hidden">
       <SelectedGenreProvider>
-        <Header
+        <ReviewSearchBar
           setSearchValue={setSearchValue}
           setIsSidenavOpen={setIsSidenavOpen}
           setLoading={setLoading}
@@ -27,8 +26,11 @@ function GameReview() {
         <a id="store" className="h-0 w-0"></a>
         {/* --------- store ---------- */}
         <div className="bg-custom-radial-gradient relative z-10">
-          <div id="parent" className="relative mt-14 flex w-full flex-col md:mt-12 md:flex-row">
-            <GenreNav
+          <div
+            id="parent"
+            className="relative mt-14 flex w-full flex-col md:mt-12 md:flex-row"
+          >
+            <ReviewSideNav
               isSidenavOpen={isSidenavOpen}
               setLoading={setLoading}
               setRenderType={setRenderType}

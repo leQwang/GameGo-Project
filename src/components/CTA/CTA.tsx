@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 
 import logoImage from "../../assets/images/Logo1.png";
 
-import ImageFly from "./ImageFly";
+import ImageFly from "./ImageFlyIn";
 import { useNavigate } from "react-router-dom";
 
 function CTA() {

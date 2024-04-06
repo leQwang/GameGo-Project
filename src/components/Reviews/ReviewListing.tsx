@@ -6,19 +6,17 @@ import { useSelectedGenre } from "../Provider/SelectedGenreProvider";
 import {
   getGamesByGenreAndPage,
   getGameBySearchAndPage,
+  getGamesByPlatformAndPage
 } from "../../Services/RawGApi";
 
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
-
-import primaryImage from "../../assets/images/horizon-poster.jpg";
-// import HFW from "../../assets/videos/HFW-trailer.mp4";
 
 import { IconButton, Typography } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 // import { render } from "react-dom";
 
 import { GameRawGCard } from "../../Services/RawGApi";
+import VideoBanner from "./VideoBanner";
 
 interface ListingMainProps {
   searchValue: string;
@@ -35,30 +33,12 @@ function ReviewListing({
   renderType,
   setRenderType,
 }: ListingMainProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const { selectedGenre } = useSelectedGenre();
+  const { selectedGenre, selectedPlatform } = useSelectedGenre();
   const [gamesList, setGamesList] = useState<GameRawGCard[]>([]);
 
   const selectedPageInput = document.getElementById(
     "selectedPagePagination",
   ) as HTMLInputElement;
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.style.zIndex = "99";
-        videoRef.current.play();
-      }
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  const handleVideoEnd = () => {
-    if (videoRef.current) {
-      videoRef.current.style.zIndex = "0";
-    }
-  };
 
   // ------------- API calls Function -------------
   const [totalPages, setTotalPages] = useState(100);
@@ -98,12 +78,32 @@ function ReviewListing({
     }
   };
 
+  const getGamesByPlatformAndPageFunc = async (platformId: number, page: number) => {
+    try {
+      const data = await getGamesByPlatformAndPage(
+        platformId.toString(),
+        pageSize,
+        page,
+      );
+      // console.log(data.count, pageSize);
+      setTotalPages(Math.floor(data.count / pageSize + 1));
+
+      const gamesListTemp: GameRawGCard[] = data.results;
+
+      setGamesList(gamesListTemp);
+      return gamesListTemp;
+    } catch (error) {
+      console.error("Error fetching games:", error);
+    }
+  }
+
   // ------------- render Games -------------
   const isFirstLoad = useRef(true);
 
   useEffect(() => {
     console.log("When the search value is: ", searchValue);
     console.log("When the genre is: ", selectedGenre);
+    console.log("When the platform is: ", selectedPlatform);
     console.log("When the render type is: ", renderType);
     // console.log("-------------------------------------");
     if (isFirstLoad.current) {
@@ -115,7 +115,7 @@ function ReviewListing({
       // If not first load: render games
       renderGames();
     }
-  }, [searchValue, selectedGenre]);
+  }, [searchValue, selectedGenre, selectedPlatform]);
 
   const renderGamesByGenre = async () => {
     setRenderType("GENRE");
@@ -153,9 +153,20 @@ function ReviewListing({
           console.error("Error fetching games:", error);
           setLoading(false);
         });
-    }
-    // ** If search value is not empty, render games by search
-    else {
+    }else if(renderType === "PLATFORM"){
+      //render type PLATFORM
+      getGamesByPlatformAndPageFunc(selectedPlatform, 1)
+        .then((gamesListTemp) => {
+          if (gamesListTemp) {
+            setGamesList(gamesListTemp);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Error fetching games:", error);
+          setLoading(false);
+        });
+    }else {     // ** If search value is not empty, render games by search
       if (searchValue === "") {
         // which mean you delete the current search value
         getGamesByGenrePageFunc(selectedGenre, 1)
@@ -170,7 +181,6 @@ function ReviewListing({
           setLoading(false);
         });
       }
-      // setRenderType("GENRE");
       // console.log("Search: ", searchValue);
       getGameBySearchPageFunc(searchValue, 1)
         .then((gamesListTemp) => {
@@ -214,6 +224,19 @@ function ReviewListing({
       if (renderType === "GENRE") {
         console.log("Fetching games by genre: ");
         getGamesByGenrePageFunc(selectedGenre, active)
+          .then((gamesListTemp) => {
+            if (gamesListTemp) {
+              setGamesList(gamesListTemp);
+            }
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error("Error fetching games:", error);
+            setLoading(false);
+          });
+      } else if(renderType === "PLATFORM"){
+        console.log("Fetching games by platform: ");
+        getGamesByPlatformAndPageFunc(selectedPlatform, active)
           .then((gamesListTemp) => {
             if (gamesListTemp) {
               setGamesList(gamesListTemp);
@@ -274,25 +297,7 @@ function ReviewListing({
 
   return (
     <div className="relative z-10 mt-2 w-full md:mt-5 min-h-screen">
-      <div className="relative group overflow-hidden md:w-[99%] md:rounded-2xl lg:h-[27rem] 2xl:h-[28rem]">
-        <LazyLoadImage
-          src={primaryImage}
-          alt="bg"
-          className={`relative z-10 h-[25rem] w-full object-cover transition-opacity duration-200 ease-in-out md:h-full`}
-          // onMouseEnter={handleMouseEnter}
-          // onMouseLeave={handleMouseLeave}
-        />
-        <video
-          ref={videoRef}
-          muted
-          className="absolute top-0 h-[25rem] w-full object-cover md:h-full "
-          src={
-            "http://cdn.akamai.steamstatic.com/steam/apps/257007287/movie_max_vp9.webm?t=1711032973"
-          }
-          onEnded={handleVideoEnd}
-        ></video>
-      </div>
-
+      <VideoBanner />
       {/* ------------------- Render Game Card -------------------- */}
       <div className="relative">
         {loading ? (

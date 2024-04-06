@@ -36,6 +36,13 @@ export const getGamesByGenreAndPage = async (genre: string, size:number, page: n
   return response.data;
 };
 
+export const getGamesByPlatformAndPage = async (platform: string, size:number, page: number) => {
+  const response = await rawGApi.get(
+    `/games?key=${apiKey}&platforms=${platform}&page_size=${size}&page=${page}`,
+  );
+  return response.data;
+};
+
 export const getGenres = async () => {
   const response = await rawGApi.get(`/genres?key=${apiKey}`);
   return response.data;
@@ -48,6 +55,11 @@ export const getStoreLinks = async (gameId: string) => {
 
 export const getScreenShotRawG = async(gameId: string) => {
   const response = await rawGApi.get(`/games/${gameId}/screenshots?key=c542e67aec3a4340908f9de9e86038af`)
+  return response.data;
+}
+
+export const getPlatforms = async () => {
+  const response = await rawGApi.get(`/platforms?key=${apiKey}`);
   return response.data;
 }
 
