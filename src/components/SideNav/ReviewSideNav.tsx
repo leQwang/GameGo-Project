@@ -54,8 +54,9 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
         name: result.name,
       }),
     );
-
-    setPlatforms(platformsListTemp);
+    let tempArray = platformsListTemp.slice(0, 20);
+    setPlatforms(tempArray);
+    console.table(tempArray);
     return platformsListTemp;
   };
 
@@ -66,10 +67,6 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
     getPlatformsList();
     return () => {};
   }, []);
-
-  useEffect(() => {
-    console.log(isSidenavOpen);
-  }, [isSidenavOpen]);
 
   // ---------------- Scroll Effect -----------------
   const handleScroll = () => {
@@ -86,22 +83,18 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
   const [isCloseGenre, setIsCloseGenre] = useState(false);
   const [isClosePlatform, setIsClosePlatform] = useState(false);
 
-  useEffect(() => {
-    console.log(isCloseGenre, isClosePlatform);
-  }, [isCloseGenre, isClosePlatform]);
-
   return (
     <div
       className={`fixed top-12 flex-col lg:relative lg:top-0 lg:flex ${isSidenavOpen ? "left-0 top-10 rounded-lg bg-[#1F140A]" : "-left-[100%]"} z-20 mt-5 transition-all duration-300 ease-in-out lg:left-0`}
     >
       <div
-        className={`${isSidenavOpen ? "" : "bg-gamecard"} top-0 z-20 mb-1 h-fit w-full text-nowrap rounded-xl py-2 md:left-0 md:ml-3 md:mr-5 md:block md:w-60 md:px-2`}
+        className={`${isSidenavOpen ? "" : "bg-gamecard"} top-0 z-20 mb-1 h-fit w-full text-nowrap rounded-xl py-2 md:left-0 md:ml-3 md:mr-5 md:block md:w-60 px-2`}
       >
         <div
           onClick={() => {
             setIsCloseGenre(!isCloseGenre);
           }}
-          className="flex justify-between"
+          className="flex justify-between cursor-pointer"
         >
           <h1 className="text-center text-2xl font-bold text-orange">Genres</h1>
           <div
@@ -140,13 +133,13 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
       {/* ----------------------------------------------------------------- */}
 
       <div
-        className={`${isSidenavOpen ? "" : "bg-gamecard"} top-0 z-20 mb-2 h-fit w-full text-nowrap rounded-xl py-2 md:left-0 md:ml-3 md:mr-5 md:block md:w-60 px-1`}
+        className={`${isSidenavOpen ? "" : "bg-gamecard"} top-0 z-20 mb-1 h-fit w-full text-nowrap rounded-xl py-2 md:left-0 md:ml-3 md:mr-5 md:block md:w-60 px-2`}
       >
         <div
           onClick={() => {
             setIsClosePlatform(!isClosePlatform);
           }}
-          className="flex justify-between"
+          className="flex justify-between cursor-pointer"
         >
           <h1 className="text-center text-2xl font-bold text-orange">Platform</h1>
           <div

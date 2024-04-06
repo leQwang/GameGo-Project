@@ -38,15 +38,7 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
     setIsReadMore(!isReadMore);
   };
 
-  const gameDescritpion = convertGameDescription(
-    gameData?.description_raw || "",
-  );
-
-  function convertGameDescription(descriptionHtml: string) {
-    return <div dangerouslySetInnerHTML={{ __html: descriptionHtml }} />;
-  }
-
-  // document.getElementById('gameDescription').innerHTML = gameData?.description_raw || "";
+  const htmlString = gameData?.description_raw ?? "";
 
   return (
     <div className="w-full flex-grow">
@@ -63,9 +55,9 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
           ))}
         </ul>
         <div className="flex items-center text-nowrap font-body">
-          AVERAGE PLAYTIME:{" "}
+          <span className="mr-1">AVERAGE PLAYTIME: </span>
+          
           <span className="font-semibold text-orange">
-            {" "}
             {gameData?.playtime} HOURS
           </span>
         </div>
@@ -116,7 +108,7 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
           ))}
         </ul>
       </div>
-{/* ---------------------------------------------------- */}
+      {/* ---------------------------------------------------- */}
       {gameData?.description_raw == null || gameData?.description_raw == "" ? (
         <div className="flex w-full flex-col overflow-hidden text-ellipsis">
           <h1 className="relative text-2xl text-orange underline ">
@@ -139,7 +131,7 @@ const GameDetailInfo = ({ gameData, gameStoreLinks }: GameDetailInfoProps) => {
               id="gameDescription"
               className={`${isReadMore ? "h-full" : "h-24"} relative first-letter:text-3xl`}
             >
-              {gameDescritpion}
+              {htmlString}
             </div>
           </div>
           <div
