@@ -67,14 +67,14 @@ function ScrShotCarousel({gameId}: {gameId: string}) {
           }, 3000);
         }
         slider.on("created", () => {
-          slider.container.addEventListener("mouseover", () => {
-            mouseOver = true;
-            clearNextTimeout();
-          });
-          slider.container.addEventListener("mouseout", () => {
-            mouseOver = false;
-            nextTimeout();
-          });
+          // slider.container.addEventListener("mouseover", () => {
+          //   mouseOver = true;
+          //   clearNextTimeout();
+          // });
+          // slider.container.addEventListener("mouseout", () => {
+          //   mouseOver = false;
+          //   nextTimeout();
+          // });
           nextTimeout();
         });
         slider.on("dragStarted", clearNextTimeout);
@@ -112,7 +112,7 @@ function ScrShotCarousel({gameId}: {gameId: string}) {
       {gameScreenShots?.length != undefined && gameScreenShots?.length > 0 ? (
         <div
           ref={sliderRef}
-          className={` ${isMobile ? "flex flex-col" : "keen-slider"}`}
+          className={`${isMobile ? "flex flex-col" : "keen-slider"}`}
         >
           {gameScreenShots?.map((screenshot, index) => {
             return (

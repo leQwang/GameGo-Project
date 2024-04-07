@@ -56,7 +56,7 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
     );
     let tempArray = platformsListTemp.slice(0, 20);
     setPlatforms(tempArray);
-    console.table(tempArray);
+    // console.table(tempArray);
     return platformsListTemp;
   };
 
@@ -104,7 +104,7 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
           </div>
         </div>
         <ul
-          className={`relative max-h-[calc(100vh-100px)] ${isCloseGenre ? "h-0" : ""}  overflow-y-scroll transition-all duration-100 ease-in-out md:max-h-fit  lg:overflow-y-hidden`}
+          className={`relative max-h-[calc(100vh-100px)] ${isCloseGenre ? "h-56" : ""}  overflow-y-scroll transition-all duration-100 ease-in-out md:max-h-fit  lg:overflow-y-hidden`}
         >
           {genres.map((genre, index) => {
             return (
@@ -149,7 +149,7 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
           </div>
         </div>
         <ul
-          className={`relative max-h-[calc(100vh-100px)] ${isClosePlatform ? "h-0" : ""}  overflow-y-scroll transition-all duration-100 ease-in-out md:max-h-fit  lg:overflow-y-hidden`}
+          className={`relative max-h-[calc(100vh-100px)] ${isClosePlatform ? "h-56" : ""}  overflow-y-scroll transition-all duration-100 ease-in-out md:max-h-fit  lg:overflow-y-hidden`}
         >
           {platforms.map((genre, index) => {
             return (

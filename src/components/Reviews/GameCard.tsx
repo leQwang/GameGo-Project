@@ -1,24 +1,20 @@
 import { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 
-import { GameRawGCard } from "../../Services/RawGApi";
+import { GameRawGCard, ShortScreenshot } from "../../Services/RawGApi";
 
-import "../../index.css";
-
-import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+
+// import { LazyLoadImage } from "react-lazy-load-image-component";
+
 import { Link } from "react-router-dom";
 
 import { FaWindows } from "react-icons/fa6";
 import { IoLogoAndroid } from "react-icons/io";
-import {
-  FaLinux ,
-  FaXbox,
-  FaPlaystation,
-  FaApple,
-} from "react-icons/fa";
+import { FaLinux, FaXbox, FaPlaystation, FaApple } from "react-icons/fa";
 
 import { SiNintendoswitch } from "react-icons/si";
+import GameCardImgCarousel from "./GameCardImgCarousel";
 
 function GameCard(gameRawG: GameRawGCard) {
   // --------------- constants ---------------
@@ -30,6 +26,25 @@ function GameCard(gameRawG: GameRawGCard) {
   const handleImageLoad = () => {
     setImageLoaded(true);
   };
+
+  // // ------------------- Keen Slider --------------------
+  // const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
+  //   slidesPerView: 1,
+  //   spacing: 15,
+  //   centered: false,
+  //   vertical: false,
+  //   loop: true,
+  //   mode: "snap",
+  //   duration: 500,
+  //   breakpoints: {
+  //     "(min-width: 768px)": {
+  //       slidesPerView: 2,
+  //     },
+  //     "(min-width: 1200px)": {
+  //       slidesPerView: 3,
+  //     },
+  //   },
+  // });
 
   // --------------- fetch Game by Name details ---------------
   // const [gameOverview, setGameOverview] =
@@ -95,45 +110,76 @@ function GameCard(gameRawG: GameRawGCard) {
   //   navigate(`/reviews/${gameRawG.id}`);
   // };
 
+  // ------------------ hover game card -----------------------
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
     <Link to={`/reviews/${gameRawG.id}`} target="_blank">
       <li
         key={gameRawG.id}
-        className="xl:h-92 group relative flex w-full flex-col overflow-hidden rounded-xl bg-[#392714] transition-all duration-100 ease-in-out hover:z-10 hover:scale-105 hover:cursor-pointer hover:overflow-visible hover:rounded-t-xl hover:shadow-lg md:hover:rounded-b-none"
-        // hover:bg-orangeCard
+        className="xl:h-92 bg-orangeGameCard group relative flex h-full w-full flex-col overflow-hidden rounded-xl transition-all duration-100 ease-in-out hover:z-10 hover:scale-105 hover:cursor-pointer hover:overflow-visible hover:rounded-t-xl hover:shadow-lg md:hover:rounded-b-none"
+        onMouseEnter={() => setIsHovered(true)}
       >
-        {/* <div>
+        <div className="h-48">
+          <img
+            src={gameRawG.background_image}
+            alt={gameRawG.name}
+            className={`${imageLoaded ? "h-48" : "hidden h-0"} w-full overflow-hidden rounded-t-xl group-hover:h-0`}
+            onLoad={handleImageLoad} // Set onLoad event handler to update imageLoaded state
+          />
 
-        </div> */}
-        <LazyLoadImage
-          src={gameRawG.background_image}
+          {/* <LazyLoadImage
+          src={gameRawG.short_screenshots[1].image != undefined || gameRawG.short_screenshots[1].image != null ? gameRawG.short_screenshots[1].image : gameRawG.background_image}
           alt={gameRawG.name}
-          className={`${imageLoaded ? "h-48" : "h-0"} w-full overflow-hidden rounded-t-xl object-cover`}
+          className={`w-full overflow-hidden rounded-t-xl relative h-0 group-hover:h-48`}
           effect="blur"
-          onLoad={handleImageLoad} // Set onLoad event handler to update imageLoaded state
-        />
+        /> */}
 
-        {!imageLoaded && (
-          <div className="animated-background">
-            <div className="background-masker"></div>
-          </div>
-        )}
+          {isHovered &&
+            gameRawG.short_screenshots != null &&
+            gameRawG.short_screenshots != undefined && (
+              <GameCardImgCarousel
+                shortScreenshots={
+                  gameRawG.short_screenshots.slice(1, 4) as ShortScreenshot[]
+                }
+              />
+            )}
+
+          {!imageLoaded && (
+            <div className="animated-background group-hover:hidden">
+              <div className="background-masker"></div>
+            </div>
+          )}
+        </div>
 
         <div className="flex flex-grow flex-col px-2 pb-2">
           <div className="mt-1 flex justify-between">
             <ul className="flex items-center ">
               {gameRawG.parent_platforms?.map((parent_platform, index) => (
-                <li
-                  className={`mx-1 my-2`}
-                  key={index}
-                >
-                  {Number(parent_platform.platform.id) === 1 ? <FaWindows /> : ""}
-                  {Number(parent_platform.platform.id) === 2 ? <FaPlaystation /> : ""}
+                <li className={`mx-1 my-2`} key={index}>
+                  {Number(parent_platform.platform.id) === 1 ? (
+                    <FaWindows />
+                  ) : (
+                    ""
+                  )}
+                  {Number(parent_platform.platform.id) === 2 ? (
+                    <FaPlaystation />
+                  ) : (
+                    ""
+                  )}
                   {Number(parent_platform.platform.id) === 3 ? <FaXbox /> : ""}
-                  {Number(parent_platform.platform.id) === 4 ? <IoLogoAndroid /> : ""}
+                  {Number(parent_platform.platform.id) === 4 ? (
+                    <IoLogoAndroid />
+                  ) : (
+                    ""
+                  )}
                   {Number(parent_platform.platform.id) === 5 ? <FaApple /> : ""}
-                  {Number(parent_platform.platform.id) === 6 ? <FaLinux  /> : ""}
-                  {Number(parent_platform.platform.id) === 7 ? <SiNintendoswitch /> : ""}
+                  {Number(parent_platform.platform.id) === 6 ? <FaLinux /> : ""}
+                  {Number(parent_platform.platform.id) === 7 ? (
+                    <SiNintendoswitch />
+                  ) : (
+                    ""
+                  )}
                 </li>
               ))}
             </ul>
@@ -156,40 +202,52 @@ function GameCard(gameRawG: GameRawGCard) {
             </div>
           </div>
 
-          <div className="flex-grow font-sans text-xl font-semibold xl:text-2xl">
+          <div className="flex flex-grow items-center font-sans text-lg font-semibold xl:text-xl">
             {gameRawG.name}
           </div>
 
           {/* --------------------------------------- */}
-          <div className="text-md relative left-0 w-full -translate-y-[7px] bg-[#392714] pb-2 transition-opacity duration-200 ease-in-out group-hover:opacity-100 md:absolute md:top-[100%] md:rounded-b-xl md:px-2 md:opacity-0">
+          <div className="text-md bg-orangeGameCard relative left-0 w-full -translate-y-[7px] pb-2 transition-opacity duration-200 ease-in-out group-hover:opacity-100 md:absolute md:top-[100%] md:rounded-b-xl md:px-2 md:opacity-0 shadow-black shadow-2xl">
             <div className="flex justify-between">
               <span className="font-semibold">Rating: </span>
               <span>{gameRawG.rating}⭐</span>
             </div>
-            <div className="h-[1px] w-full opacity-50 bg-orange"></div>
+            <div className="h-[1px] w-full bg-orange opacity-50"></div>
             <div className="flex justify-between">
               <span className="font-semibold">Released: </span>{" "}
               <span>{gameRawG.released}</span>
             </div>
-            <div className="h-[1px] w-full opacity-50 bg-orange"></div>
-            {gameRawG.released == null ? "" : (
-            <div className="flex justify-between">
-              <span className="font-semibold">Rank: </span>
-              <span>
-                {gameRawG.rating_top} of {gameRawG.released.slice(0, 4)}
-              </span>
-            </div>
+            <div className="h-[1px] w-full bg-orange opacity-50"></div>
+            {gameRawG.released == null ? (
+              ""
+            ) : (
+              <div className="flex justify-between">
+                <span className="font-semibold">Rank: </span>
+                <span>
+                  {gameRawG.rating_top} of {gameRawG.released.slice(0, 4)}
+                </span>
+              </div>
             )}
-            <div className="h-[1px] w-full opacity-50 bg-orange"></div>
+            <div className="h-[1px] w-full bg-orange opacity-50"></div>
             <div className="flex flex-col justify-between">
               <div className="flex flex-grow font-semibold">Genres: </div>
-              <div className="flex justify-end">
+              <div className="flex flex-wrap justify-end overflow-hidden">
                 {gameRawG.genres.map(
-                  (genre: { name: string }, index: number) => (
-                    <span key={index}>
-                      {index > 0 ? `, ${genre.name}` : genre.name}
-                    </span>
-                  ),
+                  (genre: { name: string }, index: number) => {
+                    if (index < gameRawG.genres.length - 1) {
+                      return (
+                        <span className="hover:font-semibold " key={index}>
+                          {genre.name},
+                        </span>
+                      );
+                    } else {
+                      return (
+                        <span className="ps-1 hover:font-semibold" key={index}>
+                          {genre.name}
+                        </span>
+                      );
+                    }
+                  },
                 )}
               </div>
             </div>

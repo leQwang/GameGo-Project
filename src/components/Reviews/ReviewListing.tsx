@@ -308,25 +308,6 @@ function ReviewListing({
     }
   };
 
-  // ------------------- Keen Slider --------------------
-  // const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
-  //   slidesPerView: 1,
-  //   spacing: 15,
-  //   centered: false,
-  //   vertical: false,
-  //   loop: true,
-  //   mode: "snap",
-  //   duration: 500,
-  //   breakpoints: {
-  //     "(min-width: 768px)": {
-  //       slidesPerView: 2,
-  //     },
-  //     "(min-width: 1200px)": {
-  //       slidesPerView: 3,
-  //     },
-  //   },
-  // });
-
   return (
     <div className="relative z-10 mt-2 w-full md:mt-5 min-h-screen">
       <VideoBanner />
@@ -336,7 +317,7 @@ function ReviewListing({
       ): ""}
       <div className="relative">
         {loading ? (
-          <div className={`${renderType !== "MAIN" ? "mt-32" : "mt-10"} ring`}>
+          <div className={`${renderType !== "MAIN" ? "mt-32" : "mt-20"} ring`}>
             Loading
             <span className="ringSpan"></span>
           </div>

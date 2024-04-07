@@ -15,4 +15,7 @@ What have I learned and enhanced throughout the journey:
 - Learn and apply Lazy loading, skeleton, loader effect to enhance user experience and speed
 - Learn about routing, configure routing for deployment on Vercel
 - Learn how to use useContext
-- Apply carousel 
+- Apply carousel to gameCard, optimize the rendering time of the All the card by only render the gameCard carousel when the user hover over it.
+  -> This allow the list of gameCard to be display out faster instead of wasting resource on render every image
+
+-Not always using lazy loading is good, especially for carousel

@@ -90,6 +90,11 @@ export interface GameStoreLink {
   url: string;
 }
 
+export interface ShortScreenshot {
+  id: number;
+  image: string;
+}
+
 export interface GameRawGGeneral {
   id: number;
   slug: string;

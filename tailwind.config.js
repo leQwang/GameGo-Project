@@ -14,7 +14,7 @@ module.exports = withMT({
         orangeText: '#E87D0E',
         orangeLight: '#FA982F',
         orangeCard: '#392714',
-
+        orangeGameCard: '#392714',
         white: '#fbfbfb',
       },
       screens: {
