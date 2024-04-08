@@ -72,7 +72,7 @@
 }
 
 .wave {
-  background: url("../public/svg/wave.svg")
+  background: url("/svg/wave.svg")
     repeat-x;
   position: absolute;
   width: 6400px;
