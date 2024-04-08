@@ -72,7 +72,7 @@
 }
 
 .wave {
-  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg)
+  background: url("../public/svg/wave.svg")
     repeat-x;
   position: absolute;
   width: 6400px;

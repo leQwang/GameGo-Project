@@ -128,12 +128,11 @@ function GameCard(gameRawG: GameRawGCard) {
             onLoad={handleImageLoad} // Set onLoad event handler to update imageLoaded state
           />
 
-          {/* <LazyLoadImage
+          <img
           src={gameRawG.short_screenshots[1].image != undefined || gameRawG.short_screenshots[1].image != null ? gameRawG.short_screenshots[1].image : gameRawG.background_image}
           alt={gameRawG.name}
-          className={`w-full overflow-hidden rounded-t-xl relative h-0 group-hover:h-48`}
-          effect="blur"
-        /> */}
+          className={`w-full overflow-hidden rounded-t-xl relative h-0 group-hover:h-48 md:hidden`}
+        />
 
           {isHovered &&
             gameRawG.short_screenshots != null &&
