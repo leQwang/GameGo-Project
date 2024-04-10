@@ -27,89 +27,6 @@ function GameCard(gameRawG: GameRawGCard) {
     setImageLoaded(true);
   };
 
-  // // ------------------- Keen Slider --------------------
-  // const [sliderRef, slider] = useKeenSlider<HTMLDivElement>({
-  //   slidesPerView: 1,
-  //   spacing: 15,
-  //   centered: false,
-  //   vertical: false,
-  //   loop: true,
-  //   mode: "snap",
-  //   duration: 500,
-  //   breakpoints: {
-  //     "(min-width: 768px)": {
-  //       slidesPerView: 2,
-  //     },
-  //     "(min-width: 1200px)": {
-  //       slidesPerView: 3,
-  //     },
-  //   },
-  // });
-
-  // --------------- fetch Game by Name details ---------------
-  // const [gameOverview, setGameOverview] =
-  //   useState<GameCardCheapSharkOverview | null>();
-
-  //**search for exact
-  // const fetchGameOverview = async (gameSlug: string) => {
-  //   try {
-  //     const gameTitle = gameSlug.replace(/-/g, "");
-  //     const exactGame = await getExactGameByName(gameTitle);
-  //     if (exactGame === undefined || exactGame.length === 0) {
-  //       console.log("Game not found", gameTitle);
-  //       // ***if the game is not found, then search for other relevant game
-  //       // let relevantGame = await fetchGameListOverview(gameTitle);
-  //       // if (relevantGame === null) {
-  //       //   // if the relevant game is not found, then set gameOverview to null
-  //       //   setGameOverview(null);
-  //       // } else {
-  //       //   setGameOverview(relevantGame[0]);
-  //       // }
-  //       // ***
-  //       return;
-  //     } else {
-  //       setGameOverview(exactGame[0]);
-  //       const gameDetailResult = await fetchGameDetails(exactGame[0].gameID);
-  //       setGameDetail(gameDetailResult);
-  //     }
-  //     // return exactGame;
-  //   } catch (error) {
-  //     console.error("Error fetching game details:", error);
-  //     setGameOverview(null);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchGameOverview(gameRawG.slug.toUpperCase());
-  // }, [gameRawG]);
-
-  // --------------- fetch Game Detail by Id ---------------
-  // this step helps getting the game Saving price
-  // const [gameDetail, setGameDetail] = useState<GameCheapSharkDetails | null>();
-
-  // const fetchGameDetails = async (gameId: number) => {
-  //   try {
-  //     const gameDetailTemp = await getGameById(gameId);
-  //     // console.log(gameDetailTemp);
-  //     if (gameDetailTemp === undefined || gameDetailTemp.length === 0) {
-  //       return null;
-  //     }
-  //     // setGameDetail(gameDetailTemp);
-  //     return gameDetailTemp;
-  //   } catch (error) {
-  //     console.error("Error fetching gameDetail:", error);
-  //   }
-  // };
-
-  // ----------------- redirect to the game detail -----------------
-  // const navigate = useNavigate();
-
-  // const handleClick = () => {
-  //   // Redirect to GameDetail component with the game ID
-  //   // window.open(`/reviews/${gameRawG.id}`, "_blank");
-  //   navigate(`/reviews/${gameRawG.id}`);
-  // };
-
   // ------------------ hover game card -----------------------
   const [isHovered, setIsHovered] = useState(false);
 
@@ -117,7 +34,7 @@ function GameCard(gameRawG: GameRawGCard) {
     <Link to={`/reviews/${gameRawG.id}`} target="_blank">
       <li
         key={gameRawG.id}
-        className="xl:h-92 bg-orangeGameCard group relative flex h-full w-full flex-col overflow-hidden rounded-xl transition-all duration-100 ease-in-out hover:z-10 hover:scale-105 hover:cursor-pointer hover:overflow-visible hover:rounded-t-xl hover:shadow-lg md:hover:rounded-b-none"
+        className="xl:h-92 group relative flex h-full w-full flex-col overflow-hidden rounded-xl bg-orangeGameCard transition-all duration-100 ease-in-out hover:z-10 hover:scale-105 hover:cursor-pointer hover:overflow-visible hover:rounded-t-xl hover:shadow-lg md:hover:rounded-b-none"
         onMouseEnter={() => setIsHovered(true)}
       >
         <div className="h-48">
@@ -129,20 +46,35 @@ function GameCard(gameRawG: GameRawGCard) {
           />
 
           <img
-          src={gameRawG.short_screenshots[1].image != undefined || gameRawG.short_screenshots[1].image != null ? gameRawG.short_screenshots[1].image : gameRawG.background_image}
-          alt={gameRawG.name}
-          className={`w-full overflow-hidden rounded-t-xl relative h-0 group-hover:h-48 md:hidden`}
-        />
+            src={
+              gameRawG.short_screenshots.length > 0
+                ? gameRawG.short_screenshots[1].image
+                : gameRawG.background_image
+            }
+            alt={gameRawG.name}
+            className={`relative h-0 w-full overflow-hidden rounded-t-xl group-hover:h-48 md:hidden`}
+          />
 
           {isHovered &&
-            gameRawG.short_screenshots != null &&
-            gameRawG.short_screenshots != undefined && (
-              <GameCardImgCarousel
-                shortScreenshots={
-                  gameRawG.short_screenshots.slice(1, 4) as ShortScreenshot[]
-                }
+          // gameRawG.short_screenshots != null &&
+          // gameRawG.short_screenshots != undefined &&
+          gameRawG.short_screenshots.length > 4 ? (
+            <GameCardImgCarousel
+              shortScreenshots={
+                gameRawG.short_screenshots.slice(1, 4) as ShortScreenshot[]
+              }
+            />
+          ) : (
+            <div className="absolute hidden h-0 w-full overflow-hidden rounded-t-xl md:group-hover:block md:group-hover:h-48">
+              {" "}
+              <img
+                src={gameRawG.background_image}
+                alt={gameRawG.name}
+                className={`${imageLoaded ? "h-48" : "hidden h-0"} w-full overflow-hidden rounded-t-xl`}
+                onLoad={handleImageLoad} // Set onLoad event handler to update imageLoaded state
               />
-            )}
+            </div>
+          )}
 
           {!imageLoaded && (
             <div className="animated-background group-hover:hidden">
@@ -206,7 +138,7 @@ function GameCard(gameRawG: GameRawGCard) {
           </div>
 
           {/* --------------------------------------- */}
-          <div className="text-md bg-orangeGameCard relative left-0 w-full -translate-y-[7px] pb-2 transition-opacity duration-200 ease-in-out group-hover:opacity-100 md:absolute md:top-[100%] md:rounded-b-xl md:px-2 md:opacity-0 shadow-black shadow-2xl">
+          <div className="text-md relative left-0 w-full -translate-y-[7px] bg-orangeGameCard pb-2 shadow-2xl shadow-black transition-opacity duration-200 ease-in-out group-hover:opacity-100 md:absolute md:top-[100%] md:rounded-b-xl md:px-2 md:opacity-0">
             <div className="flex justify-between">
               <span className="font-semibold">Rating: </span>
               <span>{gameRawG.rating}⭐</span>
