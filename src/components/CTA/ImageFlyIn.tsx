@@ -14,25 +14,25 @@ function ImageFly() {
         <LazyLoadImage
           src={switchImage}
           alt="switch image"
-          className={`flyInD img-rectangular z-0 mx-auto h-full w-full object-contain md:w-[70%] lg:w-[30rem] xl:w-[43rem]`}
+          className={`flyInD img-rectangular z-0 mx-auto h-full w-[75%] sm:w-full object-contain md:w-[70%] lg:w-[30rem] xl:w-[43rem]`}
         />
         <div className="flex -translate-y-12 flex-row items-center justify-center gap-10 md:gap-16 xl:gap-20">
           <LazyLoadImage
             src={unity}
             alt="unity logo"
-            className={`flyInA z-10 h-9`}
+            className={`flyInA z-10 sm:h-9 h-7`}
           />
 
           <LazyLoadImage
             src={cry}
             alt="unreal logo"
-            className={`flyInB z-10 h-28`}
+            className={`flyInB z-10 sm:h-28 h-20`}
           />
 
           <LazyLoadImage
             src={unreal}
             alt="cry engine logo"
-            className={`flyInC z-10 h-20`}
+            className={`flyInC z-10 sm:h-20 h-14`}
           />
         </div>
       </div>

@@ -1,7 +1,9 @@
 // import { useState } from "react";
 import logoImage from "../../assets/images/Logo1.png";
 
-import { IoHomeOutline, IoStorefrontOutline } from "react-icons/io5";
+
+import { IoHomeOutline } from "react-icons/io5";
+// import { IoStorefrontOutline } from "react-icons/io5";
 import { FaRegStar } from "react-icons/fa";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
@@ -94,9 +96,9 @@ function ReviewSearchBar({
   //  ------------ navigation ----------------
   const navigate = useNavigate();
 
-  const handleClickStore = () => {
-    navigate("/store");
-  };
+  // const handleClickStore = () => {
+  //   navigate("/store");
+  // };
 
   const handleClickReviews = () => {
     navigate("/reviews");
@@ -139,18 +141,18 @@ function ReviewSearchBar({
         >
           Reviews
         </div>
-        <div
+        {/* <div
           onClick={handleClickStore}
           className="text-md cursor-pointer flex h-full items-center px-1 transition-all duration-200 ease-in-out hover:bg-orange hover:text-black"
         >
           Store
-        </div>
+        </div> */}
       </div>
 
       <div className="flex items-center justify-center gap-3 px-2 lg:hidden">
         <IoHomeOutline onClick={handleClickHome} className="cursor-pointer"/>
         <FaRegStar onClick={handleClickReviews} className="cursor-pointer"/>
-        <IoStorefrontOutline onClick={handleClickStore} className="cursor-pointer"/>
+        {/* <IoStorefrontOutline onClick={handleClickStore} className="cursor-pointer"/> */}
       </div>
 
       {/* ---------- Search Bar ------------- */}

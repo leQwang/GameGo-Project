@@ -8,6 +8,9 @@ import logoImage from "../../assets/images/Logo1.png";
 import ImageFly from "./ImageFlyIn";
 import { useNavigate } from "react-router-dom";
 
+import { FaGithub } from "react-icons/fa";
+import { FaList } from "react-icons/fa6";
+
 function CTA() {
   const controls = useAnimation();
   const imageControls = useAnimation();
@@ -65,9 +68,9 @@ function CTA() {
     navigate("/reviews");
   };
 
-  const handleClickStore = () => {
-    navigate("/store");
-  };
+  // const handleClickStore = () => {
+  //   navigate("/store");
+  // };
 
   return (
     <div className="relative z-0 flex h-screen w-screen flex-col items-start justify-center overflow-hidden pt-16 md:pt-14">
@@ -84,10 +87,10 @@ function CTA() {
           <h4 className="w-full text-center text-lg font-bold text-orange lg:w-fit lg:text-left">
             Your favorite game listing
           </h4>
-          <h1 className="text-center text-5xl font-bold md:text-5xl md:leading-[3rem] lg:w-[25rem] lg:text-left xl:w-[30rem] xl:text-7xl xl:leading-[4rem]">
+          <h1 className="text-center text-3xl font-bold sm:text-4xl md:text-5xl md:leading-[3rem] lg:w-[25rem] lg:text-left xl:w-[30rem] xl:text-7xl xl:leading-[4rem]">
             Work that we produce for our clients
           </h1>
-          <p className="text-center text-xl leading-8 lg:mt-2 lg:w-[25rem] lg:text-left xl:mt-4 xl:w-[40rem]">
+          <p className="text-md text-center leading-6 sm:text-xl md:leading-8 lg:mt-2 lg:w-[25rem] lg:text-left xl:mt-4 xl:w-[40rem]">
             Welcome to the ultimate destination for all your gaming experience!
             Dive into our comprehensive reviews and curated lists to discover
             your next gaming adventure.
@@ -99,13 +102,23 @@ function CTA() {
             <div className="flex flex-col gap-2 md:flex-row md:gap-5">
               <button
                 onClick={handleClickReviews}
-                className="mx-auto w-full rounded-xl bg-orange px-7 py-3 text-lg font-bold transition-all duration-200 ease-in-out hover:bg-white hover:text-orange lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10"
+                className="mx-auto flex w-full items-center justify-center gap-1 rounded-xl bg-orange px-7 py-3 text-lg font-bold transition-all duration-200 ease-in-out hover:bg-white hover:text-black lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10"
               >
-                See Listing
+                <FaList />
+                <span>See Listing</span>
               </button>
-              <button onClick={handleClickStore} className="mx-auto w-full rounded-xl bg-white px-7 py-3 text-lg font-bold text-black transition-all duration-200 ease-in-out hover:bg-orange hover:text-white lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10">
-                Find Best Deal
-              </button>
+              <a
+                href="https://github.com/leQwang/GameGo-Project"
+                target="_blank"
+              >
+                <button
+                  // onClick={handleClickStore}
+                  className="mx-auto flex w-full items-center justify-center gap-1 rounded-xl bg-white px-7 py-3 text-lg font-bold text-black transition-all duration-200 ease-in-out hover:bg-orange hover:text-white lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10"
+                >
+                  <FaGithub />
+                  <span>Github Repo</span>
+                </button>
+              </a>
             </div>
           )}
         </motion.div>
@@ -116,13 +129,20 @@ function CTA() {
           <div className="mb-20 flex flex-col gap-3 md:mb-0 md:flex-row md:gap-5">
             <button
               onClick={handleClickReviews}
-              className="mx-auto w-[70%] rounded-xl bg-orange px-7 py-3 text-lg font-bold transition-all duration-200 ease-in-out hover:bg-white hover:text-orange lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10"
+              className="mx-auto flex w-[70%] items-center justify-center gap-1 rounded-xl bg-orange px-7 py-3 text-lg font-bold transition-all duration-200 ease-in-out hover:bg-white hover:text-orange lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10"
             >
-              See Listing
+              <FaList />
+              <span>See Listing</span>
             </button>
-            <button onClick={handleClickStore} className="mx-auto w-[70%] rounded-xl bg-white px-7 py-3 text-lg font-bold text-black transition-all duration-200 ease-in-out hover:bg-orange hover:text-white lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10">
-              Find Best Deal
-            </button>
+            <a href="https://github.com/leQwang/GameGo-Project" target="_blank">
+              <button
+                // onClick={handleClickStore}
+                className="mx-auto flex w-[70%] items-center justify-center gap-1 rounded-xl bg-white px-7 py-3 text-lg font-bold text-black transition-all duration-200 ease-in-out hover:bg-orange hover:text-white lg:mx-0 lg:mt-4 lg:w-fit xl:mt-10"
+              >
+                <FaGithub />
+                <span>Github Repo</span>
+              </button>
+            </a>
           </div>
         ) : (
           <div></div>
