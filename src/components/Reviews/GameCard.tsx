@@ -18,7 +18,7 @@ import GameCardImgCarousel from "./GameCardImgCarousel";
 
 function GameCard(gameRawG: GameRawGCard) {
   // --------------- constants ---------------
-  // console.log(gameRawG);
+  console.log(gameRawG);
 
   // --------------- image loading process ---------------
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -47,7 +47,7 @@ function GameCard(gameRawG: GameRawGCard) {
 
           <img
             src={
-              gameRawG.short_screenshots.length > 0
+              gameRawG.short_screenshots.length > 1
                 ? gameRawG.short_screenshots[1].image
                 : gameRawG.background_image
             }
