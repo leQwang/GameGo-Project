@@ -1,7 +1,5 @@
 import axios from "axios";
-const apiKey = "acfae1e51f0540c5b9c7bb4211faf13f";
-
-// c542e67aec3a4340908f9de9e86038af this API key allow get clips
+const apiKey = import.meta.env.VITE_APP_RAWG_API_KEY;
 
 export const rawGApi = axios.create({
   baseURL: "https://api.rawg.io/api",

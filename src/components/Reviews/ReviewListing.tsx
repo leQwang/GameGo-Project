@@ -315,6 +315,12 @@ function ReviewListing({
       {renderType === "MAIN" ? (
         <div className="text-5xl font-semibold mt-5 mx-5 md:mx-3">NEWS and TRENDING</div>
       ): ""}
+      {renderType === "GENRE" ? (
+        <div className="text-5xl font-semibold mt-5 mx-5 md:mx-3">{selectedGenre}</div>
+      ): ""}
+      {renderType === "PLATFORM" ? (
+        <div className="text-5xl font-semibold mt-5 mx-5 md:mx-3">{selectedPlatform}</div>
+      ): ""}
       <div className="relative">
         {loading ? (
           <div className={`${renderType !== "MAIN" ? "mt-32" : "mt-20"} ring`}>
