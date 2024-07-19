@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 const apiKey = import.meta.env.VITE_APP_RAWG_API_KEY;
 

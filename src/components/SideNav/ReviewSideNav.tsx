@@ -85,10 +85,10 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
 
   return (
     <div
-      className={`fixed top-12 flex-col lg:relative lg:top-0 lg:flex ${isSidenavOpen ? "left-0 top-10 rounded-lg bg-[#1F140A]" : "-left-[100%]"} z-20 mt-5 transition-all duration-300 ease-in-out lg:left-0`}
+      className={`fixed top-12 flex-col lg:relative lg:top-0 lg:flex ${isSidenavOpen ? "left-0 top-10 rounded-lg bg-[#1F140A]" : "-left-[100%]"} z-20 mt-5 transition-all duration-300 ease-in-out lg:left-0 overflow-y-clip`}
     >
       <div
-        className={`${isSidenavOpen ? "" : "bg-gamecard"} top-0 z-20 mb-1 h-fit w-full text-nowrap rounded-xl py-2 md:left-0 md:ml-3 md:mr-5 md:block md:w-60 px-2`}
+        className={`${isSidenavOpen ? "" : "bg-gamecard"} top-0 z-20 mb-1 h-fit w-full text-nowrap rounded-xl py-2 md:left-0 md:ml-3 md:mr-5 md:block md:w-60 px-2 overflow-hidden `}
       >
         <div
           onClick={() => {
@@ -104,7 +104,7 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
           </div>
         </div>
         <ul
-          className={`relative max-h-[calc(100vh-100px)] ${isCloseGenre ? "h-56" : ""}  overflow-y-scroll transition-all duration-100 ease-in-out md:max-h-fit  lg:overflow-y-hidden`}
+          className={`relative max-h-[calc(100vh-100px)] ${isCloseGenre ? "h-full" : "h-0"}  overflow-y-scroll transition-all duration-100 ease-in-out md:max-h-fit  lg:overflow-y-hidden `}
         >
           {genres.map((genre, index) => {
             return (
@@ -133,7 +133,7 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
       {/* ----------------------------------------------------------------- */}
 
       <div
-        className={`${isSidenavOpen ? "" : "bg-gamecard"} top-0 z-20 mb-1 h-fit w-full text-nowrap rounded-xl py-2 md:left-0 md:ml-3 md:mr-5 md:block md:w-60 px-2`}
+        className={`${isSidenavOpen ? "" : "bg-gamecard"} top-0 z-20 mb-1 h-fit w-full text-nowrap rounded-xl py-2 md:left-0 md:ml-3 md:mr-5 md:block md:w-60 px-2 overflow-hidden`}
       >
         <div
           onClick={() => {
@@ -149,7 +149,7 @@ const ReviewSideNav: React.FC<GenreNavProps> = ({
           </div>
         </div>
         <ul
-          className={`relative max-h-[calc(100vh-100px)] ${isClosePlatform ? "h-56" : ""}  overflow-y-scroll transition-all duration-100 ease-in-out md:max-h-fit  lg:overflow-y-hidden`}
+          className={`relative max-h-[calc(100vh-100px)] ${isClosePlatform ? "h-full" : "h-0"}  overflow-y-scroll transition-all duration-100 ease-in-out md:max-h-fit  lg:overflow-y-hidden`}
         >
           {platforms.map((genre, index) => {
             return (

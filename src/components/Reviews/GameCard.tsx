@@ -37,15 +37,16 @@ function GameCard(gameRawG: GameRawGCard) {
         className="xl:h-92 group relative flex h-full w-full flex-col overflow-hidden rounded-xl bg-orangeGameCard transition-all duration-100 ease-in-out hover:z-10 hover:scale-105 hover:cursor-pointer hover:overflow-visible hover:rounded-t-xl hover:shadow-lg md:hover:rounded-b-none"
         onMouseEnter={() => setIsHovered(true)}
       >
-        <div className="h-48">
+        <div className="h-48 z-0">
           <img
             src={gameRawG.background_image}
             alt={gameRawG.name}
-            className={`${imageLoaded ? "h-48" : "hidden h-0"} w-full overflow-hidden rounded-t-xl group-hover:h-0`}
+            className={`${imageLoaded ? "h-48" : "hidden h-0"} w-full overflow-hidden rounded-t-xl`}
             onLoad={handleImageLoad} // Set onLoad event handler to update imageLoaded state
           />
 
-          <img
+          {/* For Mobile second image */}
+          {/* <img
             src={
               gameRawG.short_screenshots.length > 1
                 ? gameRawG.short_screenshots[1].image
@@ -53,7 +54,7 @@ function GameCard(gameRawG: GameRawGCard) {
             }
             alt={gameRawG.name}
             className={`relative h-0 w-full overflow-hidden rounded-t-xl group-hover:h-48 md:hidden`}
-          />
+          /> */}
 
           {isHovered &&
           // gameRawG.short_screenshots != null &&
@@ -65,7 +66,7 @@ function GameCard(gameRawG: GameRawGCard) {
               }
             />
           ) : (
-            <div className="absolute hidden h-0 w-full overflow-hidden rounded-t-xl md:group-hover:block md:group-hover:h-48">
+            <div className="absolute top-0 left-0 hidden h-0 w-full overflow-hidden rounded-t-xl md:group-hover:block md:group-hover:h-48">
               {" "}
               <img
                 src={gameRawG.background_image}

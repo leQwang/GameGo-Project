@@ -18,7 +18,7 @@ function GameCardImgCarousel({ shortScreenshots }: GameCardImgCarouselProps) {
     },
     [
       (slider) => {
-        let interval: any;
+        let interval: NodeJS.Timeout;
         function startAutoSlide() {
           interval = setInterval(() => {
             if (slider) slider.next();
@@ -48,9 +48,9 @@ function GameCardImgCarousel({ shortScreenshots }: GameCardImgCarouselProps) {
   }, [loadedImages]);
 
   return (
-    <div className="absolute hidden h-0 w-full overflow-hidden rounded-t-xl md:group-hover:block md:group-hover:h-48">
+    <div className={`absolute hidden top-0 left-0 z-20 h-0 w-full overflow-hidden rounded-t-xl md:group-hover:block md:group-hover:h-48 ${!isFullyLoaded ? "opacity-50" : "opacity-100"}`}>
       <div
-        className={`${!isFullyLoaded ? "h-48" : "hidden"} absolute flex w-full items-center justify-center rounded-t-xl bg-black bg-opacity-50`}
+        className={`${!isFullyLoaded ? "h-48" : "hidden"} absolute flex w-full items-center justify-center rounded-t-xl bg-black bg-opacity-10`}
       >
         <div className="loading-circle absolute"></div>
       </div>
